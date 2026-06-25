@@ -1,0 +1,35 @@
+OLS REGRESSION FOR TOPSIS_score
+====================================
+Predictors used: ['pld', 'asa_m2_cm3']
+R-squared: 0.3796, Adj R-squared: 0.3396
+F-statistic p-value: 6.12e-04
+Shapiro-Wilk test on residuals: stat=0.9008, p-value=0.0048
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           TOPSIS_score   R-squared:                       0.380
+Model:                            OLS   Adj. R-squared:                  0.340
+Method:                 Least Squares   F-statistic:                     9.484
+Date:                Thu, 25 Jun 2026   Prob (F-statistic):           0.000612
+Time:                        20:12:29   Log-Likelihood:                 24.712
+No. Observations:                  34   AIC:                            -43.42
+Df Residuals:                      31   BIC:                            -38.84
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.7540      0.068     11.043      0.000       0.615       0.893
+pld           -0.0283      0.010     -2.903      0.007      -0.048      -0.008
+asa_m2_cm3 -4.798e-05    5.1e-05     -0.942      0.354      -0.000     5.6e-05
+==============================================================================
+Omnibus:                        8.605   Durbin-Watson:                   1.640
+Prob(Omnibus):                  0.014   Jarque-Bera (JB):               11.641
+Skew:                           0.509   Prob(JB):                      0.00297
+Kurtosis:                       5.680   Cond. No.                     5.15e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 5.15e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

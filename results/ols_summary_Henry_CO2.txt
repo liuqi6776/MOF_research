@@ -1,0 +1,35 @@
+OLS REGRESSION FOR Henry_CO2
+====================================
+Predictors used: ['pld', 'asa_m2_cm3']
+R-squared: 0.1490, Adj R-squared: 0.0941
+F-statistic p-value: 8.21e-02
+Shapiro-Wilk test on residuals: stat=0.6241, p-value=0.0000
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:              Henry_CO2   R-squared:                       0.149
+Model:                            OLS   Adj. R-squared:                  0.094
+Method:                 Least Squares   F-statistic:                     2.713
+Date:                Thu, 25 Jun 2026   Prob (F-statistic):             0.0821
+Time:                        20:12:28   Log-Likelihood:                 267.69
+No. Observations:                  34   AIC:                            -529.4
+Df Residuals:                      31   BIC:                            -524.8
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.0002   5.38e-05      3.575      0.001    8.26e-05       0.000
+pld        -1.078e-05   7.68e-06     -1.403      0.171   -2.65e-05    4.89e-06
+asa_m2_cm3 -2.777e-08   4.01e-08     -0.692      0.494    -1.1e-07    5.41e-08
+==============================================================================
+Omnibus:                       56.946   Durbin-Watson:                   1.919
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              418.374
+Skew:                           3.631   Prob(JB):                     1.42e-91
+Kurtosis:                      18.576   Cond. No.                     5.15e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 5.15e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.

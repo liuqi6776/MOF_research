@@ -1,0 +1,33 @@
+OLS REGRESSION FOR Qreg_VSA
+====================================
+Predictors used: ['pld_path', 'pore_vol_cm3_g']
+R-squared: 0.7535, Adj R-squared: 0.7376
+F-statistic p-value: 3.74e-10
+Shapiro-Wilk test on residuals: stat=0.9525, p-value=0.1457
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               Qreg_VSA   R-squared:                       0.754
+Model:                            OLS   Adj. R-squared:                  0.738
+Method:                 Least Squares   F-statistic:                     47.38
+Date:                Thu, 25 Jun 2026   Prob (F-statistic):           3.74e-10
+Time:                        20:12:29   Log-Likelihood:                -102.92
+No. Observations:                  34   AIC:                             211.8
+Df Residuals:                      31   BIC:                             216.4
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==================================================================================
+                     coef    std err          t      P>|t|      [0.025      0.975]
+----------------------------------------------------------------------------------
+const             40.1272      2.667     15.044      0.000      34.687      45.567
+pld_path           0.5159      0.386      1.335      0.191      -0.272       1.304
+pore_vol_cm3_g    13.3877      3.516      3.808      0.001       6.217      20.559
+==============================================================================
+Omnibus:                        3.933   Durbin-Watson:                   1.799
+Prob(Omnibus):                  0.140   Jarque-Bera (JB):                2.571
+Skew:                           0.614   Prob(JB):                        0.276
+Kurtosis:                       3.554   Cond. No.                         48.4
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

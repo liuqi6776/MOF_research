@@ -1,0 +1,33 @@
+OLS REGRESSION FOR Qreg_TSA
+====================================
+Predictors used: ['pld_path', 'pld']
+R-squared: 0.3562, Adj R-squared: 0.3147
+F-statistic p-value: 1.09e-03
+Shapiro-Wilk test on residuals: stat=0.8157, p-value=0.0001
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               Qreg_TSA   R-squared:                       0.356
+Model:                            OLS   Adj. R-squared:                  0.315
+Method:                 Least Squares   F-statistic:                     8.576
+Date:                Thu, 25 Jun 2026   Prob (F-statistic):            0.00109
+Time:                        20:12:29   Log-Likelihood:                -203.91
+No. Observations:                  34   AIC:                             413.8
+Df Residuals:                      31   BIC:                             418.4
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          2.1514     46.743      0.046      0.964     -93.181      97.484
+pld_path      15.3254      6.610      2.319      0.027       1.844      28.806
+pld            1.4528     11.263      0.129      0.898     -21.519      24.425
+==============================================================================
+Omnibus:                       18.380   Durbin-Watson:                   2.017
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               24.036
+Skew:                           1.492   Prob(JB):                     6.04e-06
+Kurtosis:                       5.839   Cond. No.                         34.5
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

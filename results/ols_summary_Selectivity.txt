@@ -1,0 +1,33 @@
+OLS REGRESSION FOR Selectivity
+====================================
+Predictors used: ['pld', 'pore_vol_cm3_g']
+R-squared: 0.2947, Adj R-squared: 0.2492
+F-statistic p-value: 4.47e-03
+Shapiro-Wilk test on residuals: stat=0.7863, p-value=0.0000
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:            Selectivity   R-squared:                       0.295
+Model:                            OLS   Adj. R-squared:                  0.249
+Method:                 Least Squares   F-statistic:                     6.476
+Date:                Thu, 25 Jun 2026   Prob (F-statistic):            0.00447
+Time:                        20:12:29   Log-Likelihood:                -115.68
+No. Observations:                  34   AIC:                             237.4
+Df Residuals:                      31   BIC:                             241.9
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==================================================================================
+                     coef    std err          t      P>|t|      [0.025      0.975]
+----------------------------------------------------------------------------------
+const             23.1014      4.231      5.460      0.000      14.472      31.731
+pld               -1.0641      0.852     -1.249      0.221      -2.802       0.674
+pore_vol_cm3_g    -4.2312      4.552     -0.929      0.360     -13.515       5.053
+==============================================================================
+Omnibus:                       37.843   Durbin-Watson:                   1.930
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              136.213
+Skew:                           2.376   Prob(JB):                     2.64e-30
+Kurtosis:                      11.577   Cond. No.                         30.5
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

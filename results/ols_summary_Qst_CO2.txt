@@ -1,0 +1,35 @@
+OLS REGRESSION FOR Qst_CO2
+====================================
+Predictors used: ['asa_m2_cm3', 'pld']
+R-squared: 0.4226, Adj R-squared: 0.3854
+F-statistic p-value: 2.01e-04
+Shapiro-Wilk test on residuals: stat=0.9611, p-value=0.2612
+
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                Qst_CO2   R-squared:                       0.423
+Model:                            OLS   Adj. R-squared:                  0.385
+Method:                 Least Squares   F-statistic:                     11.35
+Date:                Thu, 25 Jun 2026   Prob (F-statistic):           0.000201
+Time:                        20:12:29   Log-Likelihood:                -89.697
+No. Observations:                  34   AIC:                             185.4
+Df Residuals:                      31   BIC:                             190.0
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         29.4334      1.975     14.900      0.000      25.405      33.462
+asa_m2_cm3    -0.0037      0.001     -2.525      0.017      -0.007      -0.001
+pld           -0.5099      0.282     -1.806      0.081      -1.086       0.066
+==============================================================================
+Omnibus:                        5.412   Durbin-Watson:                   1.548
+Prob(Omnibus):                  0.067   Jarque-Bera (JB):                3.861
+Skew:                           0.673   Prob(JB):                        0.145
+Kurtosis:                       3.957   Cond. No.                     5.15e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 5.15e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
