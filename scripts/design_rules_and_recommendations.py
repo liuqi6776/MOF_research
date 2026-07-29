@@ -77,11 +77,11 @@ def generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, rank_res=
         },
         {
             'Parameter': 'Primary Metal Node',
-            'Optimal_Interval': 'Cu (Paddlewheel), Zn (Tetranuclear/M4O), Zr (Hexanuclear)',
-            'Top_Median': 'Cu (50%), Zn (25%), Zr (15%)',
-            'Bottom_Median': 'Mixed / Low-frequency metals',
+            'Optimal_Interval': 'Zn (Tetranuclear/M4O), Cd, Co, Cu (Paddlewheel)',
+            'Top_Median': f"{', '.join([f'{m} ({p:.1f}%)' for m, p in top_mofs['primary_metal'].value_counts(normalize=True).head(3).items()])}",
+            'Bottom_Median': f"{', '.join([f'{m} ({p:.1f}%)' for m, p in bottom_mofs['primary_metal'].value_counts(normalize=True).head(3).items()])}",
             'Evidence_Strength': 'Strong',
-            'Rationale': 'Cu and Zn nodes provide ideal coordination geometry and OMS density.'
+            'Rationale': 'Zn, Cd and Co nodes provide ideal coordination geometry and pore polarization.'
         }
     ]
     

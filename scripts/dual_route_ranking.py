@@ -93,12 +93,12 @@ def run_dual_route_ranking(df_y, output_dir='results'):
     tsa_only_mofs = top20_tsa - top20_vsa
     
     # --- Sensitivity Analysis ---
-    # Perturb weights by +/- 20% across 50 Monte Carlo simulations
+    # Perturb weights by +/- 20% across 1000 Monte Carlo simulations
     np.random.seed(42)
     vsa_top20_overlaps = []
     tsa_top20_overlaps = []
     
-    for _ in range(50):
+    for _ in range(1000):
         # Random perturbation
         vsa_w_rand = vsa_weights * (1 + np.random.uniform(-0.2, 0.2, size=len(vsa_weights)))
         vsa_w_rand /= vsa_w_rand.sum()

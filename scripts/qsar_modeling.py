@@ -115,7 +115,7 @@ def run_qsar_modeling(df_y, x_encoded, output_dir='results'):
         
     plt.suptitle('Structure-Property Relationship Feature Importance Mapping', fontsize=16, y=1.02)
     plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'feature_importance_shap.png'), dpi=300, bbox_inches='tight')
+    plt.savefig(os.path.join(output_dir, 'feature_importance_rf.png'), dpi=300, bbox_inches='tight')
     plt.close()
     
     # --- Partial Dependence Plots (PDP) ---

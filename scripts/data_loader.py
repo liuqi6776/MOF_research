@@ -84,12 +84,14 @@ def load_mof_dataset(file_path):
             clean_name = col.replace('\n', ' ').strip()
             if '孔体积' in clean_name and 'cm³/g' in clean_name and '可访问' not in clean_name and '不可访问' not in clean_name:
                 x_features['pore_vol_cm3_g'] = pd.to_numeric(pv_sa[col], errors='coerce')
+            elif '不可访问表面积' in clean_name and 'm²/g' in clean_name:
+                x_features['NASA_m2_g'] = pd.to_numeric(pv_sa[col], errors='coerce')
+            elif '不可访问表面积' in clean_name and 'm²/cm³' in clean_name:
+                x_features['NASA_m2_cm3'] = pd.to_numeric(pv_sa[col], errors='coerce')
             elif '可访问表面积' in clean_name and 'm²/cm³' in clean_name:
                 x_features['ASA_m2_cm3'] = pd.to_numeric(pv_sa[col], errors='coerce')
             elif '可访问表面积' in clean_name and 'm²/g' in clean_name:
                 x_features['ASA_m2_g'] = pd.to_numeric(pv_sa[col], errors='coerce')
-            elif '不可访问表面积' in clean_name and 'm²/g' in clean_name:
-                x_features['NASA_m2_g'] = pd.to_numeric(pv_sa[col], errors='coerce')
             elif '可访问孔' in clean_name and '体积分数' in clean_name:
                 x_features['void_fraction'] = pd.to_numeric(pv_sa[col], errors='coerce')
             elif '可访问孔体积' in clean_name and 'cm³/g' in clean_name:
