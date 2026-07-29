@@ -101,7 +101,7 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 
 1. **Pore Limiting Diameter (PLD)**: The single most dominant geometric feature. PLD shows a strong non-linear optimal window ($3.5 - 5.5\text{ Å}$).
 2. **Accessible Surface Area (ASA)**: Gravimetric ASA (mean = 2042 m²/g) and volumetric ASA contribute high importance, exhibiting strong positive correlations with $\text{CO}_2$ uptake.
-3. **Open Metal Sites (OMS)**: `has_oms` provides a positive coefficient boosting $Q_{st}$ and selectivity at low partial pressure ($0.15 \text{ bar}$).
+3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $\text{CO}_2$ uptake and selectivity ($Q_{st}$), excessively strong OMS increases desorption energy ($\text{PE}_{\text{VSA}}$ & $\text{Qreg}_{\text{TSA}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio (~52.4%) compared to ~88.0% in the bottom group.
 4. **Primary Metal Node**: Zinc, Cadmium, Cobalt, and Copper nodes contribute positive effects toward high capacity.
 
 ![Partial Dependence Plots](results/pdp_curves.png)
@@ -117,8 +117,8 @@ Parameter,Optimal_Interval,Top_Median,Bottom_Median,Evidence_Strength,Rationale
 "Accessible Surface Area (ASA, m²/g)",872 - 1868 m²/g,1138 m²/g,3404 m²/g,Strong,High gravimetric surface area provides dense CO2 adsorption sites.
 "Volumetric ASA (ASA_vol, m²/cm³)",1133 - 1776 m²/cm³,1346 m²/cm³,1721 m²/cm³,Strong,High volumetric surface area enhances packing density in adsorption beds.
 Crystal Density (g/cm³),0.95 - 1.32 g/cm³,1.17 g/cm³,0.62 g/cm³,Moderate,Density around 0.9 - 1.3 g/cm³ balances void fraction and volumetric capacity.
-Open Metal Sites (OMS Presence),has_oms = 1 (Present),OMS Ratio: 52.4%,OMS Ratio: 88.0%,Strong,"Unsaturated metal centers create strong localized electrostatic fields, boosting Qst and low-pressure uptake."
-Primary Metal Node,"Zn (Tetranuclear/M4O), Cd, Co, Cu (Paddlewheel)","Zn (0.3%), Cd (0.2%), Co (0.1%)","Cu (0.4%), Zn (0.2%), Co (0.1%)",Strong,"Zn, Cd and Co nodes provide ideal coordination geometry and pore polarization."
+Open Metal Sites (OMS Trade-off),Moderate OMS density (~50-55%) for balanced uptake & energy,OMS Ratio: 52.4%,OMS Ratio: 88.0% (Excessive OMS elevates desorption heat),Strong Trade-off,High OMS boosts 0.15 bar CO2 uptake but increases desorption energy (Roach Motel effect). Top MOFs balance OMS at ~52.4% vs 88.0% in bottom group.
+Primary Metal Node,"Dominant Top Metals: Zn, Cd, Co","Zn (33.3%), Cd (19.0%), Co (14.3%)","Cu (38.0%), Zn (22.0%), Co (6.0%)",Strong,"Top performers are dominated by Zn, Cd, and Co nodes offering balanced affinity and pore geometry."
 
 ```
 

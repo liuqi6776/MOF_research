@@ -162,7 +162,7 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 
 1. **Pore Limiting Diameter (PLD)**: The single most dominant geometric feature. PLD shows a strong non-linear optimal window ($3.5 - 5.5\\text{{ Å}}$).
 2. **Accessible Surface Area (ASA)**: Gravimetric ASA (mean = 2042 m²/g) and volumetric ASA contribute high importance, exhibiting strong positive correlations with $\\text{{CO}}_2$ uptake.
-3. **Open Metal Sites (OMS)**: `has_oms` provides a positive coefficient boosting $Q_{{st}}$ and selectivity at low partial pressure ($0.15 \\text{{ bar}}$).
+3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $\\text{{CO}}_2$ uptake and selectivity ($Q_{{st}}$), excessively strong OMS increases desorption energy ($\\text{{PE}}_{{\\text{{VSA}}}}$ & $\\text{{Qreg}}_{{\\text{{TSA}}}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio (~52.4%) compared to ~88.0% in the bottom group.
 4. **Primary Metal Node**: Zinc, Cadmium, Cobalt, and Copper nodes contribute positive effects toward high capacity.
 
 ![Partial Dependence Plots](results/pdp_curves.png)

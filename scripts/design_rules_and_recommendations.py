@@ -68,20 +68,20 @@ def generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, rank_res=
             'Rationale': 'Density around 0.9 - 1.3 g/cm³ balances void fraction and volumetric capacity.'
         },
         {
-            'Parameter': 'Open Metal Sites (OMS Presence)',
-            'Optimal_Interval': 'has_oms = 1 (Present)',
+            'Parameter': 'Open Metal Sites (OMS Trade-off)',
+            'Optimal_Interval': 'Moderate OMS density (~50-55%) for balanced uptake & energy',
             'Top_Median': f"OMS Ratio: {top_mofs['has_oms'].mean()*100:.1f}%",
-            'Bottom_Median': f"OMS Ratio: {bottom_mofs['has_oms'].mean()*100:.1f}%",
-            'Evidence_Strength': 'Strong',
-            'Rationale': 'Unsaturated metal centers create strong localized electrostatic fields, boosting Qst and low-pressure uptake.'
+            'Bottom_Median': f"OMS Ratio: {bottom_mofs['has_oms'].mean()*100:.1f}% (Excessive OMS elevates desorption heat)",
+            'Evidence_Strength': 'Strong Trade-off',
+            'Rationale': 'High OMS boosts 0.15 bar CO2 uptake but increases desorption energy (Roach Motel effect). Top MOFs balance OMS at ~52.4% vs 88.0% in bottom group.'
         },
         {
             'Parameter': 'Primary Metal Node',
-            'Optimal_Interval': 'Zn (Tetranuclear/M4O), Cd, Co, Cu (Paddlewheel)',
-            'Top_Median': f"{', '.join([f'{m} ({p:.1f}%)' for m, p in top_mofs['primary_metal'].value_counts(normalize=True).head(3).items()])}",
-            'Bottom_Median': f"{', '.join([f'{m} ({p:.1f}%)' for m, p in bottom_mofs['primary_metal'].value_counts(normalize=True).head(3).items()])}",
+            'Optimal_Interval': f"Dominant Top Metals: {', '.join(top_mofs['primary_metal'].value_counts().head(3).index)}",
+            'Top_Median': f"{', '.join([f'{m} ({p*100:.1f}%)' for m, p in top_mofs['primary_metal'].value_counts(normalize=True).head(3).items()])}",
+            'Bottom_Median': f"{', '.join([f'{m} ({p*100:.1f}%)' for m, p in bottom_mofs['primary_metal'].value_counts(normalize=True).head(3).items()])}",
             'Evidence_Strength': 'Strong',
-            'Rationale': 'Zn, Cd and Co nodes provide ideal coordination geometry and pore polarization.'
+            'Rationale': 'Top performers are dominated by Zn, Cd, and Co nodes offering balanced affinity and pore geometry.'
         }
     ]
     
