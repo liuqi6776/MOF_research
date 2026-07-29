@@ -76,6 +76,10 @@ def generate_master_report(ind_res, rank_res, df_eval, df_rules, df_recs):
     dynamic_model_table = build_dynamic_model_table(df_eval)
     dynamic_recs_summary = build_dynamic_recommendations_summary(df_recs)
     
+    oms_rule = df_rules[df_rules['Parameter'].str.contains('OMS')].iloc[0]
+    oms_top_val = oms_rule['Top_Median']
+    oms_bot_val = oms_rule['Bottom_Median'].split(' ')[2]
+
     report_content = f"""# Comprehensive Evaluation of 252 MOFs for Post-Combustion CO₂ Capture & Structure-Property Relationship Research
 # 252个MOF湿烟气/干燥烟气CO₂捕集性能综合评估与构效关系研究报告
 
@@ -162,7 +166,7 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 
 1. **Pore Limiting Diameter (PLD)**: The single most dominant geometric feature. PLD shows a strong non-linear optimal window ($3.5 - 5.5\\text{{ Å}}$).
 2. **Accessible Surface Area (ASA)**: Gravimetric ASA (mean = 2042 m²/g) and volumetric ASA contribute high importance, exhibiting strong positive correlations with $\\text{{CO}}_2$ uptake.
-3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $\\text{{CO}}_2$ uptake and selectivity ($Q_{{st}}$), excessively strong OMS increases desorption energy ($\\text{{PE}}_{{\\text{{VSA}}}}$ & $\\text{{Qreg}}_{{\\text{{TSA}}}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio (~52.4%) compared to ~88.0% in the bottom group.
+3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $\\text{{CO}}_2$ uptake and selectivity ($Q_{{st}}$), excessively strong OMS increases desorption energy ($\\text{{PE}}_{{\\text{{VSA}}}}$ & $\\text{{Qreg}}_{{\\text{{TSA}}}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio ({oms_top_val}) compared to {oms_bot_val} in the bottom group.
 4. **Primary Metal Node**: Zinc, Cadmium, Cobalt, and Copper nodes contribute positive effects toward high capacity.
 
 ![Partial Dependence Plots](results/pdp_curves.png)

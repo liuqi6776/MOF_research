@@ -26,6 +26,9 @@ def generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, rank_res=
     bottom_mofs = df_merged.sort_values(by='VSA_Rank').tail(50)
     
     # Compute quantitative rule boundaries (median/percentiles of top vs bottom)
+    top_oms = top_mofs['has_oms'].mean() * 100
+    bot_oms = bottom_mofs['has_oms'].mean() * 100
+    
     rules = [
         {
             'Parameter': 'Pore Limiting Diameter (PLD, Å)',
@@ -69,11 +72,11 @@ def generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, rank_res=
         },
         {
             'Parameter': 'Open Metal Sites (OMS Trade-off)',
-            'Optimal_Interval': 'Moderate OMS density (~50-55%) for balanced uptake & energy',
-            'Top_Median': f"OMS Ratio: {top_mofs['has_oms'].mean()*100:.1f}%",
-            'Bottom_Median': f"OMS Ratio: {bottom_mofs['has_oms'].mean()*100:.1f}% (Excessive OMS elevates desorption heat)",
+            'Optimal_Interval': f"Moderate OMS density (~{top_oms:.0f}%) for balanced uptake & energy",
+            'Top_Median': f"OMS Ratio: {top_oms:.1f}%",
+            'Bottom_Median': f"OMS Ratio: {bot_oms:.1f}% (Excessive OMS elevates desorption heat)",
             'Evidence_Strength': 'Strong Trade-off',
-            'Rationale': 'High OMS boosts 0.15 bar CO2 uptake but increases desorption energy (Roach Motel effect). Top MOFs balance OMS at ~52.4% vs 88.0% in bottom group.'
+            'Rationale': f"High OMS boosts 0.15 bar CO2 uptake but increases desorption energy (Roach Motel effect). Top MOFs balance OMS at ~{top_oms:.1f}% vs {bot_oms:.1f}% in bottom group."
         },
         {
             'Parameter': 'Primary Metal Node',
