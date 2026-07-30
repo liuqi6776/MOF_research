@@ -1,0 +1,253 @@
+MOF_name,n_C,formula,non_mof_flag,hard_flag,hard_reason
+ABAYIO_clean,288,C288O192H96Mn48Cl48,False,False,Valid
+ABAYOU_clean,288,C288O192H96Co48Cl48,False,False,Valid
+ABETIN_clean,416,C416H288N64Cu16,False,False,Valid
+ABEXEN_clean,240,C240H120O96In12S12,False,False,Valid
+ABIXOZ_clean,0,O52Mo12P8Co3,True,True,Non-MOF (0 Carbons)
+ABULOB_clean,0,O48P16H16Be12,True,True,Non-MOF (0 Carbons)
+ABUWOJ_clean,96,C96H56O56Zn16,False,False,Valid
+ACAJIZ_clean,88,H96C88O32Cu8N8,False,False,Valid
+ACAJOF_clean,92,H104C92O32Cu8N8,False,False,Valid
+ACIBOE_clean,72,C72O52H24Zn12,False,True,Atomic overlap (min_dist=0.683Å); Isolated atoms (9)
+ACODON_clean,86,C86H50O32Tb4P4,False,True,Atomic overlap (min_dist=0.691Å); Isolated atoms (8)
+ACOGAB_clean,64,H72C64N24O8Br4Cd2,False,False,Valid
+ACOGEF_clean,64,H72C64N24O8I4Cd2,False,False,Valid
+ACOLOV_clean,208,C208H160O76Cd12,False,False,Valid
+ACUBAB_clean,0,O48Zn16P12Cl2,True,True,Non-MOF (0 Carbons)
+ACUFEK_clean,384,C384H192O96N48Cu24,False,True,Atomic overlap (min_dist=0.743Å)
+ACUJOZ_manual,648,C648H288O270Cu54Cr18,False,False,Valid
+ADARAA_clean,1152,C1152H480O216Br96N96Co72,False,False,Valid
+ADASAB_charged,504,C504H264O176N96Cu48,False,True,Atomic overlap (min_dist=0.708Å); Isolated atoms (40)
+ADASEF_clean,360,C360H168O104N96Cu48,False,True,Atomic overlap (min_dist=0.759Å); Isolated atoms (16)
+ADATAC_clean,408,C408H240O120N48Zn24,False,True,Atomic overlap (min_dist=0.732Å); Isolated atoms (18)
+ADATEG_manual,672,C672H360O96Cu24N8,False,True,Atomic overlap (min_dist=0.789Å); Isolated atoms (140)
+ADATIK_clean,384,C384H192O128N120Cu48,False,True,Atomic overlap (min_dist=0.528Å); Isolated atoms (132)
+ADATOQ_clean,312,C312H288N80Ag12,False,False,Valid
+ADAXEK_clean,26,C26H16O10Co2N2,False,False,Valid
+ADAXIO_clean,104,C104H64O40N8Co8,False,False,Valid
+ADOCEC_clean,80,C80H64O52V32N16Ni4,False,False,Valid
+ADODAA_charged,96,C96O56H48N48Cu24,False,True,Isolated atoms (12)
+ADODII_clean,52,C52H40O19La2,False,True,Atomic overlap (min_dist=0.785Å)
+ADODOO_clean,52,C52H40O19Eu2,False,True,Atomic overlap (min_dist=0.785Å); Isolated atoms (2)
+ADODUU_clean,52,C52H40O19Tb2,False,True,Atomic overlap (min_dist=0.791Å)
+ADOGEH_clean,288,H288C288O192N96Cu48,False,True,Atomic overlap (min_dist=0.536Å)
+ADUROI_clean,1008,C1008H624O288N144Zn48,False,True,Atomic overlap (min_dist=0.638Å); Isolated atoms (96)
+ADUWON_clean,432,C432H288O144Ni12,False,False,Valid
+AFEJOK_ion_b,40,C40H32F18N9O3P3Cu2,False,False,Valid
+AFITEP_clean,52,C52H32O8N4Zn2,False,False,Valid
+AFITUF_clean,252,C252H120O48Br24Zn12N12,False,False,Valid
+AFIXAO_clean,120,H120C120N80Co20,False,False,Valid
+AFIXES_clean,120,H120C120N80Co20,False,False,Valid
+AFOTOF_clean,42,C42H24O12Eu2,False,True,Isolated atoms (4)
+AFOTUL_clean,42,C42H24O12Sm2,False,True,Isolated atoms (4)
+AFOVAT_clean,42,C42H24O12La2,False,True,Isolated atoms (4)
+AFOVEX_clean,42,C42H24O12Ce2,False,True,Isolated atoms (4)
+AFOVIB_clean,42,C42H24O12Gd2,False,True,Isolated atoms (4)
+AFOVOH_clean,42,C42H24O12Nd2,False,True,Isolated atoms (4)
+AFOYAW_clean,50,C50H42N30Cu4O2,False,True,Atomic overlap (min_dist=0.782Å)
+AFOYIE_clean,40,C40H32N24Cu4,False,False,Valid
+AFOYOK_clean,72,C72H24N24Cu4,False,False,Valid
+AFUKET_clean,256,C256H200O76N16Mn12,False,False,Valid
+AFUKIX_clean,262,C262H188O76Mn12N12,False,True,Atomic overlap (min_dist=0.711Å); Isolated atoms (8)
+AFUPEX_clean,36,C36O24H12Tm4,False,False,Valid
+AGABIU_clean,60,C60O36N12Li6Ni4,False,False,Valid
+AGARUW_clean,44,C44O44H16N16La8,False,False,Valid
+AGOFEJ_clean,400,C400H352N64O64Cu24,False,False,Valid
+AGONAM_clean,40,C40O32H12Cd4,False,False,Valid
+AGONEQ_clean,40,C40O32H8Cd4,False,False,Valid
+AGOVOJ_clean,376,C376O88In24N24,False,False,Valid
+AGUBUA_clean,0,O48P24Zn12H8,True,True,Non-MOF (0 Carbons)
+AGUVOO_charged,144,N192H144C144O32Cu24F24,False,False,Valid
+AHEQAH_clean,132,C132H60O24Ho4,False,False,Valid
+AJAKON_clean,168,C168H96O48Cd10N8,False,False,Valid
+AJAYIT_clean,48,H60C48O48N12Cu6Er4,False,False,Valid
+AJIGIL_clean,248,H348C248N64O56Na8Br4Co4P4,False,False,Valid
+AJOTEY_clean,0,O48P16V12,True,True,Non-MOF (0 Carbons)
+AJOXAA_clean,72,C72O48H24S12Nd8,False,False,Valid
+AKEDIF_clean,112,C112H80O16N8Zn4,False,False,Valid
+AKUKUO_clean,34,C34H34O14N8P4Ni3,False,True,Atomic overlap (min_dist=0.777Å)
+ALAHUS_clean,344,C344H152O144Tb24N16,False,False,Valid
+ALAMUW_clean,78,C78O36H24Cu6N6,False,True,Atomic overlap (min_dist=0.777Å)
+ALANAD_clean,208,C208O96H64Zn16N16,False,True,Atomic overlap (min_dist=0.710Å)
+ALEJEI_clean,528,C528H288O240N96Cu48,False,False,Valid
+ALEJIM_clean,528,C528H288O240N96Zn48,False,False,Valid
+ALIXOJ_clean,68,C68H40O36Ni8,False,False,Valid
+ALIXUP_clean,68,C68H40O40Cu12,False,False,Valid
+ALOLET_charged,408,C408H228O144N24In18,False,False,Valid
+ALOLIX_charged,396,C396H186O144In18N18Cs6,False,False,Valid
+ALOLIY_clean,128,C128O72H64Mn16,False,False,Valid
+ALOLOD_charged,492,C492H432O162N30In18,False,False,Valid
+ALONEV_clean,320,C320H224Cl192N128Nb96O32Mn16,False,False,Valid
+ALUJEX_clean,144,C144H80O76La12,False,False,Valid
+ALUJIB_clean,144,C144H76O74Ce12,False,False,Valid
+ALUJOH_clean,144,C144H72O72Nd12,False,False,Valid
+ALUKIC_clean,84,C84H48O24N12Ce4,False,False,Valid
+ALUKOI_clean,84,C84H48O24N12Sm4,False,False,Valid
+ALUKUO_clean,84,C84H48O24N12Eu4,False,False,Valid
+ALULAV_clean,84,C84H48O24N12Gd4,False,False,Valid
+ALULEZ_clean,336,C336H192O96N48Ce12,False,True,Atomic overlap (min_dist=0.556Å); Isolated atoms (64)
+ALULID_clean,84,C84H48O24N12Ce4,False,True,Atomic overlap (min_dist=0.741Å)
+ALURAB_clean,152,C152H136O36N28Co6,False,False,Valid
+AMAFOK_clean,30,C30H18N12O12Cu3,False,True,Atomic overlap (min_dist=0.687Å); Isolated atoms (6)
+AMAGAX_clean,120,C120H72N48O48Cu12,False,True,Atomic overlap (min_dist=0.700Å); Isolated atoms (22)
+AMILOY_clean,240,C240H192O64N32Zn16,False,False,Valid
+AMILUE_clean,120,C120H96O32N16Zn8,False,False,Valid
+AMIMAL_clean,240,C240H192O64N32Zn16,False,False,Valid
+AMIMEP_clean,120,C120H96O32N16Zn8,False,False,Valid
+AMODUC_clean,96,C96H60O24Tb4,False,False,Valid
+AMOFAK_clean,192,C192H120O48Eu8,False,False,Valid
+AMUWIP_charged,352,C352H256N32Cu16S16W4I4,False,True,Isolated atoms (4)
+AMUWUB_clean,74,C74H42O24Cu6N6,False,True,Atomic overlap (min_dist=0.783Å)
+AMUXAI_clean,84,C84H52O24N8Cu6,False,True,Atomic overlap (min_dist=0.763Å)
+ANAWIX_clean,64,C64O40F32H8In8,False,False,Valid
+ANAWOD_clean,96,C96O60F48In12H12,False,False,Valid
+ANOMOG_clean,204,C204O80H68Cu12N12,False,True,Atomic overlap (min_dist=0.757Å); Overcoordinated N (4)
+ANOMUM_clean,60,C60O24H20Cu4N4,False,True,Atomic overlap (min_dist=0.756Å); Isolated atoms (12)
+ANONAT_manual,60,C60O24H20Cu4N4,False,True,Atomic overlap (min_dist=0.762Å); Isolated atoms (8)
+ANUGIA_clean,84,C84H42O24Cu6,False,False,Valid
+ANUGOG_clean,112,C112H56O32Cu8,False,True,Atomic overlap (min_dist=0.650Å); Isolated atoms (8)
+APACAX_clean,192,C192O96H72Zn12,False,True,Isolated atoms (8)
+APARAM_clean,90,C90H54F18O12N6Mn3,False,False,Valid
+APAYIB_clean,168,C168H88O48Eu8,False,False,Valid
+APAYOH_clean,168,C168H88O48Tb8,False,False,Valid
+APAYUN_clean,168,C168H88O48La8,False,False,Valid
+APAZAU_clean,216,C216H120O48Eu8,False,False,Valid
+APAZEY_clean,216,C216H120O48Tb8,False,False,Valid
+APAZIC_clean,216,C216H120O48La8,False,False,Valid
+APAZOI_clean,120,C120H56O48La8,False,False,Valid
+APEBEE_clean,32,C32H28N16O6B2Cd2,False,True,Atomic overlap (min_dist=0.774Å)
+AQEGUY_clean,80,C80H74O50S8Ba4,False,True,Atomic overlap (min_dist=0.507Å)
+AQEQES_clean,40,C40O32H8Co4,False,False,Valid
+AQEQIW_clean,40,C40O32H8Zn4,False,False,Valid
+AQIXUV_clean,168,C168H142O36N6Ni3,False,True,Atomic overlap (min_dist=0.630Å); Isolated atoms (20)
+AQOLUP_clean,768,C768N576H384Co96Cl24,False,False,Valid
+AQOMEA01_clean,768,C768N576H384Co96Cl24,False,False,Valid
+AQOMEA_clean,768,C768N576H384Co96Cl24,False,False,Valid
+AQOTIK_clean,24,C24N6Pt1Fe1,False,True,Overcoordinated N (2)
+AQUCOF_clean,50,C50H30N20O20Cu12,False,False,Valid
+AQUDAS_clean,50,C50H30N20O20Cu12,False,False,Valid
+AQUDIB_clean,72,C72O54Ni18H18,False,False,Valid
+ARADEE_clean,96,C96O48H40Cd12N12,False,False,Valid
+ARAFEF_clean,40,C40H32N24Cu4,False,False,Valid
+ARAFIJ_clean,40,C40H32N24Cu4,False,False,Valid
+ARAFOP_clean,40,C40H32N24Cu4,False,False,Valid
+ARAGOR_clean,96,C96O64H32S16Cu8Ca8,False,False,Valid
+AROFAP_clean,99,C99H72O36Cd6,False,True,Atomic overlap (min_dist=0.639Å); Isolated atoms (23)
+AROFET_clean,66,C66H48O24Cd4,False,True,Atomic overlap (min_dist=0.631Å); Isolated atoms (12)
+ARUYES_clean,64,C64H32O32Na4Bi4,False,False,Valid
+ARUYUH01_clean,0,O48P16H16Zn12,True,True,Non-MOF (0 Carbons)
+ARUYUH_clean,0,O48P16H16Zn12,True,True,Non-MOF (0 Carbons)
+ASACON_clean,80,C80O72Zn16H16,False,False,Valid
+ASADAA_clean,80,C80H44O36Cd8N8,False,False,Valid
+ASECUY_clean,240,C240H120O64N24U8Na4,False,False,Valid
+ASEKAM_clean,36,C36O24H20N16Cd8,False,False,Valid
+ASINAT_clean,180,C180H116O24N16Zn6,False,True,Atomic overlap (min_dist=0.600Å); Isolated atoms (28)
+ASINEX_clean,1440,C1440H928O192N128Zn48,False,False,Valid
+ASINIB_clean,1440,C1440H928O192N128Cu48,False,False,Valid
+ASIQEA_clean,104,C104H72N32O16Cu4,False,False,Valid
+ASIQIE_clean,104,C104H72N32O16Cu4,False,False,Valid
+ASIVAB_clean,336,C336H192O96Cu24N16,False,False,Valid
+ASIVEF_clean,368,C368H224O116N32Cu24,False,True,Atomic overlap (min_dist=0.572Å)
+ASOHUL_clean,32,C32O20V4,False,False,Valid
+ASOSUY_clean,108,C108H72O48Cu12Si6,False,False,Valid
+ASOVEL_clean,120,C120H80O16Ca4,False,False,Valid
+ASOYOY_clean,352,C352H256N96O32Cd16,False,False,Valid
+ASUBIB_clean,48,C48O24H18N6Eu4,False,True,Atomic overlap (min_dist=0.795Å)
+ASUWUI_clean,152,C152H92O24N24Zn8,False,True,Atomic overlap (min_dist=0.788Å); Isolated atoms (28)
+ATAFIK_clean,80,C80O64Zn16H16,False,False,Valid
+ATAYAX_clean,132,C132H60O48Zn12N6F6,False,False,Valid
+ATAYEB_clean,132,C132H60O48Cu12F12N6,False,False,Valid
+ATEYOP_clean,640,C640H352O128Gd24,False,False,Valid
+ATEYUV_clean,640,C640H352O128Ho24,False,False,Valid
+ATEZAC_clean,320,C320H176O64Er12,False,False,Valid
+ATEZEG_clean,352,C352H208O64Yb12,False,False,Valid
+ATEZIK_clean,352,C352H208O64Lu12,False,False,Valid
+ATIJUJ_manual,36,H54C36O18Co6P6N6,False,True,Atomic overlap (min_dist=0.665Å); Isolated atoms (22)
+ATIXAE_clean,96,C96H48O24N12Tb4,False,False,Valid
+ATOGEV_clean,0,O48P16H16Zn12,True,True,Non-MOF (0 Carbons)
+ATOWIQ_clean,40,C40H32O16N6Zn4,False,True,Atomic overlap (min_dist=0.651Å); Isolated atoms (2)
+ATOWOW_clean,40,C40H32O16N6Zn4,False,True,Atomic overlap (min_dist=0.653Å); Isolated atoms (4)
+ATUXIY_clean,136,C136O80H56Eu12,False,False,Valid
+ATUZEW_clean,270,C270O144H54Cu18,False,False,Valid
+AVAKAL_clean,312,C312H192O48Cu12N8,False,False,Valid
+AVAKEP_clean,384,C384H288O48Cu12N8,False,False,Valid
+AVELOD_clean,120,H120C120N24O16Cu8,False,False,Valid
+AVELUJ_clean,120,H120C120N24O16Ni8,False,False,Valid
+AVEMAQ_clean,120,H120C120N24O16Ni8,False,False,Valid
+AVEQID_clean,88,C88H40O32Zn8N4,False,False,Valid
+AVESOL_clean,92,C92O40H36Zn8,False,False,Valid
+AVESUR_clean,184,C184O80H72Cd16,False,False,Valid
+AVETAY_clean,192,C192O96H80Zn12,False,True,Atomic overlap (min_dist=0.743Å)
+AVIHIY_clean,36,C36O24H12Ho4,False,False,Valid
+AVIHOE_clean,36,C36O24H12Tm4,False,False,Valid
+AVILEY_clean,576,C576H288O160Hf48N48Cl24Ir12,False,False,Valid
+AVIMOI_clean,120,C120H72O40Zn8,False,False,Valid
+AVIPAX_clean,84,C84O48H36Mg12N12,False,False,Valid
+AVIPOL_clean,56,C56O32H24Mg8N8,False,False,Valid
+AVITUU_clean,384,C384H256N64Cu16S16,False,False,Valid
+AVIVAC_clean,384,C384H256N64Ag16S16,False,False,Valid
+AVIVEG_clean,384,C384H256N64Ag16S16,False,False,Valid
+AVIVIK_clean,384,C384H256N64Ag16S16,False,False,Valid
+AVIVOQ_clean,384,C384H256N64Ag16S16,False,False,Valid
+AVIVUW_clean,384,C384H256N64Ag16S16,False,False,Valid
+AVOSIO_charged,198,H216C198O36F18Ag6Sb3,False,True,Atomic overlap (min_dist=0.551Å); Isolated atoms (87)
+AVUCEA_clean,324,C324O216H108Co36,False,False,Valid
+AWAGEL_clean,108,C108H84N28Cd4,False,False,Valid
+AWAHEM_clean,24,O60H24C24P12U10Mn4,False,False,Valid
+AWASEY_clean,240,C240H160O80Cu48I48N40Pr12K4,False,False,Valid
+AWAWUR_clean,180,C180H84O78N24Co18,False,False,Valid
+AWEDOW_charged,228,C228H176N64O40Zn8,False,False,Valid
+AWEJIW_clean,84,C84H44O24Cd6,False,True,Atomic overlap (min_dist=0.651Å); Isolated atoms (8)
+AWEVIJ_clean,848,C848H704N72O64Zn16,False,False,Valid
+AWOFOI_clean,36,C36O24H12Ce4,False,False,Valid
+AWUPAL_clean,200,C200H104O32N8In4Fe2,False,False,Valid
+AXIMUP_clean,96,C96H96O16N16La4,False,False,Valid
+AXINAX01_clean,324,C324H180O72Co22,False,False,Valid
+AXIPEE01_clean,144,C144H80N64Au16Fe8,False,False,Valid
+AXIPEE02_clean,432,C432H240N192Au48Fe24,False,False,Valid
+AXIPEE03_clean,144,C144H80N64Au16Fe8,False,False,Valid
+AXIPEE_clean,144,C144H80N64Au16Fe8,False,False,Valid
+AXUBAW_manual,72,C72H72O26Zn8,False,True,Isolated atoms (36)
+AXUBOL_clean,120,C120H76O52Ni12N12,False,True,Atomic overlap (min_dist=0.724Å); Isolated atoms (34)
+AXUHEH_clean,264,H264C264O56S16N16Co6Na4,False,False,Valid
+AYOXUJ_clean,144,C144H128O32N16Co8,False,False,Valid
+AYUJIP_clean,558,H702C558O288Mn108N36,False,True,Overcoordinated N (18)
+AZAFIS_clean,16,C16O8Br4H4Ca2,False,False,Valid
+AZAVUU_clean,192,C192H96O48Cu12,False,False,Valid
+AZAWAB_clean,192,C192H100O50Cu12,False,False,Valid
+AZEBUE_clean,72,C72O48H24S12Ho8,False,False,Valid
+AZIVAI_clean,80,C80H48N16Cu4,False,False,Valid
+AZIXUD_clean,68,C68O40H32Zn8,False,False,Valid
+BADYAJ_clean,192,C192H120N48O48Tb8,False,False,Valid
+BAFHAU_clean,48,C48N16Cu16,False,False,Valid
+BAKGIF_manual,24,C24N24H20Ni2,False,True,Atomic overlap (min_dist=0.798Å)
+BAKJEE_clean,104,C104H56O32Co8N8,False,False,Valid
+BAKJII_clean,52,C52H28O16Co4N4,False,False,Valid
+BAKJOO_clean,78,C78H42O24Co6N6,False,False,Valid
+BAKYOE_clean,64,C64H48O44N20Mg8,False,False,Valid
+BAMKIM_clean,88,C88H84N24O20Cu8,False,False,Valid
+BAMKOS_clean,88,C88H84N24O20Cu8,False,False,Valid
+BANMAG_clean,48,O60H48C48Co6Nd4,False,False,Valid
+BAPDAA_clean,72,C72O54Cd18H18,False,False,Valid
+BAQWIC_clean,42,C42H30N24Ag11,False,True,Atomic overlap (min_dist=0.602Å); Isolated atoms (12)
+BARZUR_clean,60,H60C60N36Zn3,False,True,Atomic overlap (min_dist=0.618Å); Isolated atoms (23)
+BASJUB_clean,116,C116H96O32N16Cl8Co4,False,False,Valid
+BAWROI_clean,360,C360H208N120O96Zn40,False,False,Valid
+BAZFUF01_clean,216,C216H120O48Cu12,False,False,Valid
+BAZFUF_clean,216,C216H120O48Cu12,False,False,Valid
+BAZGAM_clean,360,C360H216O48Cu12,False,True,Atomic overlap (min_dist=0.744Å)
+BAZGEQ_clean,672,C672H384O96N48Cu24,False,False,Valid
+BAZJET_clean,72,C72N48H36Mn6O2,False,True,Isolated atoms (16)
+BAZJIX_clean,96,C96N64H48Mn10O4,False,False,Valid
+BEDYEQ_clean,288,C288H144O72N24Zr18Fe6Cl6,False,True,Atomic overlap (min_dist=0.776Å); Isolated atoms (56)
+BELJIL_clean,78,H90C78O24N12Cu6,False,True,Atomic overlap (min_dist=0.795Å); Isolated atoms (38)
+BEPBAB_clean,36,C36H16N12Ca2O2,False,False,Valid
+BEPLUF_clean,54,H66C54N12O12Zn6,False,True,Atomic overlap (min_dist=0.743Å); Isolated atoms (16)
+BEPMAM_clean,54,H66C54N12O12Zn6,False,True,Atomic overlap (min_dist=0.690Å); Isolated atoms (20)
+BEPMIU_clean,54,H66C54N12O12Zn6Cl6,False,True,Atomic overlap (min_dist=0.686Å); Isolated atoms (24)
+BEPNIV_clean,54,H60C54N12O12Zn6,False,True,Atomic overlap (min_dist=0.659Å); Isolated atoms (20)
+BEPNOB_clean,54,H60C54N12O12Zn6,False,True,Atomic overlap (min_dist=0.693Å); Isolated atoms (20)
+BEPNUH_clean,54,H66C54N12O12Zn6Br6,False,True,Atomic overlap (min_dist=0.779Å); Isolated atoms (22)
+BEPPAP_clean,54,H66C54N12O12Zn6Cl6,False,True,Atomic overlap (min_dist=0.686Å); Isolated atoms (28)
+BEPPIX_clean,66,H90C66N12O12Zn6,False,True,Atomic overlap (min_dist=0.569Å); Isolated atoms (30)
+BEPPOD_clean,66,H84C66N12O12Zn6,False,True,Atomic overlap (min_dist=0.584Å); Isolated atoms (30)

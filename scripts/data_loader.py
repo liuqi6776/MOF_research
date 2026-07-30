@@ -157,6 +157,15 @@ def load_mof_dataset(file_path):
     
     x_encoded = pd.concat([x_features, metal_dummies, topo_dummies], axis=1)
     
+    # Filter out 8 non-MOF zero-carbon structures (inorganic phosphates / POMs)
+    non_mof_names = ['ABIXOZ_clean', 'ABULOB_clean', 'ACUBAB_clean', 'AGUBUA_clean', 
+                     'AJOTEY_clean', 'ARUYUH01_clean', 'ARUYUH_clean', 'ATOGEV_clean']
+    valid_mof_mask = ~x_encoded['MOF_name'].isin(non_mof_names)
+    
+    df_raw = df_raw[valid_mof_mask].reset_index(drop=True)
+    df_y = df_y[valid_mof_mask].reset_index(drop=True)
+    x_encoded = x_encoded[valid_mof_mask].reset_index(drop=True)
+    
     return df_raw, df_y, x_encoded
 
 def extract_smiles_features(smiles_series):

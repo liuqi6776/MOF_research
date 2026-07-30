@@ -1,0 +1,253 @@
+MOF_name,n_atoms,n_C,formula,min_interatomic_dist_A,overlap_pairs_sub_0.8A,non_mof_flag,hard_flag,hard_reason,isolated_atoms_115,over_C_115,over_H_115,over_N_115
+ABAYIO_clean,672,288,C288O192H96Mn48Cl48,0.962,0,False,False,Valid,0,0,0,0
+ABAYOU_clean,672,288,C288O192H96Co48Cl48,0.929,0,False,False,Valid,0,0,0,0
+ABETIN_clean,784,416,C416H288N64Cu16,0.929,0,False,False,Valid,0,0,0,0
+ABEXEN_clean,480,240,C240H120O96In12S12,0.93,0,False,False,Valid,0,0,0,0
+ABIXOZ_clean,75,0,O52Mo12P8Co3,1.298,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+ABULOB_clean,92,0,O48P16H16Be12,1.299,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+ABUWOJ_clean,224,96,C96H56O56Zn16,0.93,0,False,False,Valid,0,0,0,0
+ACAJIZ_clean,232,88,H96C88O32Cu8N8,0.929,0,False,False,Valid,0,0,0,0
+ACAJOF_clean,244,92,H104C92O32Cu8N8,0.93,0,False,False,Valid,0,0,0,0
+ACIBOE_clean,160,72,C72O52H24Zn12,0.683,3,False,True,Atomic overlap (min_dist=0.683Å); Isolated atoms (9),9,1,0,0
+ACODON_clean,176,86,C86H50O32Tb4P4,0.691,8,False,True,Atomic overlap (min_dist=0.691Å); Isolated atoms (8),8,0,0,0
+ACOGAB_clean,174,64,H72C64N24O8Br4Cd2,0.814,0,False,False,Valid,0,0,0,0
+ACOGEF_clean,174,64,H72C64N24O8I4Cd2,0.814,0,False,False,Valid,0,0,0,0
+ACOLOV_clean,456,208,C208H160O76Cd12,0.879,0,False,False,Valid,0,0,0,0
+ACUBAB_clean,78,0,O48Zn16P12Cl2,1.502,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+ACUFEK_clean,744,384,C384H192O96N48Cu24,0.743,32,False,True,Atomic overlap (min_dist=0.743Å),0,0,0,0
+ACUJOZ_manual,1278,648,C648H288O270Cu54Cr18,1.14,0,False,False,Valid,0,0,0,0
+ADARAA_clean,2112,1152,C1152H480O216Br96N96Co72,0.947,0,False,False,Valid,0,0,0,0
+ADASAB_charged,1088,504,C504H264O176N96Cu48,0.708,40,False,True,Atomic overlap (min_dist=0.708Å); Isolated atoms (40),40,0,0,0
+ADASEF_clean,776,360,C360H168O104N96Cu48,0.759,4,False,True,Atomic overlap (min_dist=0.759Å); Isolated atoms (16),16,0,0,0
+ADATAC_clean,840,408,C408H240O120N48Zn24,0.732,24,False,True,Atomic overlap (min_dist=0.732Å); Isolated atoms (18),18,0,0,0
+ADATEG_manual,1160,672,C672H360O96Cu24N8,0.789,12,False,True,Atomic overlap (min_dist=0.789Å); Isolated atoms (140),140,0,0,0
+ADATIK_clean,872,384,C384H192O128N120Cu48,0.528,60,False,True,Atomic overlap (min_dist=0.528Å); Isolated atoms (132),132,0,0,0
+ADATOQ_clean,692,312,C312H288N80Ag12,0.86,0,False,False,Valid,0,0,0,0
+ADAXEK_clean,56,26,C26H16O10Co2N2,0.929,0,False,False,Valid,0,0,0,0
+ADAXIO_clean,224,104,C104H64O40N8Co8,0.929,0,False,False,Valid,0,0,0,0
+ADOCEC_clean,248,80,C80H64O52V32N16Ni4,0.929,0,False,False,Valid,0,0,0,0
+ADODAA_charged,272,96,C96O56H48N48Cu24,0.842,0,False,True,Isolated atoms (12),12,0,0,0
+ADODII_clean,113,52,C52H40O19La2,0.785,4,False,True,Atomic overlap (min_dist=0.785Å),0,2,0,0
+ADODOO_clean,113,52,C52H40O19Eu2,0.785,4,False,True,Atomic overlap (min_dist=0.785Å); Isolated atoms (2),2,2,0,0
+ADODUU_clean,113,52,C52H40O19Tb2,0.791,4,False,True,Atomic overlap (min_dist=0.791Å),0,2,0,0
+ADOGEH_clean,912,288,H288C288O192N96Cu48,0.536,96,False,True,Atomic overlap (min_dist=0.536Å),0,0,96,0
+ADUROI_clean,2112,1008,C1008H624O288N144Zn48,0.638,64,False,True,Atomic overlap (min_dist=0.638Å); Isolated atoms (96),96,0,0,0
+ADUWON_clean,876,432,C432H288O144Ni12,0.929,0,False,False,Valid,0,0,0,0
+AFEJOK_ion_b,107,40,C40H32F18N9O3P3Cu2,0.93,0,False,False,Valid,0,0,0,0
+AFITEP_clean,98,52,C52H32O8N4Zn2,0.932,0,False,False,Valid,0,0,0,0
+AFITUF_clean,468,252,C252H120O48Br24Zn12N12,0.948,0,False,False,Valid,0,0,0,0
+AFIXAO_clean,340,120,H120C120N80Co20,0.919,0,False,False,Valid,0,0,0,0
+AFIXES_clean,340,120,H120C120N80Co20,0.913,0,False,False,Valid,0,0,0,0
+AFOTOF_clean,80,42,C42H24O12Eu2,0.836,0,False,True,Isolated atoms (4),4,0,0,0
+AFOTUL_clean,80,42,C42H24O12Sm2,0.834,0,False,True,Isolated atoms (4),4,0,0,0
+AFOVAT_clean,80,42,C42H24O12La2,0.837,0,False,True,Isolated atoms (4),4,0,0,0
+AFOVEX_clean,80,42,C42H24O12Ce2,0.833,0,False,True,Isolated atoms (4),4,0,0,0
+AFOVIB_clean,80,42,C42H24O12Gd2,0.836,0,False,True,Isolated atoms (4),4,0,0,0
+AFOVOH_clean,80,42,C42H24O12Nd2,0.836,0,False,True,Isolated atoms (4),4,0,0,0
+AFOYAW_clean,128,50,C50H42N30Cu4O2,0.782,2,False,True,Atomic overlap (min_dist=0.782Å),0,0,0,0
+AFOYIE_clean,100,40,C40H32N24Cu4,0.93,0,False,False,Valid,0,0,0,0
+AFOYOK_clean,124,72,C72H24N24Cu4,0.95,0,False,False,Valid,0,0,0,0
+AFUKET_clean,560,256,C256H200O76N16Mn12,0.927,0,False,False,Valid,0,0,0,0
+AFUKIX_clean,550,262,C262H188O76Mn12N12,0.711,34,False,True,Atomic overlap (min_dist=0.711Å); Isolated atoms (8),8,0,0,0
+AFUPEX_clean,76,36,C36O24H12Tm4,0.928,0,False,False,Valid,0,0,0,0
+AGABIU_clean,118,60,C60O36N12Li6Ni4,1.257,0,False,False,Valid,0,0,0,0
+AGARUW_clean,128,44,C44O44H16N16La8,0.87,0,False,False,Valid,0,4,0,0
+AGOFEJ_clean,904,400,C400H352N64O64Cu24,0.948,0,False,False,Valid,0,0,0,0
+AGONAM_clean,88,40,C40O32H12Cd4,0.821,0,False,False,Valid,0,0,0,0
+AGONEQ_clean,84,40,C40O32H8Cd4,0.965,0,False,False,Valid,0,0,0,0
+AGOVOJ_clean,512,376,C376O88In24N24,1.094,0,False,False,Valid,0,0,0,0
+AGUBUA_clean,92,0,O48P24Zn12H8,0.936,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+AGUVOO_charged,560,144,N192H144C144O32Cu24F24,0.845,0,False,False,Valid,0,0,0,0
+AHEQAH_clean,220,132,C132H60O24Ho4,0.948,0,False,False,Valid,0,0,0,0
+AJAKON_clean,330,168,C168H96O48Cd10N8,0.929,0,False,False,Valid,0,0,0,0
+AJAYIT_clean,178,48,H60C48O48N12Cu6Er4,0.91,0,False,False,Valid,0,0,0,0
+AJIGIL_clean,736,248,H348C248N64O56Na8Br4Co4P4,0.841,0,False,False,Valid,0,0,0,0
+AJOTEY_clean,76,0,O48P16V12,1.504,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+AJOXAA_clean,164,72,C72O48H24S12Nd8,0.929,0,False,False,Valid,0,0,0,0
+AKEDIF_clean,220,112,C112H80O16N8Zn4,0.95,0,False,False,Valid,0,0,0,0
+AKUKUO_clean,97,34,C34H34O14N8P4Ni3,0.777,6,False,True,Atomic overlap (min_dist=0.777Å),0,0,0,0
+ALAHUS_clean,680,344,C344H152O144Tb24N16,0.927,0,False,False,Valid,0,0,0,0
+ALAMUW_clean,150,78,C78O36H24Cu6N6,0.777,4,False,True,Atomic overlap (min_dist=0.777Å),0,0,0,0
+ALANAD_clean,400,208,C208O96H64Zn16N16,0.71,8,False,True,Atomic overlap (min_dist=0.710Å),0,0,0,0
+ALEJEI_clean,1200,528,C528H288O240N96Cu48,0.879,0,False,False,Valid,0,0,0,0
+ALEJIM_clean,1200,528,C528H288O240N96Zn48,0.877,0,False,False,Valid,0,0,0,0
+ALIXOJ_clean,152,68,C68H40O36Ni8,0.82,0,False,False,Valid,0,0,0,0
+ALIXUP_clean,160,68,C68H40O40Cu12,0.929,0,False,False,Valid,0,0,0,0
+ALOLET_charged,822,408,C408H228O144N24In18,0.928,0,False,False,Valid,0,0,0,0
+ALOLIX_charged,768,396,C396H186O144In18N18Cs6,0.928,0,False,False,Valid,0,0,0,0
+ALOLIY_clean,280,128,C128O72H64Mn16,0.819,0,False,False,Valid,0,0,0,0
+ALOLOD_charged,1134,492,C492H432O162N30In18,0.819,0,False,False,Valid,0,0,0,0
+ALONEV_clean,1008,320,C320H224Cl192N128Nb96O32Mn16,0.948,0,False,False,Valid,0,0,0,0
+ALUJEX_clean,312,144,C144H80O76La12,0.849,0,False,False,Valid,0,0,0,0
+ALUJIB_clean,306,144,C144H76O74Ce12,0.879,0,False,False,Valid,0,0,0,0
+ALUJOH_clean,300,144,C144H72O72Nd12,0.925,0,False,False,Valid,0,0,0,0
+ALUKIC_clean,172,84,C84H48O24N12Ce4,0.849,0,False,False,Valid,0,0,0,0
+ALUKOI_clean,172,84,C84H48O24N12Sm4,0.852,0,False,False,Valid,0,0,0,0
+ALUKUO_clean,172,84,C84H48O24N12Eu4,0.852,0,False,False,Valid,0,0,0,0
+ALULAV_clean,172,84,C84H48O24N12Gd4,0.851,0,False,False,Valid,0,0,0,0
+ALULEZ_clean,684,336,C336H192O96N48Ce12,0.556,48,False,True,Atomic overlap (min_dist=0.556Å); Isolated atoms (64),64,14,4,0
+ALULID_clean,172,84,C84H48O24N12Ce4,0.741,4,False,True,Atomic overlap (min_dist=0.741Å),0,0,0,0
+ALURAB_clean,358,152,C152H136O36N28Co6,0.87,0,False,False,Valid,0,0,0,0
+AMAFOK_clean,75,30,C30H18N12O12Cu3,0.687,4,False,True,Atomic overlap (min_dist=0.687Å); Isolated atoms (6),6,0,0,0
+AMAGAX_clean,300,120,C120H72N48O48Cu12,0.7,14,False,True,Atomic overlap (min_dist=0.700Å); Isolated atoms (22),22,0,0,0
+AMILOY_clean,544,240,C240H192O64N32Zn16,0.948,0,False,False,Valid,0,0,0,0
+AMILUE_clean,272,120,C120H96O32N16Zn8,0.93,0,False,False,Valid,0,0,0,0
+AMIMAL_clean,544,240,C240H192O64N32Zn16,0.949,0,False,False,Valid,0,0,0,0
+AMIMEP_clean,272,120,C120H96O32N16Zn8,0.922,0,False,False,Valid,0,0,0,0
+AMODUC_clean,184,96,C96H60O24Tb4,0.873,0,False,False,Valid,0,0,0,0
+AMOFAK_clean,368,192,C192H120O48Eu8,0.948,0,False,False,Valid,0,0,0,0
+AMUWIP_charged,680,352,C352H256N32Cu16S16W4I4,0.927,0,False,True,Isolated atoms (4),4,0,0,0
+AMUWUB_clean,152,74,C74H42O24Cu6N6,0.783,8,False,True,Atomic overlap (min_dist=0.783Å),0,0,0,0
+AMUXAI_clean,174,84,C84H52O24N8Cu6,0.763,16,False,True,Atomic overlap (min_dist=0.763Å),0,0,0,0
+ANAWIX_clean,152,64,C64O40F32H8In8,0.84,0,False,False,Valid,0,0,0,0
+ANAWOD_clean,228,96,C96O60F48In12H12,0.826,0,False,False,Valid,0,0,0,0
+ANOMOG_clean,376,204,C204O80H68Cu12N12,0.757,8,False,True,Atomic overlap (min_dist=0.757Å); Overcoordinated N (4),0,36,0,4
+ANOMUM_clean,112,60,C60O24H20Cu4N4,0.756,8,False,True,Atomic overlap (min_dist=0.756Å); Isolated atoms (12),12,0,0,0
+ANONAT_manual,112,60,C60O24H20Cu4N4,0.762,8,False,True,Atomic overlap (min_dist=0.762Å); Isolated atoms (8),8,0,0,0
+ANUGIA_clean,156,84,C84H42O24Cu6,0.874,0,False,False,Valid,0,0,0,0
+ANUGOG_clean,208,112,C112H56O32Cu8,0.65,12,False,True,Atomic overlap (min_dist=0.650Å); Isolated atoms (8),8,0,0,0
+APACAX_clean,372,192,C192O96H72Zn12,0.929,0,False,True,Isolated atoms (8),8,0,0,0
+APARAM_clean,183,90,C90H54F18O12N6Mn3,0.928,0,False,False,Valid,0,0,0,0
+APAYIB_clean,312,168,C168H88O48Eu8,0.929,0,False,False,Valid,0,0,0,0
+APAYOH_clean,312,168,C168H88O48Tb8,0.929,0,False,False,Valid,0,0,0,0
+APAYUN_clean,312,168,C168H88O48La8,0.93,0,False,False,Valid,0,0,0,0
+APAZAU_clean,392,216,C216H120O48Eu8,0.928,0,False,False,Valid,0,0,0,0
+APAZEY_clean,392,216,C216H120O48Tb8,0.929,0,False,False,Valid,0,0,0,0
+APAZIC_clean,392,216,C216H120O48La8,0.928,0,False,False,Valid,0,0,0,0
+APAZOI_clean,232,120,C120H56O48La8,0.929,0,False,False,Valid,0,0,0,0
+APEBEE_clean,86,32,C32H28N16O6B2Cd2,0.774,2,False,True,Atomic overlap (min_dist=0.774Å),0,0,0,0
+AQEGUY_clean,216,80,C80H74O50S8Ba4,0.507,12,False,True,Atomic overlap (min_dist=0.507Å),0,0,4,0
+AQEQES_clean,84,40,C40O32H8Co4,0.97,0,False,False,Valid,0,0,0,0
+AQEQIW_clean,84,40,C40O32H8Zn4,0.93,0,False,False,Valid,0,0,0,0
+AQIXUV_clean,355,168,C168H142O36N6Ni3,0.63,20,False,True,Atomic overlap (min_dist=0.630Å); Isolated atoms (20),20,0,0,0
+AQOLUP_clean,1848,768,C768N576H384Co96Cl24,0.951,0,False,False,Valid,0,0,0,0
+AQOMEA01_clean,1848,768,C768N576H384Co96Cl24,0.95,0,False,False,Valid,0,0,0,0
+AQOMEA_clean,1848,768,C768N576H384Co96Cl24,0.931,0,False,False,Valid,0,0,0,0
+AQOTIK_clean,32,24,C24N6Pt1Fe1,1.152,0,False,True,Overcoordinated N (2),0,2,0,2
+AQUCOF_clean,132,50,C50H30N20O20Cu12,0.926,0,False,False,Valid,0,0,0,0
+AQUDAS_clean,132,50,C50H30N20O20Cu12,0.924,0,False,False,Valid,0,0,0,0
+AQUDIB_clean,162,72,C72O54Ni18H18,0.96,0,False,False,Valid,0,0,0,0
+ARADEE_clean,208,96,C96O48H40Cd12N12,0.929,0,False,False,Valid,0,0,0,0
+ARAFEF_clean,100,40,C40H32N24Cu4,0.95,0,False,False,Valid,0,0,0,0
+ARAFIJ_clean,100,40,C40H32N24Cu4,0.95,0,False,False,Valid,0,0,0,0
+ARAFOP_clean,100,40,C40H32N24Cu4,0.949,0,False,False,Valid,0,0,0,0
+ARAGOR_clean,224,96,C96O64H32S16Cu8Ca8,0.928,0,False,False,Valid,0,0,0,0
+AROFAP_clean,213,99,C99H72O36Cd6,0.639,17,False,True,Atomic overlap (min_dist=0.639Å); Isolated atoms (23),23,0,0,0
+AROFET_clean,142,66,C66H48O24Cd4,0.631,8,False,True,Atomic overlap (min_dist=0.631Å); Isolated atoms (12),12,4,0,0
+ARUYES_clean,136,64,C64H32O32Na4Bi4,0.93,0,False,False,Valid,0,0,0,0
+ARUYUH01_clean,92,0,O48P16H16Zn12,0.98,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+ARUYUH_clean,92,0,O48P16H16Zn12,1.226,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+ASACON_clean,184,80,C80O72Zn16H16,0.929,0,False,False,Valid,0,0,0,0
+ASADAA_clean,176,80,C80H44O36Cd8N8,0.887,0,False,False,Valid,0,0,0,0
+ASECUY_clean,460,240,C240H120O64N24U8Na4,0.928,0,False,False,Valid,0,0,0,0
+ASEKAM_clean,104,36,C36O24H20N16Cd8,0.85,0,False,False,Valid,0,0,0,0
+ASINAT_clean,342,180,C180H116O24N16Zn6,0.6,18,False,True,Atomic overlap (min_dist=0.600Å); Isolated atoms (28),28,0,0,0
+ASINEX_clean,2736,1440,C1440H928O192N128Zn48,0.877,0,False,False,Valid,0,0,0,0
+ASINIB_clean,2736,1440,C1440H928O192N128Cu48,0.879,0,False,False,Valid,0,0,0,0
+ASIQEA_clean,228,104,C104H72N32O16Cu4,0.929,0,False,False,Valid,0,0,0,0
+ASIQIE_clean,228,104,C104H72N32O16Cu4,0.929,0,False,False,Valid,0,0,0,0
+ASIVAB_clean,664,336,C336H192O96Cu24N16,0.829,0,False,False,Valid,0,0,0,0
+ASIVEF_clean,764,368,C368H224O116N32Cu24,0.572,24,False,True,Atomic overlap (min_dist=0.572Å),0,0,0,0
+ASOHUL_clean,56,32,C32O20V4,1.26,0,False,False,Valid,0,0,0,0
+ASOSUY_clean,246,108,C108H72O48Cu12Si6,0.949,0,False,False,Valid,0,0,0,0
+ASOVEL_clean,220,120,C120H80O16Ca4,0.948,0,False,False,Valid,0,0,0,0
+ASOYOY_clean,752,352,C352H256N96O32Cd16,0.929,0,False,False,Valid,0,0,0,0
+ASUBIB_clean,100,48,C48O24H18N6Eu4,0.795,2,False,True,Atomic overlap (min_dist=0.795Å),0,0,0,0
+ASUWUI_clean,300,152,C152H92O24N24Zn8,0.788,4,False,True,Atomic overlap (min_dist=0.788Å); Isolated atoms (28),28,0,0,0
+ATAFIK_clean,176,80,C80O64Zn16H16,0.929,0,False,False,Valid,0,0,0,0
+ATAYAX_clean,264,132,C132H60O48Zn12N6F6,0.88,0,False,False,Valid,0,0,0,0
+ATAYEB_clean,270,132,C132H60O48Cu12F12N6,0.861,0,False,False,Valid,0,0,0,0
+ATEYOP_clean,1144,640,C640H352O128Gd24,0.928,0,False,False,Valid,0,0,0,0
+ATEYUV_clean,1144,640,C640H352O128Ho24,0.928,0,False,False,Valid,0,0,0,0
+ATEZAC_clean,572,320,C320H176O64Er12,0.929,0,False,False,Valid,0,0,0,0
+ATEZEG_clean,636,352,C352H208O64Yb12,0.928,0,False,False,Valid,0,48,0,0
+ATEZIK_clean,636,352,C352H208O64Lu12,0.928,0,False,False,Valid,0,32,0,0
+ATIJUJ_manual,126,36,H54C36O18Co6P6N6,0.665,5,False,True,Atomic overlap (min_dist=0.665Å); Isolated atoms (22),22,0,1,0
+ATIXAE_clean,184,96,C96H48O24N12Tb4,0.947,0,False,False,Valid,0,0,0,0
+ATOGEV_clean,92,0,O48P16H16Zn12,1.269,0,True,True,Non-MOF (0 Carbons),0,0,0,0
+ATOWIQ_clean,98,40,C40H32O16N6Zn4,0.651,8,False,True,Atomic overlap (min_dist=0.651Å); Isolated atoms (2),2,0,0,0
+ATOWOW_clean,98,40,C40H32O16N6Zn4,0.653,10,False,True,Atomic overlap (min_dist=0.653Å); Isolated atoms (4),4,0,0,0
+ATUXIY_clean,284,136,C136O80H56Eu12,0.95,0,False,False,Valid,0,0,0,0
+ATUZEW_clean,486,270,C270O144H54Cu18,0.93,0,False,False,Valid,0,18,0,0
+AVAKAL_clean,572,312,C312H192O48Cu12N8,0.928,0,False,False,Valid,0,0,0,0
+AVAKEP_clean,740,384,C384H288O48Cu12N8,0.929,0,False,False,Valid,0,0,0,0
+AVELOD_clean,288,120,H120C120N24O16Cu8,0.859,0,False,False,Valid,0,0,0,0
+AVELUJ_clean,288,120,H120C120N24O16Ni8,0.9,0,False,False,Valid,0,0,0,0
+AVEMAQ_clean,288,120,H120C120N24O16Ni8,0.86,0,False,False,Valid,0,0,0,0
+AVEQID_clean,172,88,C88H40O32Zn8N4,0.859,0,False,False,Valid,0,0,0,0
+AVESOL_clean,176,92,C92O40H36Zn8,0.93,0,False,False,Valid,0,0,0,0
+AVESUR_clean,352,184,C184O80H72Cd16,0.929,0,False,False,Valid,0,0,0,0
+AVETAY_clean,380,192,C192O96H80Zn12,0.743,8,False,True,Atomic overlap (min_dist=0.743Å),0,0,0,0
+AVIHIY_clean,76,36,C36O24H12Ho4,0.929,0,False,False,Valid,0,0,0,0
+AVIHOE_clean,76,36,C36O24H12Tm4,0.95,0,False,False,Valid,0,0,0,0
+AVILEY_clean,1156,576,C576H288O160Hf48N48Cl24Ir12,0.948,0,False,False,Valid,0,0,0,0
+AVIMOI_clean,240,120,C120H72O40Zn8,0.929,0,False,False,Valid,0,0,0,0
+AVIPAX_clean,192,84,C84O48H36Mg12N12,0.852,0,False,False,Valid,0,0,0,0
+AVIPOL_clean,128,56,C56O32H24Mg8N8,0.929,0,False,False,Valid,0,0,0,0
+AVITUU_clean,736,384,C384H256N64Cu16S16,0.948,0,False,False,Valid,0,0,0,0
+AVIVAC_clean,736,384,C384H256N64Ag16S16,0.949,0,False,False,Valid,0,0,0,0
+AVIVEG_clean,736,384,C384H256N64Ag16S16,0.928,0,False,False,Valid,0,0,0,0
+AVIVIK_clean,736,384,C384H256N64Ag16S16,0.948,0,False,False,Valid,0,0,0,0
+AVIVOQ_clean,736,384,C384H256N64Ag16S16,0.929,0,False,False,Valid,0,0,0,0
+AVIVUW_clean,736,384,C384H256N64Ag16S16,0.928,0,False,False,Valid,0,0,0,0
+AVOSIO_charged,477,198,H216C198O36F18Ag6Sb3,0.551,32,False,True,Atomic overlap (min_dist=0.551Å); Isolated atoms (87),87,0,1,0
+AVUCEA_clean,684,324,C324O216H108Co36,0.828,0,False,False,Valid,0,0,0,0
+AWAGEL_clean,224,108,C108H84N28Cd4,0.817,0,False,False,Valid,0,0,0,0
+AWAHEM_clean,134,24,O60H24C24P12U10Mn4,0.937,0,False,False,Valid,0,0,0,0
+AWASEY_clean,632,240,C240H160O80Cu48I48N40Pr12K4,0.947,0,False,False,Valid,0,0,0,0
+AWAWUR_clean,384,180,C180H84O78N24Co18,0.861,0,False,False,Valid,0,0,0,0
+AWEDOW_charged,516,228,C228H176N64O40Zn8,0.929,0,False,False,Valid,0,0,0,0
+AWEJIW_clean,158,84,C84H44O24Cd6,0.651,8,False,True,Atomic overlap (min_dist=0.651Å); Isolated atoms (8),8,10,0,0
+AWEVIJ_clean,1704,848,C848H704N72O64Zn16,0.947,0,False,False,Valid,0,0,0,0
+AWOFOI_clean,76,36,C36O24H12Ce4,0.93,0,False,False,Valid,0,0,0,0
+AWUPAL_clean,350,200,C200H104O32N8In4Fe2,0.929,0,False,False,Valid,0,0,0,0
+AXIMUP_clean,228,96,C96H96O16N16La4,0.929,0,False,False,Valid,0,0,0,0
+AXINAX01_clean,598,324,C324H180O72Co22,0.881,0,False,False,Valid,0,0,0,0
+AXIPEE01_clean,312,144,C144H80N64Au16Fe8,0.939,0,False,False,Valid,0,0,0,0
+AXIPEE02_clean,936,432,C432H240N192Au48Fe24,0.946,0,False,False,Valid,0,0,0,0
+AXIPEE03_clean,312,144,C144H80N64Au16Fe8,0.949,0,False,False,Valid,0,0,0,0
+AXIPEE_clean,312,144,C144H80N64Au16Fe8,0.948,0,False,False,Valid,0,0,0,0
+AXUBAW_manual,178,72,C72H72O26Zn8,0.856,0,False,True,Isolated atoms (36),36,0,0,0
+AXUBOL_clean,272,120,C120H76O52Ni12N12,0.724,8,False,True,Atomic overlap (min_dist=0.724Å); Isolated atoms (34),34,0,2,0
+AXUHEH_clean,626,264,H264C264O56S16N16Co6Na4,0.88,0,False,False,Valid,0,0,0,0
+AYOXUJ_clean,328,144,C144H128O32N16Co8,0.928,0,False,False,Valid,0,0,0,0
+AYUJIP_clean,1692,558,H702C558O288Mn108N36,0.929,0,False,True,Overcoordinated N (18),0,90,0,18
+AZAFIS_clean,34,16,C16O8Br4H4Ca2,1.109,0,False,False,Valid,0,0,0,0
+AZAVUU_clean,348,192,C192H96O48Cu12,0.949,0,False,False,Valid,0,0,0,0
+AZAWAB_clean,354,192,C192H100O50Cu12,0.851,0,False,False,Valid,0,0,2,0
+AZEBUE_clean,164,72,C72O48H24S12Ho8,0.928,0,False,False,Valid,0,0,0,0
+AZIVAI_clean,148,80,C80H48N16Cu4,0.949,0,False,False,Valid,0,0,0,0
+AZIXUD_clean,148,68,C68O40H32Zn8,0.949,0,False,False,Valid,0,0,0,0
+BADYAJ_clean,416,192,C192H120N48O48Tb8,0.86,0,False,False,Valid,0,0,0,0
+BAFHAU_clean,80,48,C48N16Cu16,1.122,0,False,False,Valid,0,0,0,0
+BAKGIF_manual,70,24,C24N24H20Ni2,0.798,8,False,True,Atomic overlap (min_dist=0.798Å),0,0,0,0
+BAKJEE_clean,208,104,C104H56O32Co8N8,0.949,0,False,False,Valid,0,0,0,0
+BAKJII_clean,104,52,C52H28O16Co4N4,0.948,0,False,False,Valid,0,0,0,0
+BAKJOO_clean,156,78,C78H42O24Co6N6,0.928,0,False,False,Valid,0,0,0,0
+BAKYOE_clean,184,64,C64H48O44N20Mg8,0.86,0,False,False,Valid,0,0,0,0
+BAMKIM_clean,224,88,C88H84N24O20Cu8,0.842,0,False,False,Valid,0,0,0,0
+BAMKOS_clean,224,88,C88H84N24O20Cu8,0.848,0,False,False,Valid,0,0,0,0
+BANMAG_clean,166,48,O60H48C48Co6Nd4,0.969,0,False,False,Valid,0,0,0,0
+BAPDAA_clean,162,72,C72O54Cd18H18,0.93,0,False,False,Valid,0,0,0,0
+BAQWIC_clean,107,42,C42H30N24Ag11,0.602,8,False,True,Atomic overlap (min_dist=0.602Å); Isolated atoms (12),12,0,0,0
+BARZUR_clean,159,60,H60C60N36Zn3,0.618,10,False,True,Atomic overlap (min_dist=0.618Å); Isolated atoms (23),23,0,2,0
+BASJUB_clean,272,116,C116H96O32N16Cl8Co4,0.945,0,False,False,Valid,0,0,0,0
+BAWROI_clean,824,360,C360H208N120O96Zn40,0.949,0,False,False,Valid,0,0,0,0
+BAZFUF01_clean,396,216,C216H120O48Cu12,0.93,0,False,False,Valid,0,0,0,0
+BAZFUF_clean,396,216,C216H120O48Cu12,0.928,0,False,False,Valid,0,0,0,0
+BAZGAM_clean,636,360,C360H216O48Cu12,0.744,36,False,True,Atomic overlap (min_dist=0.744Å),0,0,0,0
+BAZGEQ_clean,1224,672,C672H384O96N48Cu24,0.926,0,False,False,Valid,0,0,0,0
+BAZJET_clean,164,72,C72N48H36Mn6O2,0.806,0,False,True,Isolated atoms (16),16,0,4,0
+BAZJIX_clean,222,96,C96N64H48Mn10O4,0.925,0,False,False,Valid,0,0,0,0
+BEDYEQ_clean,558,288,C288H144O72N24Zr18Fe6Cl6,0.776,16,False,True,Atomic overlap (min_dist=0.776Å); Isolated atoms (56),56,0,0,0
+BELJIL_clean,210,78,H90C78O24N12Cu6,0.795,2,False,True,Atomic overlap (min_dist=0.795Å); Isolated atoms (38),38,0,0,0
+BEPBAB_clean,68,36,C36H16N12Ca2O2,0.845,0,False,False,Valid,0,0,0,0
+BEPLUF_clean,150,54,H66C54N12O12Zn6,0.743,4,False,True,Atomic overlap (min_dist=0.743Å); Isolated atoms (16),16,0,6,0
+BEPMAM_clean,150,54,H66C54N12O12Zn6,0.69,6,False,True,Atomic overlap (min_dist=0.690Å); Isolated atoms (20),20,0,4,0
+BEPMIU_clean,156,54,H66C54N12O12Zn6Cl6,0.686,6,False,True,Atomic overlap (min_dist=0.686Å); Isolated atoms (24),24,0,4,0
+BEPNIV_clean,144,54,H60C54N12O12Zn6,0.659,6,False,True,Atomic overlap (min_dist=0.659Å); Isolated atoms (20),20,0,2,0
+BEPNOB_clean,144,54,H60C54N12O12Zn6,0.693,4,False,True,Atomic overlap (min_dist=0.693Å); Isolated atoms (20),20,0,2,0
+BEPNUH_clean,156,54,H66C54N12O12Zn6Br6,0.779,4,False,True,Atomic overlap (min_dist=0.779Å); Isolated atoms (22),22,0,6,0
+BEPPAP_clean,156,54,H66C54N12O12Zn6Cl6,0.686,6,False,True,Atomic overlap (min_dist=0.686Å); Isolated atoms (28),28,0,2,0
+BEPPIX_clean,186,66,H90C66N12O12Zn6,0.569,12,False,True,Atomic overlap (min_dist=0.569Å); Isolated atoms (30),30,0,2,0
+BEPPOD_clean,180,66,H84C66N12O12Zn6,0.584,10,False,True,Atomic overlap (min_dist=0.584Å); Isolated atoms (30),30,0,0,0

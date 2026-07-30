@@ -5,7 +5,10 @@ import seaborn as sns
 import os
 import sys
 
-from data_loader import load_mof_dataset
+try:
+    from scripts.data_loader import load_mof_dataset
+except ImportError:
+    from data_loader import load_mof_dataset
 
 # Set matplotlib parameters for publication quality figures
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'SimHei']

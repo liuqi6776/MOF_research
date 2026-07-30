@@ -3,8 +3,12 @@ import numpy as np
 import os
 import sys
 
-from data_loader import load_mof_dataset
-from dual_route_ranking import run_dual_route_ranking
+try:
+    from scripts.data_loader import load_mof_dataset
+    from scripts.dual_route_ranking import run_dual_route_ranking
+except ImportError:
+    from data_loader import load_mof_dataset
+    from dual_route_ranking import run_dual_route_ranking
 
 def generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, rank_res=None, output_dir='results'):
     os.makedirs(output_dir, exist_ok=True)
@@ -91,10 +95,15 @@ def generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, rank_res=
     df_rules = pd.DataFrame(rules)
     df_rules.to_csv(os.path.join(output_dir, 'design_rules_checklist.csv'), index=False)
     
-    # --- 2. Select 4 Specific MOF Recommendations ---
-    win_win_names = rank_res['win_win_mofs']
+    # --- 2. Select 4 Specific MOF Recommendations (Excluding Hard-Flagged Structures) ---
+    win_win_names = list(rank_res['win_win_mofs'])
+    validity_csv = os.path.join(output_dir, 'mof_validity_final.csv')
+    if os.path.exists(validity_csv):
+        df_val = pd.read_csv(validity_csv)
+        hard_flagged = set(df_val[df_val['hard_flag'] == True]['MOF_name'])
+        win_win_names = [m for m in win_win_names if m not in hard_flagged]
+
     top_candidates = df_merged[df_merged['MOF_name'].isin(win_win_names)].sort_values(by='VSA_Score', ascending=False)
-    
     selected_mofs = top_candidates.head(4).copy()
     
     recommendations = []

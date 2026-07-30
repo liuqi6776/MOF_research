@@ -14,8 +14,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 import xgboost as xgb
 
-from data_loader import load_mof_dataset
-from indicator_system import run_indicator_system_analysis
+try:
+    from scripts.data_loader import load_mof_dataset
+    from scripts.indicator_system import run_indicator_system_analysis
+except ImportError:
+    from data_loader import load_mof_dataset
+    from indicator_system import run_indicator_system_analysis
 
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'SimHei']
 plt.rcParams['axes.unicode_minus'] = False

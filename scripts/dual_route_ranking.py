@@ -5,8 +5,12 @@ import seaborn as sns
 import os
 import sys
 
-from data_loader import load_mof_dataset
-from indicator_system import run_indicator_system_analysis
+try:
+    from scripts.data_loader import load_mof_dataset
+    from scripts.indicator_system import run_indicator_system_analysis
+except ImportError:
+    from data_loader import load_mof_dataset
+    from indicator_system import run_indicator_system_analysis
 
 def topsis_score(matrix, weights, directions):
     """

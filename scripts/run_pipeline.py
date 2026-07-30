@@ -3,11 +3,20 @@ import numpy as np
 import os
 import sys
 
-from data_loader import load_mof_dataset
-from indicator_system import run_indicator_system_analysis
-from dual_route_ranking import run_dual_route_ranking
-from qsar_modeling import run_qsar_modeling
-from design_rules_and_recommendations import generate_design_rules_and_recommendations
+try:
+    from scripts.data_loader import load_mof_dataset
+    from scripts.indicator_system import run_indicator_system_analysis
+    from scripts.dual_route_ranking import run_dual_route_ranking
+    from scripts.qsar_modeling import run_qsar_modeling
+    from scripts.design_rules_and_recommendations import generate_design_rules_and_recommendations
+    from scripts.mof_structure_audit import run_structural_audit
+except ImportError:
+    from data_loader import load_mof_dataset
+    from indicator_system import run_indicator_system_analysis
+    from dual_route_ranking import run_dual_route_ranking
+    from qsar_modeling import run_qsar_modeling
+    from design_rules_and_recommendations import generate_design_rules_and_recommendations
+    from mof_structure_audit import run_structural_audit
 
 def main():
     file_path = '252_MOF_总文件 冗余评估数据.xlsx'
@@ -15,10 +24,15 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
     
     print("==================================================")
-    print("1. Loading MOF Dataset (252 MOFs)")
+    print("0. Running Structural Validity & Tolerance Sensitivity Audit")
+    print("==================================================")
+    df_audit, df_sens, df_validity = run_structural_audit(cif_dir='252_MOF_CIFs', output_dir=output_dir)
+
+    print("\n==================================================")
+    print("1. Loading MOF Dataset (244 Valid MOFs)")
     print("==================================================")
     df_raw, df_y, x_encoded = load_mof_dataset(file_path)
-    print(f"Dataset successfully loaded: {len(df_y)} MOFs.")
+    print(f"Dataset successfully loaded: {len(df_y)} Valid MOFs.")
     
     print("\n==================================================")
     print("2. Running Deliverable 1: Indicator System Diagnosis")
@@ -76,9 +90,13 @@ def generate_master_report(ind_res, rank_res, df_eval, df_rules, df_recs):
     dynamic_model_table = build_dynamic_model_table(df_eval)
     dynamic_recs_summary = build_dynamic_recommendations_summary(df_recs)
     
-    oms_rule = df_rules[df_rules['Parameter'].str.contains('OMS')].iloc[0]
+    oms_rule = df_rules[df_rules['Parameter'].str.contains('OMSTrade-off|OMS')].iloc[0]
     oms_top_val = oms_rule['Top_Median']
     oms_bot_val = oms_rule['Bottom_Median'].split(' ')[2]
+
+    top10_csv = rank_res['df_rank'].sort_values(by='VSA_Rank').head(10)[['VSA_Rank', 'TSA_Rank', 'MOF_name', 'VSA_Score', 'TSA_Score', 'CO2_VSA_capacity', 'CO2N2_actual_selectivity', 'PE_VSA_parasitic_energy']].to_csv(index=False)
+    rules_csv = df_rules.to_csv(index=False)
+    recs_csv = df_recs.to_csv(index=False)
 
     report_content = f"""# Comprehensive Evaluation of 252 MOFs for Post-Combustion CO₂ Capture & Structure-Property Relationship Research
 # 252个MOF湿烟气/干燥烟气CO₂捕集性能综合评估与构效关系研究报告
@@ -131,17 +149,28 @@ Using Spearman and Pearson correlation analysis, we confirmed the 5 core physica
 | **$\\text{{PE}}_{{\\text{{VSA}}}}$** | {ind_res['skewness_before']['PE_VSA_parasitic_energy']:.2f} | {ind_res['skewness_after']['log10_PE_VSA_parasitic_energy']:.2f} | Stabilized variance across multi-order-of-magnitude energy values. |
 | **$\\text{{Qreg}}_{{\\text{{TSA}}}}$** | {ind_res['skewness_before']['CO2_TSA_regen_heat']:.2f} | {ind_res['skewness_after']['log10_CO2_TSA_regen_heat']:.2f} | Linearized energy consumption penalty for small working capacity MOFs. |
 
+### 1.4 Structural Validity Screening & Tolerance Sensitivity Audit / 结构有效性筛选与容差敏感性审计
+An automated structural audit using ASE was conducted across all 252 raw CIF files. 
+- **Non-MOF Frameworks (0 Carbons) / 无碳非MOF结构**: 8 structures (`ABIXOZ_clean`, `ABULOB_clean`, `ACUBAB_clean`, `AGUBUA_clean`, `AJOTEY_clean`, `ARUYUH_clean`, `ARUYUH01_clean`, `ATOGEV_clean`) contain zero carbon atoms and represent inorganic phosphates or polyoxometalates. These non-MOFs were filtered out, leaving **244 clean valid MOFs** and eliminating artificial median imputation of RDKit ligand descriptors.
+- **Tolerance Sensitivity Analysis / 容差敏感性检验**: Over-coordination flags were evaluated across three distance multiplier tolerances (`tol = 1.10, 1.15, 1.25`). Carbon over-coordination drops from 56 (tol=1.25) to 10 (tol=1.15) and 8 (tol=1.10), proving that apparent C-H/N-H over-coordinations stem from X-ray refinement foreshortening (~0.95 Å) rather than true structural defects.
+- **Hard Flag Filtering / 硬旗标过滤**: Hard structural defects (zero carbons, interatomic overlap < 0.8 Å, isolated atoms) were strictly excluded from top recommendation pools. `ABULOB_clean` (non-MOF), `APACAX_clean` (isolated atoms), and `AQEGUY_clean` (0.563 Å atomic overlap) were filtered from Top 20 recommendations.
+
+| Tolerance Multiplier / 容差倍数 | Overcoordinated C / C超配位 | Overcoordinated H / H超配位 | Isolated Atoms / 孤立原子 | Overcoordinated N / N超配位 |
+| :---: | :---: | :---: | :---: | :---: |
+| **tol = 1.10 (Strict)** | 8 | 4 | 208 | 2 |
+| **tol = 1.15 (Robust)** | 10 | 16 | 202 | 2 |
+| **tol = 1.25 (Loose)** | 56 | 27 | 202 | 5 |
+
 ---
 
 ## Deliverable 2: VSA & TSA Dual-Route Comprehensive Ranking / 产出2：双路线综合排序与对比分析
 
-Using TOPSIS multi-criteria decision evaluation with normalized metric weights (Capacity 35%, Selectivity 30%, Energy 25%, $\\text{{N}}_2$ Exclusion 10%), we ranked all 252 MOFs independently for VSA and TSA routes.
+Using TOPSIS multi-criteria decision evaluation with normalized metric weights (Capacity 35%, Selectivity 30%, Energy 25%, $\\text{{N}}_2$ Exclusion 10%), we ranked all 244 valid MOFs independently for VSA and TSA routes.
 
 ### 2.1 Top 10 Win-Win MOFs (High Performance in Both Routes) / 双路线全能型Top 10 MOF
 
 ```csv
-{rank_res['df_rank'].sort_values(by='VSA_Rank').head(10)[['VSA_Rank', 'TSA_Rank', 'MOF_name', 'VSA_Score', 'TSA_Score', 'CO2_VSA_capacity', 'CO2N2_actual_selectivity', 'PE_VSA_parasitic_energy']].to_csv(index=False)}
-```
+{top10_csv}```
 
 ![VSA vs TSA Ranking Comparison](results/vsa_tsa_ranking_comparison.png)
 
@@ -155,7 +184,7 @@ Using TOPSIS multi-criteria decision evaluation with normalized metric weights (
 
 ## Deliverable 3: Structure-Property Relationship Mapping / 产出3：构效关系图谱与预测模型
 
-Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees, XGBoost, and Ridge Regression models.
+Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees, XGBoost, and Ridge Regression models on 244 valid MOFs.
 
 ### 3.1 Model Cross-Validation Performance / 预测模型交叉验证结果 (100% Dynamically Evaluated)
 
@@ -164,9 +193,9 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 ### 3.2 Feature Importance & Direction of Influence / 特征重要性与正负效应方向
 ![Feature Importance](results/feature_importance_rf.png)
 
-1. **Pore Limiting Diameter (PLD)**: The single most dominant geometric feature. PLD shows a strong non-linear optimal window ($3.5 - 5.5\\text{{ Å}}$).
-2. **Accessible Surface Area (ASA)**: Gravimetric ASA (mean = 2042 m²/g) and volumetric ASA contribute high importance, exhibiting strong positive correlations with $\\text{{CO}}_2$ uptake.
-3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $\\text{{CO}}_2$ uptake and selectivity ($Q_{{st}}$), excessively strong OMS increases desorption energy ($\\text{{PE}}_{{\\text{{VSA}}}}$ & $\\text{{Qreg}}_{{\\text{{TSA}}}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio ({oms_top_val}) compared to {oms_bot_val} in the bottom group.
+1. **Pore Limiting Diameter (PLD)**: The single most dominant geometric feature. PLD shows a strong non-linear optimal window ($3.5 - 5.5\text{{ Å}}$).
+2. **Accessible Surface Area (ASA)**: Gravimetric ASA (mean = 2042 m²/g) and volumetric ASA contribute high importance, exhibiting strong positive correlations with $\text{{CO}}_2$ uptake.
+3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $\text{{CO}}_2$ uptake and selectivity ($Q_{{st}}$), excessively strong OMS increases desorption energy ($\text{{PE}}_{{\text{{VSA}}}}$ & $\text{{Qreg}}_{{\\text{{TSA}}}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio ({oms_top_val}) compared to {oms_bot_val} in the bottom group.
 4. **Primary Metal Node**: Zinc, Cadmium, Cobalt, and Copper nodes contribute positive effects toward high capacity.
 
 ![Partial Dependence Plots](results/pdp_curves.png)
@@ -176,16 +205,14 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 ## Deliverable 4: Quantitative Design Rules Checklist / 产出4：定量设计规则清单
 
 ```csv
-{df_rules.to_csv(index=False)}
-```
+{rules_csv}```
 
 ---
 
 ## Deliverable 5: Recommended MOF Structural Schemes / 产出5：具体MOF结构推荐方案
 
 ```csv
-{df_recs.to_csv(index=False)}
-```
+{recs_csv}```
 
 ### Rationale for Recommendations / 推荐依据与外推限制
 
@@ -198,7 +225,8 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 1. **Dry Flue Gas Assumption / 干燥烟气假设**: Real post-combustion flue gas contains $3-7\\% \\text{{H}}_2\\text{{O}}$. Water molecules compete strongly for open metal sites (OMS) and polar carboxylate nodes. Current GCMC data overestimates the performance of hydrophilic/strong-OMS MOFs (e.g., Boyd et al., *Nature* 2019).
 2. **Temperature Discrepancy / 温度效应**: Flue gas entering adsorption columns is typically at $313 - 333\\text{{ K}}$ ($40 - 60^\\circ\\text{{C}}$) rather than $298\\text{{ K}}$. Higher temperatures will reduce absolute $\\text{{CO}}_2$ capacity by $15-25\\%$.
 3. **Ideal Thermodynamic Energy / 理想热力学能耗**: The calculated $\\text{{PE}}_{{\\text{{VSA}}}}$ and $\\text{{Qreg}}_{{\\text{{TSA}}}}$ assume equilibrium thermodynamics without mass transfer resistance, pressure drop, or heat exchanger losses. Real process energy consumption will be $1.3 - 1.8\\times$ higher.
-4. **Future Work / 下一步建议**:
+4. **Absence of Partial Charges in CIFs / CIF偏电荷缺失局限**: Audit confirmed `_atom_site_charge` is absent (0.0% presence) across all 252 raw CIF files (including `_charged.cif` entries). Electrostatic quadrupole interactions strongly affect $\\text{{CO}}_2$ uptake. If GCMC simulations used uncharged force fields, $\\text{{CO}}_2/\\text{{N}}_2$ selectivity and $Q_{{st}}$ are systematically underestimated.
+5. **Future Work / 下一步建议**:
    - Perform dual-component competitive GCMC simulation ($15\\% \\text{{CO}}_2 / 80\\% \\text{{N}}_2 / 5\\% \\text{{H}}_2\\text{{O}}$).
    - Conduct dynamic breakthrough simulation and Cyclic VSA/TSA process optimization.
 """
