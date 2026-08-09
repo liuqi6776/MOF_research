@@ -1,0 +1,11 @@
+﻿Target,lasso_features
+log10_CO2_TSA_regen_heat,PLD_A; LFPD_A; NASA_m2_g; void_fraction; C_mass_frac; O_mass_frac; ligand_n_aromatic_rings; metal_Cu; metal_Zr; topo_error; topo_pcu; topo_pts; topo_tsy
+CO2_Qst_CC_mean,PLD_A; LFPD_A; LCD_PLD_ratio; ASA_m2_g; NASA_m2_g; void_fraction; C_mass_frac; O_mass_frac; catenation; ligand_LogP; ligand_n_aromatic_rings; ligand_n_halogen; metal_Cu; metal_Ni; metal_Zr; topo_error; topo_lvt; topo_pcu; topo_pto; topo_pts; topo_tbo; topo_tsy
+CO2_Qst_CC_1bar,PLD_A; LFPD_A; ASA_m2_g; NASA_m2_g; void_fraction; C_mass_frac; O_mass_frac; catenation; ligand_LogP; ligand_n_aromatic_rings; metal_Cu; metal_Zr; topo_error; topo_lvt; topo_pcu; topo_pto; topo_pts; topo_tsy
+log10_CO2N2_actual_selectivity,PLD_A; LCD_PLD_ratio; ASA_m2_cm3; ASA_m2_g; NASA_m2_g; void_fraction; C_mass_frac; O_mass_frac; catenation; shortest_MM_dist; ligand_LogP; ligand_n_aromatic_rings; ligand_n_N_hetero; ligand_n_halogen; metal_Cu; metal_Mn; metal_Ni; metal_Other; metal_Zn; metal_Zr; topo_error; topo_lim; topo_lvt; topo_pcu; topo_pto; topo_pts; topo_tbo; topo_tsy
+log10_CO2N2_Henry_selectivity,void_fraction
+log10_PE_VSA_parasitic_energy,LCD_A; PLD_A; LFPD_A; LCD_PLD_ratio; pore_vol_cm3_g; ASA_m2_cm3; ASA_m2_g; NASA_m2_g; void_fraction; accessible_pore_vol; has_oms; density_g_cm3; uc_volume_A3; C_mass_frac; N_mass_frac; O_mass_frac; catenation; shortest_MM_dist; ligand_n_heavy; ligand_n_aromatic_rings; ligand_n_carboxylate; ligand_n_N_hetero; ligand_n_halogen; ligand_n_amino; ligand_TPSA; metal_Cu; metal_Mn; metal_Ni; metal_Other; metal_Zn; metal_Zr; topo_dia; topo_error; topo_lim; topo_lvt; topo_ntt; topo_pcu; topo_pto; topo_pts; topo_tbo; topo_tsy
+N2_Qst_Widom,PLD_A; ASA_m2_g; void_fraction; topo_pcu
+N2_Qst_GCMC_flue_mean,PLD_A; ASA_m2_g; NASA_m2_cm3; NASA_m2_g; void_fraction; C_mass_frac; O_mass_frac; catenation; ligand_LogP; ligand_n_aromatic_rings; ligand_n_halogen; metal_Cu; metal_Ni; metal_Zr; topo_error; topo_lvt; topo_pcu; topo_pto; topo_pts; topo_tbo; topo_tsy
+N2_ads_0.75bar,PLD_A; C_mass_frac; ligand_n_aromatic_rings; topo_dia; topo_error
+Qst_diff_CO2_N2,

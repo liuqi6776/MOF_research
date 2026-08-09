@@ -10,6 +10,7 @@ try:
     from scripts.qsar_modeling import run_qsar_modeling
     from scripts.design_rules_and_recommendations import generate_design_rules_and_recommendations
     from scripts.mof_structure_audit import run_structural_audit
+    from scripts.mva_analysis import run_mva_analysis
 except ImportError:
     from data_loader import load_mof_dataset
     from indicator_system import run_indicator_system_analysis
@@ -17,6 +18,7 @@ except ImportError:
     from qsar_modeling import run_qsar_modeling
     from design_rules_and_recommendations import generate_design_rules_and_recommendations
     from mof_structure_audit import run_structural_audit
+    from mva_analysis import run_mva_analysis
 
 def main():
     file_path = '252_MOF_总文件 冗余评估数据.xlsx'
@@ -59,7 +61,15 @@ def main():
     print("Design rules checklist and top MOF structural recommendations exported.")
     
     print("\n==================================================")
-    print("6. Compiling Master Bilingual Report (MOF_Research_Report.md)")
+    print("6. Running MVA: Multivariate Joint-Effect Analysis")
+    print("==================================================")
+    mva_res = run_mva_analysis(df_y, x_encoded, output_dir=os.path.join(output_dir, 'mva'))
+    print(f"MVA complete. {len(mva_res['representative_targets'])} representative targets analyzed.")
+    generate_mva_summary(mva_res)
+    print("MVA summary report generated (MVA_Summary.md).")
+
+    print("\n==================================================")
+    print("7. Compiling Master Bilingual Report (MOF_Research_Report.md)")
     print("==================================================")
     generate_master_report(ind_res, rank_res, df_eval, df_rules, df_recs)
     generate_readme()
@@ -85,6 +95,140 @@ def build_dynamic_recommendations_summary(df_recs):
     for idx, row in df_recs.iterrows():
         lines.append(f"- **`{row['MOF_name']}`**: Inorganic SBU: `{row['Inorganic_SBU']}`, Ligand SMILES: `{row['Organic_Ligand_SMILES']}`, Topology: `{row['Topology']}`. VSA Score: **{row['VSA_Score']}**, TSA Score: **{row['TSA_Score']}**. $\\text{{CO}}_2$ Uptake: {row['CO2_ads_0.15bar']}, Selectivity: {row['Selectivity']}, $\\text{{PE}}_{{\\text{{VSA}}}}$: {row['PE_VSA']}, $\\text{{Qreg}}_{{\\text{{TSA}}}}$: {row['CO2_TSA_regen_heat']}. Satisfied Rules: {row['Key_Rules_Satisfied']}.")
     return "\n".join(lines)
+
+def generate_mva_summary(mva_res):
+    """根据 MVA 结果动态生成 MVA_Summary.md 汇总报告。"""
+    groups = mva_res['redundant_groups']
+    dom = mva_res['dominance']
+    inter = mva_res['interactions']
+    topf = mva_res['top_features']
+    cv = mva_res['model_metrics']
+    beta = mva_res['beta']
+
+    lines = []
+    lines.append("# MVA Summary: Multivariate Joint-Effect Analysis / MVA汇总：多属性联合作用分析")
+    lines.append("")
+    lines.append("> Generated dynamically by `scripts/mva_analysis.py` / 由 MVA 分析脚本动态生成")
+    lines.append("> Dataset / 数据源: 244 valid MOFs; X = 51 full descriptors; Y = 19 metrics (grouped by |r| >= 0.99)")
+    lines.append("")
+
+    # ---- 冗余分组表 ----
+    lines.append("## 1. Y-Target Redundancy Grouping / Y目标冗余分组（|r| ≥ 0.99 只罗列）")
+    lines.append("")
+    lines.append("| Group / 组 | Members / 成员 | N | Representative / 代表 |")
+    lines.append("| :--- | :--- | :---: | :--- |")
+    for _, row in groups.iterrows():
+        lines.append(f"| {row['group_id']} | {row['group_members']} | {row['n_members']} | **{row['representative']}** |")
+    lines.append("")
+    lines.append(f"共 {len(groups)} 组，实际建模 **{len(groups)}** 个代表 target（其余只罗列不重复建模）。")
+    lines.append("")
+
+    # ---- 每 target 建模指标 ----
+    lines.append("## 2. Cross-Validation Model Performance per Target / 各代表target的CV模型表现")
+    lines.append("")
+    lines.append("| Target / 目标 | Best Model / 最佳模型 | R² (mean ± std) | MAE | RMSE |")
+    lines.append("| :--- | :--- | :---: | :---: | :---: |")
+    for target, grp in cv.groupby('Target'):
+        best = grp.sort_values(by='R2_mean', ascending=False).iloc[0]
+        lines.append(f"| **{target}** | {best['Model']} | **{best['R2_mean']:.3f} ± {best['R2_std']:.3f}** | {best['MAE_mean']:.3f} | {best['RMSE_mean']:.3f} |")
+    lines.append("")
+
+    # ---- 每 target 结论段 ----
+    lines.append("## 3. Key Findings per Target / 各target核心发现")
+    lines.append("")
+    for target in cv['Target'].unique():
+        lines.append(f"### 3.x {target}")
+        lines.append("")
+        # dominance top5
+        dom_t = dom[dom['Target'] == target].sort_values('dominance', ascending=False).head(5)
+        if not dom_t.empty:
+            lines.append("**Dominance（子集回归平均贡献）Top 5:**")
+            lines.append("")
+            lines.append("| Feature / 特征 | Dominance | Unique | Total R² (single) |")
+            lines.append("| :--- | :---: | :---: | :---: |")
+            for _, r in dom_t.iterrows():
+                lines.append(f"| {r['Feature']} | {r['dominance']:.4f} | {r['unique']:.4f} | {r['total_R2_single']:.4f} |")
+            lines.append("")
+        # top features (ML)
+        topf_t = topf[topf['Target'] == target].head(5)
+        if not topf_t.empty:
+            lines.append("**ML Top-5 Features（RF/XGB/permutation 综合排名）:**")
+            lines.append("")
+            feat_links = "; ".join([f"`{r['Feature']}` (rank {r['rank_avg']:.1f})" for _, r in topf_t.iterrows()])
+            lines.append(f"- {feat_links}")
+            lines.append("")
+        # significant interactions (FDR<0.05)
+        sig = inter[(inter['Target'] == target) & (inter['p_fdr'] < 0.05)]
+        if not sig.empty:
+            lines.append("**显著交互（FDR < 0.05）:**")
+            lines.append("")
+            for _, r in sig.iterrows():
+                direction = "协同/放大" if r['interaction_beta'] > 0 else "拮抗/抵消"
+                lines.append(f"- `{r['feat_i']} × {r['feat_j']}`: β = {r['interaction_beta']:.3f}（{direction}），p_fdr = {r['p_fdr']:.4f}")
+            lines.append("")
+        lines.append("")
+    lines.append("")
+
+    # ---- 交叉发现的交互 ----
+    lines.append("## 4. Cross-Target Stable Interactions / 跨target稳健交互")
+    lines.append("")
+    if not inter.empty:
+        sig_all = inter[inter['p_fdr'] < 0.05]
+        if not sig_all.empty:
+            pair_counts = sig_all.groupby(['feat_i', 'feat_j']).size().reset_index(name='n_targets')
+            pair_counts = pair_counts.sort_values('n_targets', ascending=False)
+            lines.append("| Interaction Pair / 交互对 | # Targets (FDR<0.05) |")
+            lines.append("| :--- | :---: |")
+            for _, r in pair_counts.iterrows():
+                lines.append(f"| `{r['feat_i']} × {r['feat_j']}` | {r['n_targets']} |")
+            lines.append("")
+            lines.append("在多个 target 上同时显著的交互对，是物理上更可信的联合作用信号。")
+            lines.append("")
+    lines.append("")
+
+    # ---- 抑制效应 ----
+    suppress = pd.read_csv('results/mva/mva_suppression_findings.csv', encoding='utf-8-sig') \
+        if os.path.exists('results/mva/mva_suppression_findings.csv') else None
+    if suppress is not None and not suppress.empty:
+        lines.append("## 5. Suppression Effects（单变量 r 与净效应 β 方向反转）")
+        lines.append("")
+        lines.append("| Target / 目标 | Feature / 特征 | Spearman r | β (净效应) |")
+        lines.append("| :--- | :--- | :---: | :---: |")
+        for _, r in suppress.iterrows():
+            lines.append(f"| {r['Target']} | `{r['Feature']}` | {r['spearman_r']:.3f} | {r['beta_std']:.3f} |")
+        lines.append("")
+        lines.append("这些特征单变量相关性与控制其他变量后的净效应方向相反，提示存在共线性掩盖或间接效应——这是单变量分析无法揭示的。")
+        lines.append("")
+
+    # ---- 输出文件索引 ----
+    lines.append("## 6. Output Files / 输出文件清单")
+    lines.append("")
+    lines.append("| File / 文件 | Content / 内容 |")
+    lines.append("| :--- | :--- |")
+    lines.append("| `y_redundant_groups.csv` | Y目标冗余分组（|r|≥0.99，只罗列） |")
+    lines.append("| `y_redundant_pairs.csv` | 冗余对明细 |")
+    lines.append("| `vif_diagnostic.csv` | 全特征VIF（诊断，未剔除） |")
+    lines.append("| `mva_ols_beta.csv` | 全特征标准化β / 半偏相关 / p值 |")
+    lines.append("| `mva_ols_details.csv` | OLS与Lasso的R²摘要 |")
+    lines.append("| `mva_lasso_features.csv` | Lasso稀疏特征选择 |")
+    lines.append("| `mva_univariate_spearman.csv` | 单变量Spearman相关（对比基准） |")
+    lines.append("| `mva_suppression_findings.csv` | 抑制效应（方向反转） |")
+    lines.append("| `mva_dominance.csv` | Dominance分析（top-12特征） |")
+    lines.append("| `mva_commonality.csv` | Commonality分解（unique/两两共同） |")
+    lines.append("| `mva_interactions.csv` | 物理候选对交互项回归（BH-FDR） |")
+    lines.append("| `mva_shap_interaction_pairs.csv` | SHAP全对扫描的top交互对（无预设假设） |")
+    lines.append("| `mva_shap_decomposition.csv` | SHAP主效应 vs 交互效应分解 |")
+    lines.append("| `mva_model_metrics.csv` | 5模型重复5折CV指标 |")
+    lines.append("| `mva_top_features.csv` | 每target综合Top-15特征 |")
+    lines.append("| `mva_beta_heatmap.png` | 标准化β热图 |")
+    lines.append("| `mva_dominance_heatmap.png` | Dominance热图 |")
+    lines.append("| `mva_model_cv.png` | 模型CV R²对比 |")
+    lines.append("| `pdp2d_*.png` | 2D部分依赖图（top SHAP交互对） |")
+    lines.append("")
+
+    with open('MVA_Summary.md', 'w', encoding='utf-8') as f:
+        f.write("\n".join(lines))
+
 
 def generate_master_report(ind_res, rank_res, df_eval, df_rules, df_recs):
     dynamic_model_table = build_dynamic_model_table(df_eval)
@@ -258,6 +402,7 @@ MOF_research/
 │   ├── indicator_system.py            # Y correlation diagnosis, grouping & log-transformations
 │   ├── dual_route_ranking.py          # VSA & TSA TOPSIS multi-criteria ranking (1000 MC iterations)
 │   ├── qsar_modeling.py               # RF/XGB/Ridge ML models & feature importance/PDP plots
+│   ├── mva_analysis.py                # MVA multivariate joint-effect analysis (OLS/Dominance/Interaction/ML)
 │   ├── design_rules_and_recommendations.py # Dynamic rules checklist & structural recommendations
 │   └── run_pipeline.py                # Main orchestration script
 └── results/                           # Generated results, rankings & figures

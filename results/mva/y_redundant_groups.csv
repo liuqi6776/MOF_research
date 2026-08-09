@@ -1,0 +1,11 @@
+﻿group_id,group_members,n_members,representative
+1,CO2_ads_0.15bar; CO2_VSA_capacity; CO2_TSA_capacity; CO2_TSA_regen_heat; log10_CO2_TSA_regen_heat,5,log10_CO2_TSA_regen_heat
+2,CO2_Qst_CC_mean; CO2_Qst_CC_0.1bar; CO2_Qst_CC_0.5bar; CO2_Qst_GCMC_flue_mean; CO2_Qst_Widom,5,CO2_Qst_CC_mean
+3,CO2_Qst_CC_1bar,1,CO2_Qst_CC_1bar
+4,CO2N2_actual_selectivity; log10_CO2N2_actual_selectivity,2,log10_CO2N2_actual_selectivity
+5,CO2N2_Henry_selectivity; log10_CO2N2_Henry_selectivity,2,log10_CO2N2_Henry_selectivity
+6,PE_VSA_parasitic_energy; log10_PE_VSA_parasitic_energy,2,log10_PE_VSA_parasitic_energy
+7,N2_Qst_Widom,1,N2_Qst_Widom
+8,N2_Qst_GCMC_flue_mean; N2_Qst_1bar,2,N2_Qst_GCMC_flue_mean
+9,N2_ads_0.75bar; N2_ads_1bar,2,N2_ads_0.75bar
+10,Qst_diff_CO2_N2,1,Qst_diff_CO2_N2
