@@ -1,0 +1,7 @@
+Target_Key,Target_Label,R2_5Fold_CV,MAE_5Fold_CV
+co2_015bar,CO2 Uptake @ 0.15 bar (mol/kg),0.5214,0.2448
+co2_1bar,CO2 Uptake @ 1.0 bar (mol/kg),0.5509,0.7124
+selectivity_real,CO2/N2 Actual Selectivity (0.15/0.85),0.6747,0.0854
+qst_widom,CO2 Adsorption Heat Qst (kJ/mol),0.5582,2.2314
+vsa_working_capacity,VSA Working Capacity (mol/kg),0.5339,0.2211
+pe_vsa,VSA Parasitic Energy (kJ/mol CO2),0.6575,0.0219
