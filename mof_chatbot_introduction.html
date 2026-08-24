@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOF Chatbot - System Architecture & Introduction / 系统架构与介绍</title>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX for Beautiful LaTeX Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
     <style>
         :root {
             --primary: #0284c7;
@@ -34,18 +41,74 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
             background-color: var(--bg-page);
             color: var(--secondary);
-            line-height: 1.6;
+            line-height: 1.65;
             background-image: 
                 radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.06) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.06) 0px, transparent 50%);
             min-height: 100vh;
         }
 
+        /* Top Sticky Nav for Language Toggle */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+        }
+
+        .top-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--secondary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            color: #0284c7;
+            border: 1.5px solid #0284c7;
+            padding: 7px 18px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.1);
+        }
+
+        .lang-btn:hover {
+            background: #0284c7;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 24px 80px 24px;
+            padding: 32px 24px 80px 24px;
         }
+
+        /* Language Visibility Rules */
+        body.lang-mode-zh .text-en { display: none !important; }
+        body.lang-mode-en .text-zh { display: none !important; }
 
         /* Hero Banner */
         .hero {
@@ -62,10 +125,10 @@
         .hero::after {
             content: '⚛️';
             position: absolute;
-            right: 30px;
-            bottom: -20px;
-            font-size: 160px;
-            opacity: 0.12;
+            right: 25px;
+            bottom: -25px;
+            font-size: 170px;
+            opacity: 0.10;
             pointer-events: none;
         }
 
@@ -108,24 +171,19 @@
             font-weight: 500;
         }
 
-        .hero-desc-bilingual {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            background: rgba(255, 255, 255, 0.8);
+        .hero-desc-box {
+            background: rgba(255, 255, 255, 0.85);
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 32px;
+            padding: 22px;
+            margin-bottom: 30px;
             backdrop-filter: blur(8px);
-        }
-
-        .hero-desc-col {
-            font-size: 14px;
+            font-size: 14.5px;
             color: #475569;
+            line-height: 1.7;
         }
 
-        .hero-desc-col b {
+        .hero-desc-box b {
             color: #0f172a;
         }
 
@@ -141,7 +199,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 26px;
+            padding: 14px 28px;
             border-radius: 12px;
             font-size: 15px;
             font-weight: 700;
@@ -160,31 +218,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
-        }
-
-        .btn-secondary {
-            background: #ffffff;
-            color: #0f172a;
-            border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
-        .btn-secondary:hover {
-            background: #f8fafc;
-            border-color: #0284c7;
-            color: #0284c7;
-            transform: translateY(-2px);
-        }
-
-        .btn-github {
-            background: #0f172a;
-            color: #ffffff;
-            border: 1px solid #1e293b;
-        }
-
-        .btn-github:hover {
-            background: #1e293b;
-            transform: translateY(-2px);
         }
 
         /* Section Layout */
@@ -223,12 +256,6 @@
         }
 
         /* Cards Grid */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
         .grid-4 {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -267,27 +294,16 @@
         .icon-orange { background: #fef3c7; color: #d97706; }
 
         .card h3 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: #0f172a;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .card-bilingual {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .card p {
             font-size: 13.5px;
             color: #475569;
-        }
-
-        .card-bilingual .en {
-            border-bottom: 1px dashed #f1f5f9;
-            padding-bottom: 8px;
-        }
-
-        .card-bilingual .zh {
-            color: #334155;
+            line-height: 1.6;
         }
 
         /* Architecture Diagram Flow */
@@ -302,7 +318,7 @@
 
         .flow-step {
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 220px 1fr;
             gap: 24px;
             padding: 20px;
             background: #f8fafc;
@@ -342,8 +358,9 @@
         }
 
         .step-details {
-            font-size: 13.5px;
+            font-size: 14px;
             color: #475569;
+            line-height: 1.65;
         }
 
         /* Table */
@@ -393,28 +410,49 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Live Links Card */
-        .live-links-banner {
+        /* Single Focused Live Link Banner */
+        .single-link-banner {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             border-radius: 20px;
-            padding: 36px 40px;
+            padding: 40px;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+            box-shadow: 0 12px 36px rgba(15, 23, 42, 0.22);
+            border: 1px solid #334155;
         }
 
-        .live-links-info h3 {
-            font-size: 22px;
+        .banner-text h3 {
+            font-size: 24px;
             font-weight: 800;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: #ffffff;
+            font-family: 'Outfit', sans-serif;
         }
 
-        .live-links-info p {
+        .banner-text p {
             color: #94a3b8;
-            font-size: 14px;
+            font-size: 14.5px;
+        }
+
+        .btn-live-single {
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            color: #ffffff;
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .btn-live-single:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.6);
         }
 
         /* Footer */
@@ -428,127 +466,164 @@
         }
 
         @media (max-width: 900px) {
-            .grid-2, .grid-4, .hero-desc-bilingual {
+            .grid-4 {
                 grid-template-columns: 1fr;
             }
             .flow-step {
                 grid-template-columns: 1fr;
             }
-            .live-links-banner {
+            .single-link-banner {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 20px;
+                gap: 24px;
+            }
+            .btn-live-single {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
 </head>
-<body>
+<body class="lang-mode-en">
+
+<!-- TOP STICKY NAV FOR INSTANT BILINGUAL TOGGLE -->
+<div class="top-nav">
+    <div class="top-nav-inner">
+        <div class="brand-badge">
+            <span>⚛️</span>
+            <span>MOF Chatbot</span>
+        </div>
+        <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">
+            <span class="text-en">🌐 切换为中文 (Switch to Chinese)</span>
+            <span class="text-zh">🌐 Switch to English (切换为英文)</span>
+        </button>
+    </div>
+</div>
 
 <div class="container">
 
     <!-- HERO HEADER -->
     <header class="hero">
-        <div class="tag-pill">⚛️ MULTI-MODAL CRYSTAL AI & INVERSE DESIGN / 多模态晶体大模型与逆向设计</div>
-        <h1>MOF Chatbot: <span>AI Materials Assistant & 3D Crystal Studio</span></h1>
-        <div class="hero-subtitle">多模态 3D 晶体表征、图检索增强（Graph RAG）、多目标性能即时预测与逆向结构优化工作台</div>
+        <div class="tag-pill">
+            <span class="text-en">⚛️ MULTI-MODAL CRYSTAL AI & INVERSE DESIGN</span>
+            <span class="text-zh">⚛️ 多模态晶体大模型与逆向设计工作台</span>
+        </div>
 
-        <div class="hero-desc-bilingual">
-            <div class="hero-desc-col">
+        <h1>MOF Chatbot: <span>AI Materials Assistant & 3D Crystal Studio</span></h1>
+        
+        <div class="hero-subtitle">
+            <span class="text-en">3D Crystal Structure Representation, Graph RAG, Multi-Target QSAR Predictions & Inverse Modification</span>
+            <span class="text-zh">多模态 3D 晶体表征、图检索增强（Graph RAG）、多目标性能即时预测与逆向结构优化</span>
+        </div>
+
+        <div class="hero-desc-box">
+            <span class="text-en">
                 <b>English Overview:</b><br>
-                MOF Chatbot is an end-to-end AI materials platform combining <b>768-dim 3D crystal structural embeddings</b>, a <b>heterogeneous materials knowledge graph (369 nodes, 1042 edges)</b>, <b>fused multi-modal QSAR predictive models (5-fold $R^2 \approx 0.68$)</b>, and deep reasoning LLMs to enable instant zero-shot property evaluation and actionable inverse structural modification recommendations.
-            </div>
-            <div class="hero-desc-col">
+                MOF Chatbot is an integrated AI materials platform combining <b>768-dimensional 3D crystal structural embeddings</b>, a <b>heterogeneous materials knowledge graph (369 nodes, 1042 edges)</b>, <b>fused multi-modal QSAR predictive models (5-fold $R^2 \approx 0.68$)</b>, and deep reasoning LLMs to enable instant zero-shot property evaluation for unseen CIFs and actionable inverse structural modification recommendations.
+            </span>
+            <span class="text-zh">
                 <b>中文概述：</b><br>
                 MOF Chatbot 是一个端到端的多模态材料科学智能科研工作台，融合了 <b>768 维 3D 晶体空间表征向量</b>、<b>异构材料知识图谱（369 节点，1042 关系边）</b>、<b>多模态融合 QSAR 机器学习预测模型（5折交叉验证 $R^2 \approx 0.68$）</b>与大模型深度材料推理，支持对未知新 CIF 进行零样本性能即时预测与结构优化方案生成。
-            </div>
+            </span>
         </div>
 
         <div class="cta-group">
             <a href="https://percolate-zipfile-corned.ngrok-free.dev" target="_blank" class="btn btn-primary">
-                🚀 Open MOF Chatbot Live / 公网直达在线体验
-            </a>
-            <a href="http://127.0.0.1:7860" target="_blank" class="btn btn-secondary">
-                💻 Local Server / 本地调试访问 (Port 7860)
-            </a>
-            <a href="https://github.com/liuqi6776/MOF_research" target="_blank" class="btn btn-github">
-                📦 View on GitHub / 访问代码仓库
+                <span class="text-en">🚀 Open MOF Chatbot Live Access</span>
+                <span class="text-zh">🚀 立即进入 MOF Chatbot 公网直达系统</span>
             </a>
         </div>
     </header>
 
-    <!-- SECTION 1: FOUR CORE CAPABILITIES -->
+    <!-- SECTION 1: FOUR PIVOTAL SCIENTIFIC PILLARS -->
     <section class="section">
         <div class="section-header">
-            <span class="section-tag">Core Capabilities / 核心科研能力</span>
-            <h2 class="section-title">✨ Four Pivotal Scientific Pillars / 四大核心能力支柱</h2>
-            <p class="section-desc">From crystal representation to zero-shot prediction and target-driven inverse design / 从晶体表征到零样本预测与逆向设计</p>
+            <span class="section-tag">
+                <span class="text-en">Core Capabilities</span>
+                <span class="text-zh">核心科研能力</span>
+            </span>
+            <h2 class="section-title">
+                <span>✨</span>
+                <span class="text-en">Four Pivotal Scientific Pillars</span>
+                <span class="text-zh">四大核心科学能力支柱</span>
+            </h2>
+            <p class="section-desc">
+                <span class="text-en">From crystal representation to zero-shot prediction and target-driven inverse design</span>
+                <span class="text-zh">从晶体表征到未知材料零样本预测与目标导向逆向结构设计</span>
+            </p>
         </div>
 
         <div class="grid-4">
             <!-- Pillar 1 -->
             <div class="card">
                 <div class="card-icon icon-blue">⚡</div>
-                <h3>1. Zero-Shot Prediction<br><span style="font-size: 14px; font-weight: 500; color: #0284c7;">未知 CIF 零样本即时预测</span></h3>
-                <div class="card-bilingual">
-                    <div class="en">
-                        Upload any unseen CIF outside the 252 library. The system extracts its 3D geometry & 768-dim embeddings in milliseconds to instantly predict $CO_2$ uptake (0.15/1.0 bar), selectivity, $Q_{st}$, and parasitic energy.
-                    </div>
-                    <div class="zh">
-                        上传任何不在 252 数据库中的全新 CIF 文件，系统毫秒级解析其晶胞参数并调用融合 QSAR 模型，即时预测烟气吸附量、选择性、吸附热与能耗。
-                    </div>
-                </div>
+                <h3>
+                    <span class="text-en">1. Zero-Shot Prediction</span>
+                    <span class="text-zh">1. 未知材料零样本预测</span>
+                </h3>
+                <p>
+                    <span class="text-en">Upload any unseen CIF outside the 252 library. The system extracts 3D geometry & 768-dim embeddings in milliseconds to predict $\text{CO}_2$ uptake ($0.15/1.0\text{ bar}$), $\text{CO}_2/\text{N}_2$ selectivity, $Q_{st}$, and parasitic energy.</span>
+                    <span class="text-zh">上传任何不在 252 数据库中的全新 CIF 文件，系统毫秒级解析其晶胞参数并调用融合 QSAR 模型，即时预测烟气吸附量、选择性、吸附热 $Q_{st}$ 与寄生能耗。</span>
+                </p>
             </div>
 
             <!-- Pillar 2 -->
             <div class="card">
                 <div class="card-icon icon-purple">🛠️</div>
-                <h3>2. Inverse Design<br><span style="font-size: 14px; font-weight: 500; color: #8b5cf6;">目标导向逆向结构优化</span></h3>
-                <div class="card-bilingual">
-                    <div class="en">
-                        Specify target goals (e.g. Selectivity >30, lower regeneration energy). The AI computes QSAR partial dependence sensitivity to generate actionable 4-step modification strategies (pore sieving, OMS, linkers).
-                    </div>
-                    <div class="zh">
-                        指定期望性能（如选择性 >30、降低能耗），AI 基于 QSAR 偏依赖敏感度自动生成针对性的孔径筛分收缩、开放金属位点引入与配体修饰 4 步改性清单。
-                    </div>
-                </div>
+                <h3>
+                    <span class="text-en">2. Inverse Design</span>
+                    <span class="text-zh">2. 目标导向逆向优化</span>
+                </h3>
+                <p>
+                    <span class="text-en">Specify target goals (e.g. Selectivity $>30$, lower regeneration energy). The AI computes QSAR partial dependence sensitivity to generate actionable 4-step modification strategies (pore sieving, OMS, linkers).</span>
+                    <span class="text-zh">指定期望目标（如选择性 $>30$、降低能耗），AI 基于 QSAR 偏依赖敏感度自动生成针对性的孔径筛分收缩、开放金属位点引入与配体修饰 4 步改性清单。</span>
+                </p>
             </div>
 
             <!-- Pillar 3 -->
             <div class="card">
                 <div class="card-icon icon-green">🌐</div>
-                <h3>3. Multi-Modal Graph RAG<br><span style="font-size: 14px; font-weight: 500; color: #10b981;">多模态图检索增强</span></h3>
-                <div class="card-bilingual">
-                    <div class="en">
-                        Dual-channel retrieval combining 768-dim structural cosine similarity with a 1042-edge Knowledge Graph. Discovers Pareto-optimal analogues and green metal replacements without hallucination.
-                    </div>
-                    <div class="zh">
-                        结合 768 维结构余弦相似度与 1042 边异构知识图谱进行双通道检索，精准匹配近邻优选材料与环保金属替代方案，杜绝大模型学术幻觉。
-                    </div>
-                </div>
+                <h3>
+                    <span class="text-en">3. Multi-Modal Graph RAG</span>
+                    <span class="text-zh">3. 多模态图检索增强</span>
+                </h3>
+                <p>
+                    <span class="text-en">Dual-channel retrieval combining 768-dim structural cosine similarity with a 1042-edge Knowledge Graph. Discovers Pareto-optimal analogues and green metal replacements without hallucination.</span>
+                    <span class="text-zh">结合 768 维结构余弦相似度与 1042 边异构知识图谱进行双通道检索，精准匹配近邻优选材料与环保金属替代方案，杜绝大模型学术幻觉。</span>
+                </p>
             </div>
 
             <!-- Pillar 4 -->
             <div class="card">
                 <div class="card-icon icon-orange">⚛️</div>
-                <h3>4. 3D Crystal Studio<br><span style="font-size: 14px; font-weight: 500; color: #d97706;">交互式 3D 晶体空间视图</span></h3>
-                <div class="card-bilingual">
-                    <div class="en">
-                        Integrated 3Dmol.js WebGL crystal engine supporting 360° rotation, pan, zoom, unit cell boundaries, and dynamic pore descriptor cards on both desktop and mobile browsers.
-                    </div>
-                    <div class="zh">
-                        内置 3Dmol.js WebGL 晶体渲染引擎，支持周期性晶胞、球棍模型 360° 旋转平移缩放，并在 PC 与移动端实时呈现晶胞与微孔参数。
-                    </div>
-                </div>
+                <h3>
+                    <span class="text-en">4. 3D Crystal Studio</span>
+                    <span class="text-zh">4. 3D 晶体空间交互视图</span>
+                </h3>
+                <p>
+                    <span class="text-en">Integrated 3Dmol.js WebGL crystal engine supporting 360° rotation, pan, zoom, unit cell boundaries, and dynamic pore descriptor cards on both desktop and mobile browsers.</span>
+                    <span class="text-zh">内置 3Dmol.js WebGL 晶体渲染引擎，支持周期性晶胞、球棍模型 360° 旋转平移缩放，并在 PC 与移动端实时呈现晶胞与微孔几何参数。</span>
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 2: SYSTEM ARCHITECTURE -->
+    <!-- SECTION 2: END-TO-END TECHNICAL ARCHITECTURE -->
     <section class="section">
         <div class="section-header">
-            <span class="section-tag">System Architecture / 系统全景架构</span>
-            <h2 class="section-title">🏗️ End-to-End Pipeline & Technical Flow / 端到端技术架构</h2>
-            <p class="section-desc">MatterChat Multi-Modal Paradigm & Fused Representation Learning / 多模态融合表征与物理图谱增强流程</p>
+            <span class="section-tag">
+                <span class="text-en">System Architecture</span>
+                <span class="text-zh">系统全景架构</span>
+            </span>
+            <h2 class="section-title">
+                <span>🏗️</span>
+                <span class="text-en">End-to-End Pipeline & Technical Flow</span>
+                <span class="text-zh">端到端技术架构与工作流</span>
+            </h2>
+            <p class="section-desc">
+                <span class="text-en">MatterChat Multi-Modal Paradigm & Fused Representation Learning</span>
+                <span class="text-zh">多模态融合表征与物理图谱增强流程</span>
+            </p>
         </div>
 
         <div class="arch-container">
@@ -556,11 +631,20 @@
             <div class="flow-step">
                 <div class="step-badge">
                     <div class="step-num">1</div>
-                    <div class="step-name">3D Crystal Input<br><span style="font-size: 12px; color: #64748b;">3D 晶体特征提取</span></div>
+                    <div class="step-name">
+                        <span class="text-en">3D Crystal Input</span>
+                        <span class="text-zh">3D 晶体特征提取</span>
+                    </div>
                 </div>
                 <div class="step-details">
-                    <b>Input / 输入:</b> User-uploaded CIF or 252 Database Preset (用户上传 CIF 或 252 数据库预置材料)<br>
-                    <b>Feature Extraction / 特征提取:</b> Lattice cell parameters $(a,b,c,\alpha,\beta,\gamma)$, theoretical density, atomic radial distribution function (RDF), and coordination topology $\to$ <b>768-dim Normalized Structural Vector $X_{\text{emb}}$</b>.
+                    <span class="text-en">
+                        <b>Input:</b> User-uploaded CIF or 252 Database Preset.<br>
+                        <b>Feature Extraction:</b> Lattice parameters $(a,b,c,\alpha,\beta,\gamma)$, theoretical density, atomic radial distribution function (RDF), and coordination topology $\to$ <b>768-dim Normalized Structural Vector $\mathbf{X}_{\text{emb}}$</b>.
+                    </span>
+                    <span class="text-zh">
+                        <b>输入：</b> 用户上传本地 CIF 或 252 数据库预置材料。<br>
+                        <b>特征提取：</b> 晶胞六参数 $(a,b,c,\alpha,\beta,\gamma)$、理论密度、原子径向分布函数 (RDF) 与配位拓扑 $\to$ <b>768 维归一化结构特征向量 $\mathbf{X}_{\text{emb}}$</b>。
+                    </span>
                 </div>
             </div>
 
@@ -568,12 +652,22 @@
             <div class="flow-step">
                 <div class="step-badge">
                     <div class="step-num">2</div>
-                    <div class="step-name">Fused Representation<br><span style="font-size: 12px; color: #64748b;">多模态融合表征矩阵</span></div>
+                    <div class="step-name">
+                        <span class="text-en">Fused Representation</span>
+                        <span class="text-zh">多模态融合表征</span>
+                    </div>
                 </div>
                 <div class="step-details">
-                    <b>Fusion Architecture / 融合结构:</b> Concatenates 9-dim physical pore descriptors ($\text{PLD, LCD, ASA, Void Fraction}$) with 16-dim PCA principal components of $X_{\text{emb}}$:<br>
-                    $$\mathbf{X}_{\text{fused}} = \left[ \mathbf{X}_{\text{trad}} (9\text{d}), \ \text{PCA}_{16}(\mathbf{X}_{\text{emb}}) (16\text{d}) \right] \in \mathbb{R}^{25}$$
-                    <b>Scientific Advantage:</b> Enforces hard physical geometric constraints while encoding latent local coordination microenvironments.
+                    <span class="text-en">
+                        <b>Fusion Architecture:</b> Concatenates 9-dim physical pore descriptors ($\text{PLD, LCD, ASA, Void Fraction}$) with 16-dim PCA principal components of $\mathbf{X}_{\text{emb}}$:
+                        $$\mathbf{X}_{\text{fused}} = \left[ \mathbf{X}_{\text{trad}} (9\text{d}), \ \text{PCA}_{16}(\mathbf{X}_{\text{emb}}) (16\text{d}) \right] \in \mathbb{R}^{25}$$
+                        <b>Scientific Advantage:</b> Enforces hard physical geometric constraints while encoding latent local coordination microenvironments.
+                    </span>
+                    <span class="text-zh">
+                        <b>融合表征架构：</b> 将 9 维物理孔道描述符（$\text{PLD, LCD, ASA, Void Fraction}$）与 $\mathbf{X}_{\text{emb}}$ 的 16 维 PCA 主成分进行拼接：
+                        $$\mathbf{X}_{\text{fused}} = \left[ \mathbf{X}_{\text{trad}} (9\text{d}), \ \text{PCA}_{16}(\mathbf{X}_{\text{emb}}) (16\text{d}) \right] \in \mathbb{R}^{25}$$
+                        <b>科学优势：</b> 既严格约束孔道物理筛分边界，又有效注入了晶体对称性与局域配位微环境信息。
+                    </span>
                 </div>
             </div>
 
@@ -581,11 +675,20 @@
             <div class="flow-step">
                 <div class="step-badge">
                     <div class="step-num">3</div>
-                    <div class="step-name">Multi-Target QSAR ML<br><span style="font-size: 12px; color: #64748b;">多目标 QSAR 模型预测</span></div>
+                    <div class="step-name">
+                        <span class="text-en">Multi-Target QSAR</span>
+                        <span class="text-zh">多目标 QSAR 预测</span>
+                    </div>
                 </div>
                 <div class="step-details">
-                    <b>Trained Ensemble Regressors (`results/models/mof_property_predictors.joblib`):</b><br>
-                    Predicts 6 core performance metrics simultaneously: $q_{\text{CO2}@0.15\text{bar}}$, $q_{\text{CO2}@1.0\text{bar}}$, $\text{Selectivity}_{\text{CO2/N2}}$, $Q_{st}$, $\text{Capacity}_{\text{VSA}}$, $\text{PE}_{\text{VSA}}$.
+                    <span class="text-en">
+                        <b>Trained Ensemble Regressors (<code>results/models/mof_property_predictors.joblib</code>):</b><br>
+                        Predicts 6 core performance metrics simultaneously: $q_{\text{CO2}@0.15\text{bar}}$, $q_{\text{CO2}@1.0\text{bar}}$, $\text{Selectivity}_{\text{CO2/N2}}$, $Q_{st}$, $\text{Capacity}_{\text{VSA}}$, $\text{PE}_{\text{VSA}}$.
+                    </span>
+                    <span class="text-zh">
+                        <b>训练完成的集成回归模型 (<code>results/models/mof_property_predictors.joblib</code>)：</b><br>
+                        同时预测 6 大关键分离指标：$q_{\text{CO2}@0.15\text{bar}}$、$q_{\text{CO2}@1.0\text{bar}}$、$\text{Selectivity}_{\text{CO2/N2}}$、$Q_{st}$、$\text{Capacity}_{\text{VSA}}$、$\text{PE}_{\text{VSA}}$。
+                    </span>
                 </div>
             </div>
 
@@ -593,79 +696,129 @@
             <div class="flow-step">
                 <div class="step-badge">
                     <div class="step-num">4</div>
-                    <div class="step-name">Graph RAG & Reasoning<br><span style="font-size: 12px; color: #64748b;">图谱增强与逆向设计推理</span></div>
+                    <div class="step-name">
+                        <span class="text-en">Graph RAG & Reasoning</span>
+                        <span class="text-zh">图增强与学术推理</span>
+                    </div>
                 </div>
                 <div class="step-details">
-                    <b>Knowledge Graph & LLM Engine (`scripts/mof_graph_rag_engine.py`):</b><br>
-                    Injects structural embeddings, predicted properties, sensitivity-based modification rules, and Graph RAG candidate materials into DeepSeek LLM to generate structured scientific reasoning reports and actionable chemical modification paths.
+                    <span class="text-en">
+                        <b>Knowledge Graph & LLM Engine (<code>scripts/mof_graph_rag_engine.py</code>):</b><br>
+                        Injects structural embeddings, predicted properties, sensitivity-based modification rules, and Graph RAG candidate materials into DeepSeek LLM to generate structured scientific reasoning reports and actionable chemical modification paths.
+                    </span>
+                    <span class="text-zh">
+                        <b>材料知识图谱与 LLM 推理引擎 (<code>scripts/mof_graph_rag_engine.py</code>)：</b><br>
+                        将晶体结构向量、预测性质、改性敏感度规则与知识图谱候选材料注入大模型，生成结构化科学推理报告与具体化学改性方案。
+                    </span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: ML BENCHMARK TABLE -->
+    <!-- SECTION 3: EMPIRICAL BENCHMARK TABLE -->
     <section class="section">
         <div class="section-header">
-            <span class="section-tag">Empirical Benchmark / 实验验证与消融分析</span>
-            <h2 class="section-title">📊 Feature Representation Benchmark / 特征表征与建模消融实验</h2>
-            <p class="section-desc">5-Fold Cross-Validation ($R^2$ & MAE) on 252 MOF Dataset / 252 个 MOF 严谨 5 折交叉验证对比</p>
+            <span class="section-tag">
+                <span class="text-en">Empirical Benchmark</span>
+                <span class="text-zh">实验验证与消融分析</span>
+            </span>
+            <h2 class="section-title">
+                <span>📊</span>
+                <span class="text-en">Feature Representation Benchmark</span>
+                <span class="text-zh">特征表征方案 5 折交叉验证消融对比</span>
+            </h2>
+            <p class="section-desc">
+                <span class="text-en">5-Fold Cross-Validation ($R^2$ Score) on 252 CoRE MOF Dataset</span>
+                <span class="text-zh">252 个 MOF 严谨 5 折交叉验证决定系数 ($R^2$)</span>
+            </p>
         </div>
 
         <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
-                        <th>Feature Representation / 特征表征方案</th>
-                        <th>Dimension / 维度</th>
-                        <th>$CO_2/N_2$ Selectivity ($R^2$)</th>
-                        <th>VSA Parasitic Energy ($R^2$)</th>
-                        <th>$Q_{st}$ Adsorption Heat ($R^2$)</th>
-                        <th>Scientific Assessment / 物理机制评估</th>
+                        <th>
+                            <span class="text-en">Feature Representation</span>
+                            <span class="text-zh">特征表征方案</span>
+                        </th>
+                        <th>
+                            <span class="text-en">Dimension</span>
+                            <span class="text-zh">维度</span>
+                        </th>
+                        <th>$\text{CO}_2/\text{N}_2 \text{ Selectivity } (R^2)$</th>
+                        <th>$\text{VSA Parasitic Energy } (R^2)$</th>
+                        <th>$Q_{st} \text{ Adsorption Heat } (R^2)$</th>
+                        <th>
+                            <span class="text-en">Scientific Assessment</span>
+                            <span class="text-zh">物理机制评估</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>Traditional Descriptors ($X_{\text{trad}}$)</b><br><span style="color: #64748b;">传统几何描述符 (PLD, LCD, ASA, Void)</span></td>
+                        <td>
+                            <b>Traditional Descriptors ($\mathbf{X}_{\text{trad}}$)</b><br>
+                            <span style="color: #64748b; font-size: 12px;">PLD, LCD, ASA, Void Fraction, Density</span>
+                        </td>
                         <td><code>9d</code></td>
                         <td>0.6550</td>
                         <td>0.6403</td>
                         <td>0.5429</td>
-                        <td>Encodes hard pore bottleneck bounds, but misses subtle coordination chemistry. (编码物理硬边界，但缺失对称性)</td>
+                        <td>
+                            <span class="text-en">Encodes hard pore bottleneck bounds, but misses coordination chemistry.</span>
+                            <span class="text-zh">准确编码物理孔径硬边界，但缺失对称性与局域配位微环境。</span>
+                        </td>
                     </tr>
                     <tr>
-                        <td><b>Pure 768d Embedding ($X_{\text{emb}}$)</b><br><span style="color: #64748b;">纯 768 维结构特征向量</span></td>
+                        <td>
+                            <b>Pure 768d Structural Embedding ($\mathbf{X}_{\text{emb}}$)</b><br>
+                            <span style="color: #64748b; font-size: 12px;">Normalized 768d Structure Vector</span>
+                        </td>
                         <td><code>768d</code></td>
                         <td>0.3267</td>
                         <td>0.2297</td>
                         <td>0.1788</td>
-                        <td>Suffers from curse of dimensionality on small $N=252$ dataset. (小样本下直接拟合存在高维稀疏性)</td>
+                        <td>
+                            <span class="text-en">Suffers from curse of dimensionality on small $N=252$ dataset.</span>
+                            <span class="text-zh">在 $N=252$ 小样本场景下直接拟合存在高维稀疏性。</span>
+                        </td>
                     </tr>
                     <tr class="highlight-row">
-                        <td><b>🏆 Fused Multi-Modal ($X_{\text{fused}}$)</b><br><span style="color: #0284c7; font-weight: 700;">多模态融合特征 [$X_{\text{trad}} + \text{PCA}_{16}(X_{\text{emb}})$]</span></td>
+                        <td>
+                            <b>🏆 Fused Multi-Modal ($\mathbf{X}_{\text{fused}}$)</b><br>
+                            <span style="color: #0284c7; font-weight: 700; font-size: 12px;">$[\mathbf{X}_{\text{trad}}, \text{PCA}_{16}(\mathbf{X}_{\text{emb}})]$</span>
+                        </td>
                         <td><code>25d</code></td>
                         <td><span class="score-pill">0.6747</span> 🏆</td>
                         <td><span class="score-pill">0.6575</span> 🏆</td>
                         <td><span class="score-pill">0.5582</span> 🏆</td>
-                        <td><b>Superior Generalization:</b> Combines hard pore invariants with latent crystal symmetry. (融合物理硬约束与晶体对称性，全面最优)</td>
+                        <td>
+                            <span class="text-en"><b>Superior Generalization:</b> Combines hard pore invariants with latent crystal symmetry.</span>
+                            <span class="text-zh"><b>全面最优：</b> 结合孔径几何硬约束与主成分晶体拓扑，泛化能力最强。</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </section>
 
-    <!-- SECTION 4: LIVE ACCESS BANNER -->
+    <!-- SECTION 4: SINGLE FOCUSED LIVE LINK BANNER -->
     <section class="section">
-        <div class="live-links-banner">
-            <div class="live-links-info">
-                <h3>🌐 Live Access & Interactive Demo / 立即在线体验</h3>
-                <p>Open the live web interface to explore 3D crystal structures, upload your own CIF, and chat with AI / 点击下方按钮进入完整系统</p>
+        <div class="single-link-banner">
+            <div class="banner-text">
+                <h3>
+                    <span class="text-en">🌐 Live Access & Interactive Demo</span>
+                    <span class="text-zh">🌐 立即进入 MOF Chatbot 在线系统</span>
+                </h3>
+                <p>
+                    <span class="text-en">Click the button to access the live 3D crystal viewer, upload CIF files, and run real-time AI predictions.</span>
+                    <span class="text-zh">点击右侧按钮直接打开公网直达在线系统，体验 3D 晶体空间交互、CIF 文件上传与秒级 AI 预测。</span>
+                </p>
             </div>
-            <div class="cta-group">
-                <a href="https://percolate-zipfile-corned.ngrok-free.dev" target="_blank" class="btn btn-primary" style="background: white; color: #0f172a;">
-                    👉 Open Public Webpage / 公网直达网址
-                </a>
-                <a href="http://127.0.0.1:7860" target="_blank" class="btn btn-secondary" style="background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3);">
-                    🏠 Localhost:7860
+            <div>
+                <a href="https://percolate-zipfile-corned.ngrok-free.dev" target="_blank" class="btn-live-single">
+                    <span class="text-en">👉 Open MOF Chatbot Live Access</span>
+                    <span class="text-zh">👉 立即进入公网直达在线系统</span>
                 </a>
             </div>
         </div>
@@ -673,10 +826,50 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        MOF Chatbot Research Suite • Built with DeepSeek LLM, 3Dmol.js, NetworkX & Scikit-Learn • GitHub: <a href="https://github.com/liuqi6776/MOF_research" target="_blank" style="color: #0284c7; text-decoration: none;">liuqi6776/MOF_research</a>
+        <p>MOF Chatbot Research Suite • DeepSeek LLM + 3Dmol.js + NetworkX + Scikit-Learn • GitHub: <a href="https://github.com/liuqi6776/MOF_research" target="_blank" style="color: #0284c7; text-decoration: none;">liuqi6776/MOF_research</a></p>
     </footer>
 
 </div>
+
+<!-- Interactive KaTeX Initialization & Language Switch Script -->
+<script>
+    function renderMath() {
+        if (window.renderMathInElement) {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMath();
+    });
+
+    function toggleLanguage() {
+        const body = document.body;
+        if (body.classList.contains("lang-mode-en")) {
+            body.classList.remove("lang-mode-en");
+            body.classList.add("lang-mode-zh");
+            localStorage.setItem("mof_lang_pref", "zh");
+        } else {
+            body.classList.remove("lang-mode-zh");
+            body.classList.add("lang-mode-en");
+            localStorage.setItem("mof_lang_pref", "en");
+        }
+        setTimeout(renderMath, 50);
+    }
+
+    // Load saved preference
+    const savedLang = localStorage.getItem("mof_lang_pref");
+    if (savedLang === "zh") {
+        document.body.classList.remove("lang-mode-en");
+        document.body.classList.add("lang-mode-zh");
+    }
+</script>
 
 </body>
 </html>
