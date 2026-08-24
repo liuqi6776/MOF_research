@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOF Chatbot - System Architecture & Introduction / 系统架构与介绍</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --primary-light: #e0f2fe;
+            --primary-accent: #2563eb;
+            --secondary: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --bg-card: #ffffff;
+            --bg-page: #f8fafc;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-page);
+            color: var(--secondary);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.06) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.06) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px 80px 24px;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 10px 30px -5px rgba(2, 132, 199, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .hero::after {
+            content: '⚛️';
+            position: absolute;
+            right: 30px;
+            bottom: -20px;
+            font-size: 160px;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .tag-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #334155;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .hero-desc-bilingual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-desc-col {
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .hero-desc-col b {
+            color: #0f172a;
+        }
+
+        /* Action Buttons */
+        .cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #0284c7;
+            color: #0284c7;
+            transform: translateY(-2px);
+        }
+
+        .btn-github {
+            background: #0f172a;
+            color: #ffffff;
+            border: 1px solid #1e293b;
+        }
+
+        .btn-github:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+        }
+
+        /* Section Layout */
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-tag {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #0284c7;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-desc {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* Cards Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
+        }
+
+        .card:hover {
+            border-color: #bae6fd;
+            box-shadow: 0 8px 30px -4px rgba(2, 132, 199, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .icon-blue { background: #e0f2fe; color: #0284c7; }
+        .icon-purple { background: #f3e8ff; color: #8b5cf6; }
+        .icon-green { background: #dcfce7; color: #10b981; }
+        .icon-orange { background: #fef3c7; color: #d97706; }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .card-bilingual {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 13.5px;
+            color: #475569;
+        }
+
+        .card-bilingual .en {
+            border-bottom: 1px dashed #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+        .card-bilingual .zh {
+            color: #334155;
+        }
+
+        /* Architecture Diagram Flow */
+        .arch-container {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin-bottom: 32px;
+        }
+
+        .flow-step {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            padding: 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .flow-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #0284c7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .step-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #0f172a;
+        }
+
+        .step-details {
+            font-size: 13.5px;
+            color: #475569;
+        }
+
+        /* Table */
+        .table-wrap {
+            overflow-x: auto;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13.5px;
+        }
+
+        th, td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 13px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-row {
+            background: #f0f9ff;
+            font-weight: 600;
+        }
+
+        .score-pill {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Live Links Card */
+        .live-links-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 20px;
+            padding: 36px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
+        }
+
+        .live-links-info h3 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .live-links-info p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 60px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2, .grid-4, .hero-desc-bilingual {
+                grid-template-columns: 1fr;
+            }
+            .flow-step {
+                grid-template-columns: 1fr;
+            }
+            .live-links-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HERO HEADER -->
+    <header class="hero">
+        <div class="tag-pill">⚛️ MULTI-MODAL CRYSTAL AI & INVERSE DESIGN / 多模态晶体大模型与逆向设计</div>
+        <h1>MOF Chatbot: <span>AI Materials Assistant & 3D Crystal Studio</span></h1>
+        <div class="hero-subtitle">多模态 3D 晶体表征、图检索增强（Graph RAG）、多目标性能即时预测与逆向结构优化工作台</div>
+
+        <div class="hero-desc-bilingual">
+            <div class="hero-desc-col">
+                <b>English Overview:</b><br>
+                MOF Chatbot is an end-to-end AI materials platform combining <b>768-dim 3D crystal structural embeddings</b>, a <b>heterogeneous materials knowledge graph (369 nodes, 1042 edges)</b>, <b>fused multi-modal QSAR predictive models (5-fold $R^2 \approx 0.68$)</b>, and deep reasoning LLMs to enable instant zero-shot property evaluation and actionable inverse structural modification recommendations.
+            </div>
+            <div class="hero-desc-col">
+                <b>中文概述：</b><br>
+                MOF Chatbot 是一个端到端的多模态材料科学智能科研工作台，融合了 <b>768 维 3D 晶体空间表征向量</b>、<b>异构材料知识图谱（369 节点，1042 关系边）</b>、<b>多模态融合 QSAR 机器学习预测模型（5折交叉验证 $R^2 \approx 0.68$）</b>与大模型深度材料推理，支持对未知新 CIF 进行零样本性能即时预测与结构优化方案生成。
+            </div>
+        </div>
+
+        <div class="cta-group">
+            <a href="https://percolate-zipfile-corned.ngrok-free.dev" target="_blank" class="btn btn-primary">
+                🚀 Open MOF Chatbot Live / 公网直达在线体验
+            </a>
+            <a href="http://127.0.0.1:7860" target="_blank" class="btn btn-secondary">
+                💻 Local Server / 本地调试访问 (Port 7860)
+            </a>
+            <a href="https://github.com/liuqi6776/MOF_research" target="_blank" class="btn btn-github">
+                📦 View on GitHub / 访问代码仓库
+            </a>
+        </div>
+    </header>
+
+    <!-- SECTION 1: FOUR CORE CAPABILITIES -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-tag">Core Capabilities / 核心科研能力</span>
+            <h2 class="section-title">✨ Four Pivotal Scientific Pillars / 四大核心能力支柱</h2>
+            <p class="section-desc">From crystal representation to zero-shot prediction and target-driven inverse design / 从晶体表征到零样本预测与逆向设计</p>
+        </div>
+
+        <div class="grid-4">
+            <!-- Pillar 1 -->
+            <div class="card">
+                <div class="card-icon icon-blue">⚡</div>
+                <h3>1. Zero-Shot Prediction<br><span style="font-size: 14px; font-weight: 500; color: #0284c7;">未知 CIF 零样本即时预测</span></h3>
+                <div class="card-bilingual">
+                    <div class="en">
+                        Upload any unseen CIF outside the 252 library. The system extracts its 3D geometry & 768-dim embeddings in milliseconds to instantly predict $CO_2$ uptake (0.15/1.0 bar), selectivity, $Q_{st}$, and parasitic energy.
+                    </div>
+                    <div class="zh">
+                        上传任何不在 252 数据库中的全新 CIF 文件，系统毫秒级解析其晶胞参数并调用融合 QSAR 模型，即时预测烟气吸附量、选择性、吸附热与能耗。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="card">
+                <div class="card-icon icon-purple">🛠️</div>
+                <h3>2. Inverse Design<br><span style="font-size: 14px; font-weight: 500; color: #8b5cf6;">目标导向逆向结构优化</span></h3>
+                <div class="card-bilingual">
+                    <div class="en">
+                        Specify target goals (e.g. Selectivity >30, lower regeneration energy). The AI computes QSAR partial dependence sensitivity to generate actionable 4-step modification strategies (pore sieving, OMS, linkers).
+                    </div>
+                    <div class="zh">
+                        指定期望性能（如选择性 >30、降低能耗），AI 基于 QSAR 偏依赖敏感度自动生成针对性的孔径筛分收缩、开放金属位点引入与配体修饰 4 步改性清单。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="card">
+                <div class="card-icon icon-green">🌐</div>
+                <h3>3. Multi-Modal Graph RAG<br><span style="font-size: 14px; font-weight: 500; color: #10b981;">多模态图检索增强</span></h3>
+                <div class="card-bilingual">
+                    <div class="en">
+                        Dual-channel retrieval combining 768-dim structural cosine similarity with a 1042-edge Knowledge Graph. Discovers Pareto-optimal analogues and green metal replacements without hallucination.
+                    </div>
+                    <div class="zh">
+                        结合 768 维结构余弦相似度与 1042 边异构知识图谱进行双通道检索，精准匹配近邻优选材料与环保金属替代方案，杜绝大模型学术幻觉。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="card">
+                <div class="card-icon icon-orange">⚛️</div>
+                <h3>4. 3D Crystal Studio<br><span style="font-size: 14px; font-weight: 500; color: #d97706;">交互式 3D 晶体空间视图</span></h3>
+                <div class="card-bilingual">
+                    <div class="en">
+                        Integrated 3Dmol.js WebGL crystal engine supporting 360° rotation, pan, zoom, unit cell boundaries, and dynamic pore descriptor cards on both desktop and mobile browsers.
+                    </div>
+                    <div class="zh">
+                        内置 3Dmol.js WebGL 晶体渲染引擎，支持周期性晶胞、球棍模型 360° 旋转平移缩放，并在 PC 与移动端实时呈现晶胞与微孔参数。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SYSTEM ARCHITECTURE -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-tag">System Architecture / 系统全景架构</span>
+            <h2 class="section-title">🏗️ End-to-End Pipeline & Technical Flow / 端到端技术架构</h2>
+            <p class="section-desc">MatterChat Multi-Modal Paradigm & Fused Representation Learning / 多模态融合表征与物理图谱增强流程</p>
+        </div>
+
+        <div class="arch-container">
+            <!-- Step 1 -->
+            <div class="flow-step">
+                <div class="step-badge">
+                    <div class="step-num">1</div>
+                    <div class="step-name">3D Crystal Input<br><span style="font-size: 12px; color: #64748b;">3D 晶体特征提取</span></div>
+                </div>
+                <div class="step-details">
+                    <b>Input / 输入:</b> User-uploaded CIF or 252 Database Preset (用户上传 CIF 或 252 数据库预置材料)<br>
+                    <b>Feature Extraction / 特征提取:</b> Lattice cell parameters $(a,b,c,\alpha,\beta,\gamma)$, theoretical density, atomic radial distribution function (RDF), and coordination topology $\to$ <b>768-dim Normalized Structural Vector $X_{\text{emb}}$</b>.
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flow-step">
+                <div class="step-badge">
+                    <div class="step-num">2</div>
+                    <div class="step-name">Fused Representation<br><span style="font-size: 12px; color: #64748b;">多模态融合表征矩阵</span></div>
+                </div>
+                <div class="step-details">
+                    <b>Fusion Architecture / 融合结构:</b> Concatenates 9-dim physical pore descriptors ($\text{PLD, LCD, ASA, Void Fraction}$) with 16-dim PCA principal components of $X_{\text{emb}}$:<br>
+                    $$\mathbf{X}_{\text{fused}} = \left[ \mathbf{X}_{\text{trad}} (9\text{d}), \ \text{PCA}_{16}(\mathbf{X}_{\text{emb}}) (16\text{d}) \right] \in \mathbb{R}^{25}$$
+                    <b>Scientific Advantage:</b> Enforces hard physical geometric constraints while encoding latent local coordination microenvironments.
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flow-step">
+                <div class="step-badge">
+                    <div class="step-num">3</div>
+                    <div class="step-name">Multi-Target QSAR ML<br><span style="font-size: 12px; color: #64748b;">多目标 QSAR 模型预测</span></div>
+                </div>
+                <div class="step-details">
+                    <b>Trained Ensemble Regressors (`results/models/mof_property_predictors.joblib`):</b><br>
+                    Predicts 6 core performance metrics simultaneously: $q_{\text{CO2}@0.15\text{bar}}$, $q_{\text{CO2}@1.0\text{bar}}$, $\text{Selectivity}_{\text{CO2/N2}}$, $Q_{st}$, $\text{Capacity}_{\text{VSA}}$, $\text{PE}_{\text{VSA}}$.
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="flow-step">
+                <div class="step-badge">
+                    <div class="step-num">4</div>
+                    <div class="step-name">Graph RAG & Reasoning<br><span style="font-size: 12px; color: #64748b;">图谱增强与逆向设计推理</span></div>
+                </div>
+                <div class="step-details">
+                    <b>Knowledge Graph & LLM Engine (`scripts/mof_graph_rag_engine.py`):</b><br>
+                    Injects structural embeddings, predicted properties, sensitivity-based modification rules, and Graph RAG candidate materials into DeepSeek LLM to generate structured scientific reasoning reports and actionable chemical modification paths.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: ML BENCHMARK TABLE -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-tag">Empirical Benchmark / 实验验证与消融分析</span>
+            <h2 class="section-title">📊 Feature Representation Benchmark / 特征表征与建模消融实验</h2>
+            <p class="section-desc">5-Fold Cross-Validation ($R^2$ & MAE) on 252 MOF Dataset / 252 个 MOF 严谨 5 折交叉验证对比</p>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature Representation / 特征表征方案</th>
+                        <th>Dimension / 维度</th>
+                        <th>$CO_2/N_2$ Selectivity ($R^2$)</th>
+                        <th>VSA Parasitic Energy ($R^2$)</th>
+                        <th>$Q_{st}$ Adsorption Heat ($R^2$)</th>
+                        <th>Scientific Assessment / 物理机制评估</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Traditional Descriptors ($X_{\text{trad}}$)</b><br><span style="color: #64748b;">传统几何描述符 (PLD, LCD, ASA, Void)</span></td>
+                        <td><code>9d</code></td>
+                        <td>0.6550</td>
+                        <td>0.6403</td>
+                        <td>0.5429</td>
+                        <td>Encodes hard pore bottleneck bounds, but misses subtle coordination chemistry. (编码物理硬边界，但缺失对称性)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Pure 768d Embedding ($X_{\text{emb}}$)</b><br><span style="color: #64748b;">纯 768 维结构特征向量</span></td>
+                        <td><code>768d</code></td>
+                        <td>0.3267</td>
+                        <td>0.2297</td>
+                        <td>0.1788</td>
+                        <td>Suffers from curse of dimensionality on small $N=252$ dataset. (小样本下直接拟合存在高维稀疏性)</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><b>🏆 Fused Multi-Modal ($X_{\text{fused}}$)</b><br><span style="color: #0284c7; font-weight: 700;">多模态融合特征 [$X_{\text{trad}} + \text{PCA}_{16}(X_{\text{emb}})$]</span></td>
+                        <td><code>25d</code></td>
+                        <td><span class="score-pill">0.6747</span> 🏆</td>
+                        <td><span class="score-pill">0.6575</span> 🏆</td>
+                        <td><span class="score-pill">0.5582</span> 🏆</td>
+                        <td><b>Superior Generalization:</b> Combines hard pore invariants with latent crystal symmetry. (融合物理硬约束与晶体对称性，全面最优)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SECTION 4: LIVE ACCESS BANNER -->
+    <section class="section">
+        <div class="live-links-banner">
+            <div class="live-links-info">
+                <h3>🌐 Live Access & Interactive Demo / 立即在线体验</h3>
+                <p>Open the live web interface to explore 3D crystal structures, upload your own CIF, and chat with AI / 点击下方按钮进入完整系统</p>
+            </div>
+            <div class="cta-group">
+                <a href="https://percolate-zipfile-corned.ngrok-free.dev" target="_blank" class="btn btn-primary" style="background: white; color: #0f172a;">
+                    👉 Open Public Webpage / 公网直达网址
+                </a>
+                <a href="http://127.0.0.1:7860" target="_blank" class="btn btn-secondary" style="background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3);">
+                    🏠 Localhost:7860
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        MOF Chatbot Research Suite • Built with DeepSeek LLM, 3Dmol.js, NetworkX & Scikit-Learn • GitHub: <a href="https://github.com/liuqi6776/MOF_research" target="_blank" style="color: #0284c7; text-decoration: none;">liuqi6776/MOF_research</a>
+    </footer>
+
+</div>
+
+</body>
+</html>
