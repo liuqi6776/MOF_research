@@ -16,30 +16,39 @@ from ase.io import read
 from scripts.mof_graph_rag_engine import MOFMultiModalGraphRAG, DEFAULT_DEEPSEEK_API_KEY
 from scripts.mof_property_predictor import MOFPropertyPredictor
 
-print("[*] Initializing MOF Chatbot & ML Property Predictor...")
+print("[*] Initializing MOF Chatbot & Fine-Tuned PMTransformer Predictor...")
 rag_engine = MOFMultiModalGraphRAG()
 ml_predictor = MOFPropertyPredictor()
 
-CIF_DIR = "252_MOF_CIFs"
-ALL_CIF_FILES = sorted(glob.glob(os.path.join(CIF_DIR, "*.cif")))
+# Load CIFs from both 695 directory and 252 directory
+CIF_DIRS = [
+    "PMtransformer/PMTransformer_695GCMC_695(1)/PMTransformer_695GCMC_695/moftransformer_inputs",
+    "252_MOF_CIFs"
+]
+ALL_CIF_FILES = []
+for d in CIF_DIRS:
+    if os.path.exists(d):
+        ALL_CIF_FILES.extend(glob.glob(os.path.join(d, "*.cif")))
+
+ALL_CIF_FILES = sorted(list(set(ALL_CIF_FILES)))
 MOF_NAME_TO_PATH = {os.path.splitext(os.path.basename(f))[0]: f for f in ALL_CIF_FILES}
-MOF_CHOICES_EN = ["(Custom Upload / 自定义上传)"] + list(MOF_NAME_TO_PATH.keys())
-MOF_CHOICES_ZH = ["(自定义上传 / Custom Upload)"] + list(MOF_NAME_TO_PATH.keys())
+MOF_CHOICES_EN = ["(Custom Upload / 自定义上传)"] + sorted(list(MOF_NAME_TO_PATH.keys()))
+MOF_CHOICES_ZH = ["(自定义上传 / Custom Upload)"] + sorted(list(MOF_NAME_TO_PATH.keys()))
 
 # 多语言国际化字典 (Default English)
 I18N = {
     "en": {
         "title": "MOF Chatbot",
-        "subtitle": "Your AI Materials Assistant for 3D Crystal Structures, QSAR Predictions & Inverse Design",
+        "subtitle": "Your AI Materials Assistant for 3D Crystal Structures, Fine-Tuned PMTransformer Predictions & Agent 2.1 Inverse Design",
         "status_online": "● Online",
-        "dataset_badge": "Knowledge Base: 252 MOFs + ML Predictor",
+        "dataset_badge": f"Knowledge Base: {len(MOF_NAME_TO_PATH)} CoRE MOFs + Fine-Tuned PMTransformer",
         "sec_structure": "📁 1. Choose or Upload MOF",
         "upload_label": "Upload CIF File (*.cif)",
-        "dropdown_label": "Or Select from 252 MOF Library",
+        "dropdown_label": f"Or Select from {len(MOF_NAME_TO_PATH)} CoRE MOF Library",
         "sec_prompt": "💬 2. Chat with Assistant",
         "prompt_label": "Your Question, Target Properties, or Modification Request",
         "prompt_placeholder": "e.g., Predict this uploaded MOF's CO2 capture performance, or suggest structural modifications to achieve higher selectivity (>30) and lower regeneration energy...",
-        "default_prompt": "Can you predict this MOF's flue gas CO2 capture performance (0.15 bar uptake, selectivity, Qst), and provide structural modification suggestions to improve its separation efficiency and lower energy consumption?",
+        "default_prompt": "Can you predict this MOF's flue gas CO2 capture performance (0.15 bar uptake, selectivity, Qst), and provide Agent 2.1 structural modification suggestions to improve its separation efficiency and lower energy consumption?",
         "btn_preset_1": "⚡ Predict & Evaluate CO2 Capture",
         "btn_preset_2": "🛠️ Suggest Structural Modifications",
         "btn_preset_3": "🔍 Find Green Material Alternates",
@@ -54,7 +63,7 @@ I18N = {
         "tab_3d": "💬 Chat & 3D Crystal View",
         "tab_candidates": "🌐 Similar MOF Recommendations",
         "response_title": "### 🤖 MOF Chatbot Response",
-        "initial_message": "*👋 Hello! Select or upload a MOF crystal on the left, type your question, and I'll analyze its structure, predict properties using our trained multi-modal ML model, and provide structural modification suggestions for you.*",
+        "initial_message": f"*👋 Hello! Select or upload any of our {len(MOF_NAME_TO_PATH)} CoRE MOF crystals on the left, type your question, and I'll analyze its structure, predict properties using our Fine-Tuned PMTransformer model, and provide Agent 2.1 inverse design rules.*",
         "candidates_header": "#### 🔍 Matched Similar MOF Structures & Properties",
         "metrics_title": "Crystal & Pore Properties",
         "empty_cif": "⚛️ No MOF Crystal Selected<br><span style='font-size:12px;color:#64748b;'>Upload a CIF file or select one from the dropdown</span>",
@@ -67,21 +76,21 @@ I18N = {
         "atoms_elements": "Atoms / Elements:",
         "pld_lcd": "PLD / LCD Pore Size:",
         "asa_topo": "Surface Area / Topology:",
-        "ml_pred_header": "⚡ ML Property Predictions (QSAR Model):",
+        "ml_pred_header": "⚡ Fine-Tuned PMTransformer Predictions (807-D Multi-Modal):",
         "lang_toggle_btn": "🌐 切换为中文 (Switch to Chinese)"
     },
     "zh": {
         "title": "MOF Chatbot",
-        "subtitle": "您的材料智能科研助手 • 3D 晶体空间交互、性能即时预测与逆向结构优化",
+        "subtitle": "您的材料智能科研助手 • 3D 晶体空间交互、微调 PMTransformer 性能预测与 Agent 2.1 逆向优化",
         "status_online": "● 在线",
-        "dataset_badge": "知识库: 252 MOF 材料 + ML 预测模型",
+        "dataset_badge": f"知识库: {len(MOF_NAME_TO_PATH)} CoRE MOF 晶体 + 微调 PMTransformer",
         "sec_structure": "📁 1. 选择或上传 MOF 晶体",
         "upload_label": "上传本地 CIF 文件 (*.cif)",
-        "dropdown_label": "或从 252 数据库中选择材料",
+        "dropdown_label": f"或从 {len(MOF_NAME_TO_PATH)} 个高通量真值库中选择材料",
         "sec_prompt": "💬 2. 向 MOF Chatbot 提问",
         "prompt_label": "输入您的问题、目标性能需求或结构调整要求",
-        "prompt_placeholder": "例如：预测该新上传 MOF 的 CO2 捕集性能，或告诉我如何调整其配体与孔径以实现更高选择性（>30）和更低脱附能耗...",
-        "default_prompt": "请预测该 MOF 在烟气 CO2 捕集（15% CO2/85% N2）下的各项性能指标（容量、选择性、Qst），并给出具体的结构调整与改性建议以优化其分离效率并降低能耗。",
+        "prompt_placeholder": "例如：预测该新上传 MOF 的 CO2 捕集性能，或根据 Agent 2.1 规则指导如何调谐孔径与配体以实现高选择性（>30）与低能耗...",
+        "default_prompt": "请预测该 MOF 在烟气 CO2 捕集（15% CO2/85% N2）下的各项性能指标（容量、选择性、Qst），并结合 Agent 2.1 准则给出具体的结构调整与改性建议以优化其分离效率并降低能耗。",
         "btn_preset_1": "⚡ 预测并评估烟气 CO2 捕集",
         "btn_preset_2": "🛠️ 给出结构调整优化建议",
         "btn_preset_3": "🔍 寻找环保替代材料",
@@ -96,7 +105,7 @@ I18N = {
         "tab_3d": "💬 对话与 3D 晶体视图",
         "tab_candidates": "🌐 相似材料推荐",
         "response_title": "### 🤖 MOF Chatbot 回答",
-        "initial_message": "*👋 您好！请在左侧选择或上传 MOF 晶体结构，输入您想了解的问题，我将为您深入解析其物理化学特征、运行多模态 ML 模型即时预测性质，并提供结构调整与改性方案。*",
+        "initial_message": f"*👋 您好！请在左侧选择或上传 MOF 晶体结构（支持全库 {len(MOF_NAME_TO_PATH)} 种晶体），输入您想了解的问题，我将为您深入解析其物理化学特征、运行微调 PMTransformer 模型即时预测性质，并调用 Agent 2.1 技能提供结构调整与改性方案。*",
         "candidates_header": "#### 🔍 匹配推荐的相似 MOF 材料与属性",
         "metrics_title": "晶体与孔道物理化学参数",
         "empty_cif": "⚛️ 暂未选择晶体结构<br><span style='font-size:12px;color:#64748b;'>请上传 CIF 文件或在下拉框中选择材料</span>",
@@ -109,10 +118,11 @@ I18N = {
         "atoms_elements": "原子数 / 元素种类:",
         "pld_lcd": "PLD / LCD 孔径:",
         "asa_topo": "比表面积 ASA / 拓扑:",
-        "ml_pred_header": "⚡ 多模态 ML 模型即时预测结果:",
+        "ml_pred_header": "⚡ 微调 PMTransformer 多模态模型预测结果:",
         "lang_toggle_btn": "🌐 Switch to English (切换为英文)"
     }
 }
+
 
 def generate_3d_viewer_html(cif_content: str, mof_name: str = "Structure View", lang: str = "en") -> str:
     texts = I18N.get(lang, I18N["en"])

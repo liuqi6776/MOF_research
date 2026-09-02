@@ -160,10 +160,13 @@ def run_dual_route_ranking(df_y, output_dir='results'):
     }
 
 if __name__ == '__main__':
-    file_path = '252_MOF_总文件 冗余评估数据.xlsx'
+    file_path = '695_MOF/CoRE_MOF_2019_GCMC_695_总文件.xlsx'
+    if not os.path.exists(file_path):
+        file_path = '252_MOF_总文件 冗余评估数据.xlsx'
     _, df_y, _ = load_mof_dataset(file_path)
     res = run_dual_route_ranking(df_y)
     print("=== Win-Win MOFs (Top 20 in both VSA & TSA) ===")
     print(res['win_win_mofs'])
     print(f"\nVSA Top-20 Sensitivity Jaccard Overlap: {res['vsa_sensitivity_jaccard']:.4f}")
     print(f"TSA Top-20 Sensitivity Jaccard Overlap: {res['tsa_sensitivity_jaccard']:.4f}")
+
