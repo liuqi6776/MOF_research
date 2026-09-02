@@ -1,0 +1,13 @@
+Category,Target,R2,MAE,RMSE,Pearson_r,Spearman_rho
+Structure X,LCD (A) Largest Cavity Diameter,0.8203,1.1276,2.0336,0.9062,0.9043
+Structure X,PLD (A) Pore Limiting Diameter,0.6865,1.0508,1.7758,0.8309,0.8248
+Structure X,Pore Volume (cm3/g),0.5887,0.1587,0.2347,0.772,0.7998
+Structure X,Gravimetric Surface Area (m2/g),0.7894,376.7293,535.5427,0.8954,0.8596
+Structure X,Accessible Void Fraction,0.8175,0.0282,0.0411,0.9062,0.8964
+Low-P Uptake y,CO2 Uptake @0.001bar (mol/kg),-0.0612,0.0063,0.0138,0.1183,0.3228
+Low-P Uptake y,CO2 Uptake @0.01bar (mol/kg),0.0273,0.0498,0.0903,0.2455,0.4117
+FlueGas Uptake y,CO2 Uptake @0.15bar FlueGas (mol/kg),0.2359,0.3919,0.5548,0.5017,0.5685
+1atm Uptake y,CO2 Uptake @1.0bar 1atm (mol/kg),0.3105,1.0461,1.4081,0.5639,0.5925
+Heat Qst y,CO2 Qst Widom Heat (kJ/mol),0.434,2.6594,3.7136,0.6683,0.6919
+Separation Cap y,CO2 VSA Working Capacity (mol/kg),0.2497,0.345,0.486,0.5141,0.5814
+Selectivity y,CO2/N2 Actual Selectivity,0.5199,2.5682,3.4375,0.7293,0.7476

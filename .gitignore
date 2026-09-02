@@ -4,6 +4,9 @@ import_log.txt
 test_import.py
 *.log
 *.tmp
+*.joblib
+*.joblib.gz
+
 
 # Python & Environment
 __pycache__/
