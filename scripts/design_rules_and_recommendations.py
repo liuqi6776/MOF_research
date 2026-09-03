@@ -22,20 +22,31 @@ except ImportError:
     from dual_route_ranking import run_dual_route_ranking
 
 def generate_design_rules_and_recommendations(
+    *args,
     excel_path='695_MOF/CoRE_MOF_2019_GCMC_695_总文件.xlsx',
-    output_dir='results'
+    output_dir='results',
+    **kwargs
 ):
     """
     Agent 2.1 Design Rules & Skills Knowledge Extraction Engine
-    Combines 695 CoRE MOF GCMC data with top literature adsorbaphore & process rules
+    Combines 695 CoRE MOF GCMC data with top literature adsorbaphore & process rules.
+    Supports both direct calls and pipeline calls: generate_design_rules_and_recommendations(df_raw, df_y, x_encoded, ...)
     """
     os.makedirs(output_dir, exist_ok=True)
-    print(f"[*] Agent 2.1: Extracting design rules from {excel_path} and literature knowledge...")
     
-    # Load dataset
-    df = pd.read_excel(excel_path, header=1)
+    # If passed positional arguments from run_pipeline (df_raw, df_y, x_encoded)
+    if len(args) >= 1 and isinstance(args[0], pd.DataFrame):
+        df = args[0]
+        print("[*] Agent 2.1: Extracting design rules from in-memory dataset...")
+    else:
+        if not os.path.exists(excel_path) and os.path.exists('252_MOF_总文件 冗余评估数据.xlsx'):
+            excel_path = '252_MOF_总文件 冗余评估数据.xlsx'
+        print(f"[*] Agent 2.1: Extracting design rules from {excel_path} and literature knowledge...")
+        df = pd.read_excel(excel_path, header=1)
+
     mof_col = [c for c in df.columns if 'MOF' in str(c) or '名称' in str(c)][0]
     df['MOF_name'] = df[mof_col].astype(str).str.strip()
+
 
     # Extract key properties with safe keyword matching
     def get_c(kw):
