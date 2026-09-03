@@ -1,9 +1,17 @@
 ﻿MOF_name,Inorganic_SBU,Organic_Ligand_SMILES,Topology,CO2_ads_015bar,CO2_ads_1bar,Selectivity,Qst_kJ_mol,PLD_LCD,Key_Rules_Satisfied
-AMOFAK_clean,[Eu],[O-]C(=O)c1ccc(cc1)C=Cc1ccc(cc1)C(=O)[O-],pcu,0.27 mol/kg,1.89 mol/kg,5.0,15.0 kJ/mol,6.73 / 8.39 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-BEWCUD_clean,[O-]C(=O)c1ccc(cc1)c1cc(cc(c1)C1=C2C=CC3=[N]2[Zn]24(n5c1ccc5C(=C1[N]2=C(C=C1)C(=c1n4c(=C3c2cc(cc(c2)c2ccc(cc2)C(=O)[O-])c2ccc(cc2)C(=O)[O-])cc1)c1cc(cc(c1)c1ccc(cc1)C(=O)[O-])c1ccc(cc1)C(=O)[O-])c1cc(cc(c1)c1ccc(cc1)C(=O)[O-])c1ccc(cc1)C(=O)[O-])[Zn])c1ccc(cc1)C(=O)[O-].[Zn][Zn],nan,scu,0.25 mol/kg,1.79 mol/kg,4.6,15.0 kJ/mol,9.62 / 11.43 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-ALULAV_clean,[Gd],[O-]C(=O)c1ccc(cc1)N=Nc1ccc(cc1)C(=O)[O-],pcu,0.21 mol/kg,1.55 mol/kg,4.5,14.4 kJ/mol,6.74 / 8.53 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-EMIZAD_clean,[OH]12[Zr]34[OH]5[Zr]62[OH]2[Zr]71[OH]4[Zr]14[OH]3[Zr]35[OH]6[Zr]2([OH]71)[OH]43,[O-]C(=O)c1ccc(cc1)c1cc2cc(cc3c2c(c1)c1cc(cc2c1c3cc(c2)c1ccc(cc1)C(=O)[O-])c1ccc(cc1)C(=O)[O-])c1ccc(cc1)C(=O)[O-],csq,0.24 mol/kg,1.70 mol/kg,4.5,15.1 kJ/mol,34.51 / 35.59 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-ALUKUO_clean,[Eu],[O-]C(=O)c1ccc(cc1)N=Nc1ccc(cc1)C(=O)[O-],pcu,0.21 mol/kg,1.53 mol/kg,4.4,14.4 kJ/mol,6.78 / 8.55 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-ALUKIC_clean,[Ce],[O-]C(=O)c1ccc(cc1)N=Nc1ccc(cc1)C(=O)[O-],pcu,0.21 mol/kg,1.54 mol/kg,4.4,14.3 kJ/mol,6.77 / 8.54 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-ALUKOI_clean,[Sm],[O-]C(=O)c1ccc(cc1)N=Nc1ccc(cc1)C(=O)[O-],pcu,0.21 mol/kg,1.51 mol/kg,4.4,14.3 kJ/mol,6.77 / 8.55 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
-NIBHUC_clean,[Cu][Cu],[O-]C(=O)c1ccc(cc1)C1=NC2=[N]=C(N=C3N2C(=[N]=C([N]3)c2ccc(cc2)C(=O)[O-])[N]1)c1ccc(cc1)C(=O)[O-].[O-]C(=O)c1ccc(cc1)C1=[N]=C2N3C(=[N]=C([N]C3=[N]=C([N]2)c2ccc(cc2)C(=O)[O-])c2ccc(cc2)C(=O)[O-])[N]1.[O][C](c1ccc(cc1)C1=NC2=NC(=[N]=C3N2C(=NC(=N3)c2ccc(cc2)C(=O)[O-])[N]1)c1ccc(cc1)C(=O)[O-])[O].[O][C](c1ccc(cc1)C1=NC2=[N]=C([N]C3=[N]=C(N=C([N]1)N23)c1ccc(cc1)C(=O)[O-])c1ccc(cc1)C(=O)[O-])[O],tbo,0.20 mol/kg,1.39 mol/kg,4.4,15.0 kJ/mol,11.87 / 18.87 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AMOFAK_clean
+Name: 91, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.27 mol/kg,1.89 mol/kg,5.0,15.0 kJ/mol,6.73 / 8.39 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALULAV_clean
+Name: 80, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.21 mol/kg,1.55 mol/kg,4.5,14.4 kJ/mol,6.74 / 8.53 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALUKIC_clean
+Name: 77, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.21 mol/kg,1.54 mol/kg,4.4,14.3 kJ/mol,6.77 / 8.54 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALUKUO_clean
+Name: 79, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.21 mol/kg,1.53 mol/kg,4.4,14.4 kJ/mol,6.78 / 8.55 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALUKOI_clean
+Name: 78, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.21 mol/kg,1.51 mol/kg,4.4,14.3 kJ/mol,6.77 / 8.55 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AMODUC_clean
+Name: 90, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.27 mol/kg,1.94 mol/kg,5.1,15.3 kJ/mol,6.70 / 8.56 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AWUPAL_clean
+Name: 193, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.22 mol/kg,1.46 mol/kg,3.9,13.8 kJ/mol,9.24 / 18.42 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AVAKEP_clean
+Name: 163, dtype: object",Metal Node SBU,Linker SMILES,pcu,0.22 mol/kg,1.50 mol/kg,3.6,14.3 kJ/mol,12.49 / 25.18 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
