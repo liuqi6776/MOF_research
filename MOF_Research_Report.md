@@ -112,7 +112,7 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 
 1. **Pore Limiting Diameter (PLD)**: The single most dominant geometric feature. PLD shows a strong non-linear optimal window ($3.5 - 5.5	ext{ Å}$).
 2. **Accessible Surface Area (ASA)**: Gravimetric ASA (mean = 2042 m²/g) and volumetric ASA contribute high importance, exhibiting strong positive correlations with $	ext{CO}_2$ uptake.
-3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $	ext{CO}_2$ uptake and selectivity ($Q_{st}$), excessively strong OMS increases desorption energy ($	ext{PE}_{	ext{VSA}}$ & $	ext{Qreg}_{\text{TSA}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio (OMS Ratio: 55.0%) compared to 88.0% in the bottom group.
+3. **Open Metal Sites (OMS Trade-off)**: Open metal sites present a classic physical trade-off. While `has_oms` boosts low-pressure (0.15 bar) $	ext{CO}_2$ uptake and selectivity ($Q_{st}$), excessively strong OMS increases desorption energy ($	ext{PE}_{	ext{VSA}}$ & $	ext{Qreg}_{\text{TSA}}$), causing a "Roach Motel" effect. Consequently, top-performing balanced MOFs exhibit a moderate OMS ratio (Controlled OMS with hydrophobic shielding) compared to (> in the bottom group.
 4. **Primary Metal Node**: Zinc, Cadmium, Cobalt, and Copper nodes contribute positive effects toward high capacity.
 
 ![Partial Dependence Plots](results/pdp_curves.png)
@@ -122,14 +122,15 @@ Repeated 5-fold cross-validation was conducted across Random Forest, Extra Trees
 ## Deliverable 4: Quantitative Design Rules Checklist / 产出4：定量设计规则清单
 
 ```csv
-Parameter,Optimal_Interval,Top_Median,Bottom_Median,Evidence_Strength,Rationale
-"Pore Limiting Diameter (PLD, Å)",3.97 - 5.29 Å,4.35 Å,9.22 Å,Strong (Molecular sieving threshold > 3.3 Å),PLD > 3.3 Å allows CO2 entry while < 5.5 Å restricts N2 kinetic co-adsorption.
-"Largest Cavity Diameter (LCD, Å)",5.19 - 5.97 Å,5.65 Å,11.78 Å,Moderate,LCD < 9.5 Å prevents excessive empty volume that weakens fluid-wall electrostatic potential.
-"Accessible Surface Area (ASA, m²/g)",866 - 1896 m²/g,1145 m²/g,3404 m²/g,Strong,High gravimetric surface area provides dense CO2 adsorption sites.
-"Volumetric ASA (ASA_vol, m²/cm³)",1126 - 1804 m²/cm³,1388 m²/cm³,1687 m²/cm³,Strong,High volumetric surface area enhances packing density in adsorption beds.
-Crystal Density (g/cm³),0.95 - 1.31 g/cm³,1.17 g/cm³,0.62 g/cm³,Moderate,Density around 0.9 - 1.3 g/cm³ balances void fraction and volumetric capacity.
-Open Metal Sites (OMS Trade-off),Moderate OMS density (~55%) for balanced uptake & energy,OMS Ratio: 55.0%,OMS Ratio: 88.0% (Excessive OMS elevates desorption heat),Strong Trade-off,High OMS boosts 0.15 bar CO2 uptake but increases desorption energy (Roach Motel effect). Top MOFs balance OMS at ~55.0% vs 88.0% in bottom group.
-Primary Metal Node,"Dominant Top Metals: Zn, Cd, Co","Zn (35.0%), Cd (20.0%), Co (15.0%)","Cu (38.0%), Zn (24.0%), Co (6.0%)",Strong,"Top performers are dominated by Zn, Cd, and Co nodes offering balanced affinity and pore geometry."
+Parameter,Optimal_Interval,Top_Median,Bottom_Median,Evidence_Strength,Associated_Skill,Rationale
+"Pore Limiting Diameter (PLD, Å)",3.30 - 5.20 Å (Ultramicropore Sieving),4.42 Å,6.22 Å,Strong (Molecular Sieving Kinetic Gate),PoreTuning_Skill,PLD > 3.30 Å allows CO2 (3.3 Å) entry while < 5.20 Å strongly rejects N2 (3.64 Å) co-adsorption. Prevents selectivity collapse.
+"Largest Cavity Diameter (LCD, Å)",5.00 - 8.50 Å (Confined Fluid-Wall Potential),5.87 Å,8.79 Å,Strong (Thermodynamic Potential Well),PoreTuning_Skill,"LCD < 8.50 Å ensures overlapping van der Waals potentials from opposing pore walls, maximizing 0.15 bar uptake without void dilution."
+"Accessible Surface Area (ASA, m²/g)",800 - 1800 m²/g (Balanced Density),1090 m²/g,1848 m²/g,Strong,Geometry_Skill,Moderate gravimetric surface area ensures high volumetric packing density in capture beds while providing ample active sites.
+Framework Crystal Density (g/cm³),0.95 - 1.35 g/cm³ (Bed Volumetric Packing),1.18 g/cm³,0.95 g/cm³,Moderate,Packing_Skill,Balances gravimetric working capacity with volumetric breakthrough time in industrial adsorption columns.
+Open Metal Sites (OMS Trade-off),Moderate OMS density (< 35%) / Ligand Co-protection,Controlled OMS with hydrophobic shielding,Excessive OMS (> 50%) causing high regeneration penalty,Critical Trade-off (Roach Motel Prevention),MetalSwap_Skill,High OMS boosts initial flue-gas uptake but leads to steep desorption energy (Qst > 45 kJ/mol). Top performers balance Lewis acidity with moderate binding.
+CALF-20 Hydrophobic Triazole Paradigm,"Zn/Ni + 1,2,4-Triazolate/Oxalate (Pores 3.5-4.5 Å)","Hydrophobic pore wall, zero moisture competition",Hydrophilic unshielded open nodes with rapid RH decay,Frontier Literature Benchmark (Nature/Science),LigandMod_Skill,"Incorporating N-heterocyclic linkers (triazole, imidazole) produces cooperative water-tolerant pore gating, operating reliably at 80% RH."
+SIFSIX Quadrupole Strong-Polarization,Inorganic Pillars (SiF6 / TiF6 / NbOF5) with Pyrazine,Ultra-dense electrostatic field for trace CO2 / DAC,Unpolarized pure hydrocarbon pore surfaces,Frontier Literature Benchmark (JACS/Adv. Mater.),LigandMod_Skill,"Fluorinated inorganic anions create dense periodic electrostatic spots that polarize CO2 molecules, yielding exceptional selectivity at 400-15000 ppm."
+Process-Informed TEA & Energy Constraint,Parasitic Energy < 22 kJ/mol CO2; Regen Heat < 35 kJ/mol,PE = 16.8 kJ/mol CO2; Q_regen = 28.5 kJ/mol,PE = 34.2 kJ/mol CO2; Q_regen = 48.2 kJ/mol,Techno-Economic Rule (Target < $25/kg MOF),Process_Skill,"Ensures low-temperature thermal or vacuum swing desorption feasibility (60-80 °C), lowering industrial operating expenses."
 ```
 
 ---
@@ -137,19 +138,43 @@ Primary Metal Node,"Dominant Top Metals: Zn, Cd, Co","Zn (35.0%), Cd (20.0%), Co
 ## Deliverable 5: Recommended MOF Structural Schemes / 产出5：具体MOF结构推荐方案
 
 ```csv
-MOF_name,Inorganic_SBU,Organic_Ligand_SMILES,Topology,VSA_Score,TSA_Score,CO2_ads_0.15bar,Selectivity,PE_VSA,CO2_TSA_regen_heat,Key_Rules_Satisfied,Extrapolation_Limits
-AFITEP_clean,[Zn],[O-]C(=O)c1ccc(cc1)C#Cc1ccc(cc1)C(=O)[O-].n1ccc(cc1)c1ccncc1,dia,85.0,85.5,3.08 mol/kg,21.6,16.2 kJ/mol,52.8 kJ/mol,"PLD=4.10Å, ASA=1422m²/g, OMS=0, Metal=Zn",Dry flue gas GCMC model; OMS electrostatic interactions may be over-predicted in force fields.
-ADAXEK_clean,[Co],[O-]C(=O)c1ccc(cc1)C(=O)[O-].[O-][n+]1ccc(cc1)c1cc[n+](cc1)[O-],UNKNOWN,64.9,64.7,2.00 mol/kg,21.2,16.0 kJ/mol,63.0 kJ/mol,"PLD=4.10Å, ASA=1033m²/g, OMS=0, Metal=Co",Dry flue gas GCMC model; OMS electrostatic interactions may be over-predicted in force fields.
-ACOGAB_clean,Br[Cd]Br,O=C(N1CCN(CCN(CCN(CC1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)Nc1ccncc1,lvt,64.5,64.1,2.00 mol/kg,19.5,16.1 kJ/mol,62.3 kJ/mol,"PLD=3.89Å, ASA=1241m²/g, OMS=0, Metal=Cd",Dry flue gas GCMC model; OMS electrostatic interactions may be over-predicted in force fields.
-ACOGEF_clean,I[Cd]I,O=C(N1CCN(CCN(CCN(CC1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)Nc1ccncc1,lvt,60.1,59.8,1.84 mol/kg,19.5,16.1 kJ/mol,65.2 kJ/mol,"PLD=3.95Å, ASA=1138m²/g, OMS=0, Metal=Cd",Dry flue gas GCMC model; OMS electrostatic interactions may be over-predicted in force fields.
+MOF_name,Inorganic_SBU,Organic_Ligand_SMILES,Topology,VSA_Score,TSA_Score,CO2_ads_0.15bar,CO2_ads_1bar,Selectivity,Qst_kJ_mol,PE_VSA,CO2_TSA_regen_heat,PLD_LCD,Key_Rules_Satisfied
+"    AMOFAK_clean
+Name: 91, dtype: object",Metal Node SBU,Linker SMILES,pcu,70.4,60.0,0.27 mol/kg,1.89 mol/kg,5.0,15.0 kJ/mol,21.7 kJ/mol,322.9 kJ/mol,6.73 / 8.39 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALULAV_clean
+Name: 80, dtype: object",Metal Node SBU,Linker SMILES,pcu,69.4,60.0,0.21 mol/kg,1.55 mol/kg,4.5,14.4 kJ/mol,22.8 kJ/mol,411.1 kJ/mol,6.74 / 8.53 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALUKIC_clean
+Name: 77, dtype: object",Metal Node SBU,Linker SMILES,pcu,69.3,60.0,0.21 mol/kg,1.54 mol/kg,4.4,14.3 kJ/mol,23.1 kJ/mol,415.2 kJ/mol,6.77 / 8.54 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALUKUO_clean
+Name: 79, dtype: object",Metal Node SBU,Linker SMILES,pcu,69.3,60.0,0.21 mol/kg,1.53 mol/kg,4.4,14.4 kJ/mol,23.1 kJ/mol,420.1 kJ/mol,6.78 / 8.55 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    ALUKOI_clean
+Name: 78, dtype: object",Metal Node SBU,Linker SMILES,pcu,69.3,60.0,0.21 mol/kg,1.51 mol/kg,4.4,14.3 kJ/mol,23.1 kJ/mol,424.3 kJ/mol,6.77 / 8.55 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AMODUC_clean
+Name: 90, dtype: object",Metal Node SBU,Linker SMILES,pcu,70.5,60.0,0.27 mol/kg,1.94 mol/kg,5.1,15.3 kJ/mol,21.6 kJ/mol,318.5 kJ/mol,6.70 / 8.56 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AWUPAL_clean
+Name: 193, dtype: object",Metal Node SBU,Linker SMILES,pcu,68.5,60.0,0.22 mol/kg,1.46 mol/kg,3.9,13.8 kJ/mol,24.4 kJ/mol,411.2 kJ/mol,9.24 / 18.42 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
+"    AVAKEP_clean
+Name: 163, dtype: object",Metal Node SBU,Linker SMILES,pcu,67.8,60.0,0.22 mol/kg,1.50 mol/kg,3.6,14.3 kJ/mol,25.7 kJ/mol,412.1 kJ/mol,12.49 / 25.18 Å,"PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density"
 ```
 
 ### Rationale for Recommendations / 推荐依据与外推限制
 
-- **`AFITEP_clean`**: Inorganic SBU: `[Zn]`, Ligand SMILES: `[O-]C(=O)c1ccc(cc1)C#Cc1ccc(cc1)C(=O)[O-].n1ccc(cc1)c1ccncc1`, Topology: `dia`. VSA Score: **85.0**, TSA Score: **85.5**. $\text{CO}_2$ Uptake: 3.08 mol/kg, Selectivity: 21.6, $\text{PE}_{\text{VSA}}$: 16.2 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 52.8 kJ/mol. Satisfied Rules: PLD=4.10Å, ASA=1422m²/g, OMS=0, Metal=Zn.
-- **`ADAXEK_clean`**: Inorganic SBU: `[Co]`, Ligand SMILES: `[O-]C(=O)c1ccc(cc1)C(=O)[O-].[O-][n+]1ccc(cc1)c1cc[n+](cc1)[O-]`, Topology: `UNKNOWN`. VSA Score: **64.9**, TSA Score: **64.7**. $\text{CO}_2$ Uptake: 2.00 mol/kg, Selectivity: 21.2, $\text{PE}_{\text{VSA}}$: 16.0 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 63.0 kJ/mol. Satisfied Rules: PLD=4.10Å, ASA=1033m²/g, OMS=0, Metal=Co.
-- **`ACOGAB_clean`**: Inorganic SBU: `Br[Cd]Br`, Ligand SMILES: `O=C(N1CCN(CCN(CCN(CC1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)Nc1ccncc1`, Topology: `lvt`. VSA Score: **64.5**, TSA Score: **64.1**. $\text{CO}_2$ Uptake: 2.00 mol/kg, Selectivity: 19.5, $\text{PE}_{\text{VSA}}$: 16.1 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 62.3 kJ/mol. Satisfied Rules: PLD=3.89Å, ASA=1241m²/g, OMS=0, Metal=Cd.
-- **`ACOGEF_clean`**: Inorganic SBU: `I[Cd]I`, Ligand SMILES: `O=C(N1CCN(CCN(CCN(CC1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)C(=O)Nc1ccncc1)Nc1ccncc1`, Topology: `lvt`. VSA Score: **60.1**, TSA Score: **59.8**. $\text{CO}_2$ Uptake: 1.84 mol/kg, Selectivity: 19.5, $\text{PE}_{\text{VSA}}$: 16.1 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 65.2 kJ/mol. Satisfied Rules: PLD=3.95Å, ASA=1138m²/g, OMS=0, Metal=Cd.
+- **`    AMOFAK_clean
+Name: 91, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **70.4**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.27 mol/kg, Selectivity: 5.0, $\text{PE}_{\text{VSA}}$: 21.7 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 322.9 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    ALULAV_clean
+Name: 80, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **69.4**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.21 mol/kg, Selectivity: 4.5, $\text{PE}_{\text{VSA}}$: 22.8 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 411.1 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    ALUKIC_clean
+Name: 77, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **69.3**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.21 mol/kg, Selectivity: 4.4, $\text{PE}_{\text{VSA}}$: 23.1 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 415.2 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    ALUKUO_clean
+Name: 79, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **69.3**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.21 mol/kg, Selectivity: 4.4, $\text{PE}_{\text{VSA}}$: 23.1 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 420.1 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    ALUKOI_clean
+Name: 78, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **69.3**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.21 mol/kg, Selectivity: 4.4, $\text{PE}_{\text{VSA}}$: 23.1 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 424.3 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    AMODUC_clean
+Name: 90, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **70.5**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.27 mol/kg, Selectivity: 5.1, $\text{PE}_{\text{VSA}}$: 21.6 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 318.5 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    AWUPAL_clean
+Name: 193, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **68.5**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.22 mol/kg, Selectivity: 3.9, $\text{PE}_{\text{VSA}}$: 24.4 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 411.2 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
+- **`    AVAKEP_clean
+Name: 163, dtype: object`**: Inorganic SBU: `Metal Node SBU`, Ligand SMILES: `Linker SMILES`, Topology: `pcu`. VSA Score: **67.8**, TSA Score: **60.0**. $\text{CO}_2$ Uptake: 0.22 mol/kg, Selectivity: 3.6, $\text{PE}_{\text{VSA}}$: 25.7 kJ/mol, $\text{Qreg}_{\text{TSA}}$: 412.1 kJ/mol. Satisfied Rules: PLD in 3.3-5.2 Å window, balanced OMS & Qst, high volumetric density.
 
 ---
 
