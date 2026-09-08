@@ -1,0 +1,6 @@
+﻿Target_Property,Baseline_Cycle_R2,Agent21_Cycle_R2,Cycle_R2_Improvement,Baseline_Cycle_MAE,Agent21_Cycle_MAE,MAE_Reduction_Percent
+CO2/N2 Selectivity,0.9755,0.5453,-0.4302,0.5151,2.5955,-403.9
+CO2 Uptake @ 0.15bar,0.9858,0.3435,-0.6423,0.0459,0.3778,-723.9
+CO2 Uptake @ 1.0bar,0.9691,0.3497,-0.6194,0.1884,1.0958,-481.7
+CO2 Qst Widom Heat,0.9837,0.4386,-0.5451,0.4505,2.7561,-511.8
+CO2 VSA Capacity,0.9845,0.3592,-0.6253,0.043,0.3356,-680.4

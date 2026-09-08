@@ -1,0 +1,8 @@
+﻿Structural_Descriptor,Baseline_1NN_R2,Route1_DirectInverse_R2,Route2_LatentManifold_R2,Route3_HybridEnsemble_R2,Best_Inverse_R2,R2_Absolute_Improvement,Baseline_MAE,Best_MAE,MAE_Reduction_Percent
+PLD (A),-0.2019,0.4589,0.0636,0.5122,0.5122,0.7141,1.6038,1.3938,13.1
+LCD (A),0.3452,0.6386,0.1255,0.6239,0.6386,0.2933,2.1287,1.9708,7.4
+Surface Area (m2/g),0.7186,0.8088,0.2446,0.7554,0.8088,0.0902,456.697,403.8904,11.6
+Pore Volume (cm3/g),0.5071,0.703,0.1894,0.6296,0.703,0.1959,0.1793,0.1414,21.1
+Void Fraction,0.5514,0.7464,0.1061,0.683,0.7464,0.195,0.046,0.037,19.7
+Density (g/cm3),0.4907,0.7032,0.1894,0.6298,0.7032,0.2125,0.1816,0.1413,22.2
+Cell Volume (A3),-0.6367,-0.0742,-0.0799,0.2455,0.2455,0.8823,9021.1638,6633.4232,26.5
