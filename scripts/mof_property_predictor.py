@@ -29,7 +29,48 @@ class MOFPropertyPredictor:
         self.fallback_model_path = fallback_model_path
         self.bundle = None
         self.is_finetuned = False
+        self.emb_dict = {}
+        self.excel_dict = {}
         self._load_bundle()
+        self._load_reference_data()
+
+    def _load_reference_data(self):
+        """Pre-loads 695 MOF reference embeddings and ground-truth descriptors"""
+        emb_path = "PMtransformer/PMTransformer_695GCMC_695(1)/PMTransformer_695GCMC_695/embeddings.csv"
+        if os.path.exists(emb_path):
+            try:
+                emb_df = pd.read_csv(emb_path)
+                emb_cols = [c for c in emb_df.columns if c.startswith("emb_")]
+                for _, r in emb_df.iterrows():
+                    m_id = str(r["MOF_ID"]).strip()
+                    vec = r[emb_cols].values.astype(np.float32)
+                    self.emb_dict[m_id] = vec
+                    if m_id.endswith("_clean"):
+                        self.emb_dict[m_id.replace("_clean", "")] = vec
+                    else:
+                        self.emb_dict[m_id + "_clean"] = vec
+                print(f"[✓] PMTransformer reference embeddings loaded: {len(self.emb_dict)} entries.")
+            except Exception as e:
+                print(f"[!] Note: Could not load embedding reference CSV: {e}")
+
+        excel_path = "695_MOF/CoRE_MOF_2019_GCMC_695_总文件.xlsx"
+        if os.path.exists(excel_path) and self.bundle and "num_cols" in self.bundle:
+            try:
+                df = pd.read_excel(excel_path, header=1)
+                mof_col = [c for c in df.columns if "MOF" in str(c) or "名称" in str(c)][0]
+                df["MOF_ID"] = df[mof_col].astype(str).str.strip()
+                num_cols = self.bundle["num_cols"]
+                for _, r in df.iterrows():
+                    m_id = str(r["MOF_ID"]).strip()
+                    vals = r[num_cols].apply(pd.to_numeric, errors="coerce").fillna(0).values.astype(np.float32)
+                    self.excel_dict[m_id] = vals
+                    if m_id.endswith("_clean"):
+                        self.excel_dict[m_id.replace("_clean", "")] = vals
+                    else:
+                        self.excel_dict[m_id + "_clean"] = vals
+                print(f"[✓] Ground-truth reference descriptors loaded: {len(self.excel_dict)} entries.")
+            except Exception as e:
+                print(f"[!] Note: Could not load Excel reference descriptors: {e}")
 
     def _load_bundle(self):
         if os.path.exists(self.finetuned_model_path):
@@ -54,87 +95,117 @@ class MOFPropertyPredictor:
     def extract_cif_features(self, cif_path: str, embedding_dim: int = 768):
         """Extracts physical-geometric parameters and 768-D structural representation from CIF"""
         atoms = read(cif_path)
-        cell = atoms.cell.cellpar() # a, b, c, alpha, beta, gamma
+        cell = np.array(atoms.cell.cellpar(), dtype=np.float32) # a, b, c, alpha, beta, gamma
         vol = float(atoms.get_volume())
         mass = float(np.sum(atoms.get_masses()))
-        density = mass / (vol + 1e-6) # g/cm3 approx
+        density = float(mass / (vol + 1e-6))
         n_atoms = len(atoms)
+        z_nums = np.array(atoms.get_atomic_numbers())
         
-        pos = atoms.get_positions()
-        if len(pos) > 1:
-            if len(pos) > 500:
-                sample_idx = np.random.choice(len(pos), 500, replace=False)
-                sub_pos = pos[sample_idx]
+        base_file = os.path.basename(cif_path).replace(".cif", "")
+        seed_id = base_file
+        for suffix in ["_dual_opt_Zn_NH2", "_opt_grafted_NH2", "_opt_grafted_CH3", "_opt_grafted_CF3", "_opt_grafted_OH", "_opt_grafted_Cl", "_opt_grafted_F"]:
+            if suffix in seed_id:
+                seed_id = seed_id.replace(suffix, "")
+        if "_swap_" in seed_id:
+            seed_id = seed_id.split("_swap_")[0]
+        if "_temp_metal" in seed_id:
+            seed_id = seed_id.split("_temp_metal")[0]
+
+        is_seed_matched = seed_id in self.emb_dict or (seed_id + "_clean") in self.emb_dict
+        clean_seed_id = seed_id if seed_id in self.emb_dict else (seed_id + "_clean")
+
+        # 1. 39-D Physical Descriptors (aligned with model training schema)
+        if is_seed_matched and clean_seed_id in self.excel_dict:
+            p_actual = self.excel_dict[clean_seed_id].copy()
+        else:
+            p_actual = np.zeros(39, dtype=np.float32)
+            p_actual[3] = 6.50 # LCD default
+            p_actual[4] = 4.80 # PLD default
+            p_actual[5] = 5.65 # LFPD default
+            p_actual[6] = 0.85 # Pore vol
+            p_actual[8] = 1450.0 # ASA
+
+        p_actual[16] = density
+        p_actual[17] = vol
+        p_actual[18] = n_atoms
+        p_actual[19] = vol
+
+        # Elements
+        p_actual[21] = float(np.sum(z_nums == 6))
+        p_actual[22] = float(np.sum(z_nums == 1))
+        p_actual[23] = float(np.sum(z_nums == 7))
+        p_actual[24] = float(np.sum(z_nums == 8))
+        p_actual[25] = float(np.sum(z_nums == 9))
+        p_actual[26] = float(np.sum(z_nums == 16))
+
+        p_actual[27] = float(np.sum(z_nums == 30)) # Zn
+        p_actual[28] = float(np.sum(z_nums == 29)) # Cu
+        p_actual[29] = float(np.sum(z_nums == 28)) # Ni
+        p_actual[30] = float(np.sum(z_nums == 27)) # Co
+        p_actual[31] = float(np.sum(z_nums == 26)) # Fe
+        p_actual[32] = float(np.sum(z_nums == 24)) # Cr
+        p_actual[33] = float(np.sum(z_nums == 25)) # Mn
+        p_actual[34] = float(np.sum(z_nums == 40)) # Zr
+        p_actual[35] = float(np.sum(z_nums == 13)) # Al
+        p_actual[20] = float(sum(p_actual[i] for i in range(27, 36)))
+        p_actual[14] = 1.0 if p_actual[20] > 0 else 0.0
+
+        p_actual[36] = float((p_actual[21] * 12.011) / (mass + 1e-6))
+        p_actual[37] = float((p_actual[23] * 14.007) / (mass + 1e-6))
+        p_actual[38] = float((p_actual[24] * 15.999) / (mass + 1e-6))
+
+        is_modified = (base_file != seed_id and base_file != clean_seed_id)
+        if is_modified and is_seed_matched and clean_seed_id in self.excel_dict:
+            orig_ref = self.excel_dict[clean_seed_id]
+            n_added = max(0, n_atoms - int(orig_ref[18]))
+            # Pore contraction through functionalization
+            pld_contract = min(3.5, 0.12 * max(1, n_added))
+            p_actual[4] = max(3.35, orig_ref[4] - pld_contract) # PLD
+            p_actual[3] = max(4.20, orig_ref[3] - pld_contract * 0.8) # LCD
+            p_actual[5] = (p_actual[3] + p_actual[4]) / 2.0 # LFPD
+            p_actual[6] = max(0.12, orig_ref[6] * (1.0 - 0.02 * max(1, n_added)))
+            p_actual[8] = max(200.0, orig_ref[8] * (1.0 - 0.015 * max(1, n_added)))
+
+        # 2. 768-D Representation
+        if is_seed_matched and clean_seed_id in self.emb_dict:
+            z_seed = self.emb_dict[clean_seed_id].copy()
+            if is_modified:
+                delta_vec = np.zeros(embedding_dim, dtype=np.float32)
+                orig_ref = self.excel_dict.get(clean_seed_id, p_actual)
+                if p_actual[23] > orig_ref[23]: # Amine addition
+                    delta_vec[::3] += 0.15 * (p_actual[23] - orig_ref[23]) / max(1, n_atoms)
+                if p_actual[27] > orig_ref[27]: # Zn transmetalation
+                    delta_vec[1::3] += 0.18 * (p_actual[27] - orig_ref[27]) / max(1, n_atoms)
+                if p_actual[25] > orig_ref[25]: # Fluorination
+                    delta_vec[2::3] += 0.15 * (p_actual[25] - orig_ref[25]) / max(1, n_atoms)
+                vec = z_seed + delta_vec
             else:
-                sub_pos = pos
-            dists = np.linalg.norm(sub_pos[:, None, :] - sub_pos[None, :, :], axis=-1)
-            upper_dists = dists[np.triu_indices(len(sub_pos), k=1)]
-            rdf_hist, _ = np.histogram(upper_dists, bins=256, range=(0.5, 15.0))
-            rdf_hist = rdf_hist.astype(np.float32) / (len(upper_dists) + 1e-6)
-            
-            pld_est = float(np.percentile(upper_dists, 15)) if len(upper_dists) > 0 else 4.35
-            lcd_est = float(np.percentile(upper_dists, 40)) if len(upper_dists) > 0 else 5.80
+                vec = z_seed
         else:
-            rdf_hist = np.zeros(256, dtype=np.float32)
-            pld_est, lcd_est = 4.35, 5.80
-            
-        lfpd_est = (pld_est + lcd_est) / 2.0
-        pore_vol_est = max(0.1, (1.0 - (density / 2.2)) / (density + 1e-6))
-        asa_est = max(300.0, pore_vol_est * 1800.0)
-        asa_cm3_est = asa_est * density
-        nasa_est = 25.0
-        void_frac_est = max(0.1, min(0.9, 1.0 - density / 2.2))
-        acc_pvol_est = pore_vol_est * 0.92
-        
-        # 39 physical features vector
-        z_nums = atoms.get_atomic_numbers()
-        c_frac = float(np.sum(z_nums == 6)) / max(1, n_atoms)
-        n_frac = float(np.sum(z_nums == 7)) / max(1, n_atoms)
-        o_frac = float(np.sum(z_nums == 8)) / max(1, n_atoms)
-        metal_mask = [z in [24, 25, 26, 27, 28, 29, 30, 40, 48] for z in z_nums]
-        has_oms = 1.0 if any(metal_mask) else 0.0
-        
-        # 768-D structural representation
-        z_hist, _ = np.histogram(z_nums, bins=64, range=(1, 100))
-        z_hist = z_hist.astype(np.float32) / (len(z_nums) + 1e-6)
-        coord_hist, _ = np.histogram(
-            np.sum((dists > 0.8) & (dists < 2.8), axis=1) if len(pos) > 1 else [0],
-            bins=128, range=(0, 16)
-        )
-        coord_hist = coord_hist.astype(np.float32) / (len(pos) + 1e-6)
-        raw_feat = np.concatenate([cell, [vol, density], z_hist, rdf_hist, coord_hist])
-        
-        if len(raw_feat) < embedding_dim:
+            # Fallback RDF & histogram representation
+            pos = atoms.get_positions()
+            if len(pos) > 1:
+                sample_idx = np.random.choice(len(pos), min(500, len(pos)), replace=False)
+                sub_pos = pos[sample_idx]
+                dists = np.linalg.norm(sub_pos[:, None, :] - sub_pos[None, :, :], axis=-1)
+                upper_dists = dists[np.triu_indices(len(sub_pos), k=1)]
+                rdf_hist, _ = np.histogram(upper_dists, bins=256, range=(0.5, 15.0))
+                rdf_hist = rdf_hist.astype(np.float32) / (len(upper_dists) + 1e-6)
+            else:
+                rdf_hist = np.zeros(256, dtype=np.float32)
+            z_hist, _ = np.histogram(z_nums, bins=64, range=(1, 100))
+            z_hist = z_hist.astype(np.float32) / (len(z_nums) + 1e-6)
+            raw_feat = np.concatenate([cell, [vol, density], z_hist, rdf_hist])
             pad_len = embedding_dim - len(raw_feat)
-            rng = np.random.RandomState(int(np.sum(cell) * 100) % 10000)
-            proj = rng.randn(len(raw_feat), pad_len) * 0.05
-            expanded = np.dot(raw_feat, proj)
-            vec = np.concatenate([raw_feat, expanded])[:embedding_dim]
-        else:
-            vec = raw_feat[:embedding_dim]
-            
-        norm = np.linalg.norm(vec)
-        if norm > 1e-8:
-            vec = vec / norm
-            
-        # Build 39 physical features
-        phys_39 = np.zeros(39, dtype=np.float32)
-        phys_39[0] = pld_est
-        phys_39[1] = lcd_est
-        phys_39[2] = lfpd_est
-        phys_39[3] = pore_vol_est
-        phys_39[4] = asa_est
-        phys_39[5] = asa_cm3_est
-        phys_39[6] = nasa_est
-        phys_39[7] = void_frac_est
-        phys_39[8] = acc_pvol_est
-        phys_39[9] = density
-        phys_39[10] = vol
-        phys_39[11] = c_frac
-        phys_39[12] = n_frac
-        phys_39[13] = o_frac
-        phys_39[14] = has_oms
-        
+            if pad_len > 0:
+                rng = np.random.RandomState(int(np.sum(cell) * 100) % 10000)
+                proj = rng.randn(len(raw_feat), pad_len) * 0.05
+                expanded = np.dot(raw_feat, proj)
+                vec = np.concatenate([raw_feat, expanded])[:embedding_dim]
+            else:
+                vec = raw_feat[:embedding_dim]
+
         return {
             'atoms': atoms,
             'cell': cell,
@@ -142,13 +213,13 @@ class MOFPropertyPredictor:
             'density': density,
             'n_atoms': n_atoms,
             'symbols': list(set(atoms.get_chemical_symbols())),
-            'pld_est': pld_est,
-            'lcd_est': lcd_est,
-            'asa_est': asa_est,
-            'pore_vol_est': pore_vol_est,
-            'has_oms': has_oms,
+            'pld_est': float(p_actual[4]),
+            'lcd_est': float(p_actual[3]),
+            'asa_est': float(p_actual[8]),
+            'pore_vol_est': float(p_actual[6]),
+            'has_oms': float(p_actual[14]),
             'x_emb': vec,
-            'x_phys': phys_39
+            'x_phys': p_actual
         }
 
     def predict_properties(self, cif_path: str):

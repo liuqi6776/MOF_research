@@ -15,15 +15,18 @@ import gradio as gr
 from ase.io import read
 from scripts.mof_graph_rag_engine import MOFMultiModalGraphRAG, DEFAULT_DEEPSEEK_API_KEY
 from scripts.mof_property_predictor import MOFPropertyPredictor
+from scripts.cif_inverse_modifier import CIFInverseModifier
 
 print("[*] Initializing MOF Chatbot & Fine-Tuned PMTransformer Predictor...")
 rag_engine = MOFMultiModalGraphRAG()
 ml_predictor = MOFPropertyPredictor()
+cif_modifier = CIFInverseModifier()
 
-# Load CIFs from both 695 directory and 252 directory
+# Load CIFs from 695 directory, 252 directory, and generated CIFs
 CIF_DIRS = [
     "PMtransformer/PMTransformer_695GCMC_695(1)/PMTransformer_695GCMC_695/moftransformer_inputs",
-    "252_MOF_CIFs"
+    "252_MOF_CIFs",
+    "results/generated_cifs"
 ]
 ALL_CIF_FILES = []
 for d in CIF_DIRS:
@@ -441,6 +444,89 @@ def execute_chat_query(
         
     return llm_response, cards_html
 
+
+def render_mod_comparison_html(res: dict, lang: str = "en") -> str:
+    comparison = res.get("comparison", {})
+    details = res.get("modification_details", {})
+    action = details.get("action", res.get("strategy", ""))
+    
+    rows = []
+    for k, item in comparison.items():
+        delta = item["delta"]
+        pct = item["percent_change"]
+        if "Lower is better" in item["goal"]:
+            color = "#10b981" if delta < 0 else ("#ef4444" if delta > 0 else "#64748b")
+            badge_icon = "📉" if delta < 0 else "📈"
+        else:
+            color = "#10b981" if delta > 0 else ("#ef4444" if delta < 0 else "#64748b")
+            badge_icon = "📈" if delta > 0 else "📉"
+            
+        rows.append(f"""
+        <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 10px 14px; font-weight: 600; color: #1e293b;">{item['label']}</td>
+            <td style="padding: 10px 14px; color: #475569; text-align: center;">{item['original']:.2f}</td>
+            <td style="padding: 10px 14px; font-weight: 700; color: #0284c7; text-align: center;">{item['optimized']:.2f}</td>
+            <td style="padding: 10px 14px; font-weight: 700; color: {color}; text-align: center;">
+                {badge_icon} {delta:+.2f} ({pct:+.1f}%)
+            </td>
+            <td style="padding: 10px 14px; font-size: 11px; color: #64748b;">{item['goal']}</td>
+        </tr>
+        """)
+        
+    table_rows = "\n".join(rows)
+    return f"""
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); margin-top: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9;">
+            <span style="font-size: 14px; font-weight: 700; color: #0f172a;">🛠️ Modification: {action}</span>
+            <span style="font-size: 12px; color: #0284c7; background: #e0f2fe; padding: 3px 10px; border-radius: 9999px; font-weight: 600;">Crystal: {os.path.basename(res['generated_cif'])}</span>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+            <thead>
+                <tr style="background: #f8fafc; border-bottom: 2px solid #cbd5e1; color: #475569; text-align: left;">
+                    <th style="padding: 10px 14px;">Property / 指标</th>
+                    <th style="padding: 10px 14px; text-align: center;">Before (Seed)</th>
+                    <th style="padding: 10px 14px; text-align: center;">After (Modified)</th>
+                    <th style="padding: 10px 14px; text-align: center;">Change (Δ)</th>
+                    <th style="padding: 10px 14px;">Design Objective</th>
+                </tr>
+            </thead>
+            <tbody>
+                {table_rows}
+            </tbody>
+        </table>
+    </div>
+    """
+
+
+def execute_cif_modification(cif_path, strategy, target_metal, lang="en"):
+    if not cif_path or not os.path.exists(cif_path):
+        msg = "⚠️ Please select or upload a valid MOF crystal structure first." if lang == "en" else "⚠️ 请先在左侧选择或上传有效的 MOF 晶体结构。"
+        return (
+            f"### ❌ {msg}",
+            f"<div style='color: #ef4444; padding: 12px;'>{msg}</div>",
+            None
+        )
+    try:
+        res = cif_modifier.optimize_and_evaluate(
+            seed_cif=cif_path,
+            strategy=strategy,
+            target_metal=target_metal
+        )
+        html_table = render_mod_comparison_html(res, lang=lang)
+        summary_title = (
+            f"### ✅ Crystal Modification Succeeded: `{os.path.basename(res['generated_cif'])}`"
+            if lang == "en" else
+            f"### ✅ 晶体靶向逆向改性成功: `{os.path.basename(res['generated_cif'])}`"
+        )
+        return summary_title, html_table, res["generated_cif"]
+    except Exception as e:
+        err_msg = f"❌ Optimization Failed: {str(e)}"
+        return (
+            f"### {err_msg}",
+            f"<div style='color: #ef4444; padding: 12px;'>{err_msg}</div>",
+            None
+        )
+
 # ----------------- 现代纯白学术风 UI 样式 -----------------
 custom_css = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -590,6 +676,36 @@ with gr.Blocks(title="MOF Chatbot - AI Materials Assistant", css=custom_css, the
                     candidates_header_md = gr.Markdown(I18N['en']['candidates_header'])
                     candidates_output = gr.HTML(value="<div style='color: #64748b; padding: 16px;'>No recommendations yet.</div>")
 
+                with gr.TabItem("🛠️ Agent 2.2 Inverse Design / 晶体逆向结构工程") as tab_inverse_item:
+                    gr.Markdown("""
+                    ### 🧪 Agent 2.2 Rational Lead Optimization Engine (先导晶体靶向逆向工程)
+                    *Bridges Agent 2.1 Sieving Rules with Fine-Tuned PMTransformer Multi-Modal Predictions.*
+                    Perform in silico crystal modification directly on the active MOF structure, evaluate the physical delta, and download the optimized periodic `.cif` file.
+                    """)
+                    with gr.Row():
+                        with gr.Column(scale=4):
+                            strategy_dropdown = gr.Dropdown(
+                                label="Modification Strategy / 改性策略",
+                                choices=[
+                                    ("PoreTuning: Amine Functionalization (-NH2)", "PoreTuning_Amination"),
+                                    ("CALF-20 Analogue: Methyl Grafting (-CH3)", "Hydrophobic_CALF20_Methylation"),
+                                    ("SIFSIX Polar Analogue: Fluorination (-CF3)", "Fluorinated_SIFSIX_Polarization"),
+                                    ("Isomorphic Metal Transmetalation", "Metal_Node_Transmetalation"),
+                                    ("Dual Synergy: Transmetalation + Amination", "Dual_Synergy_Metal_and_Linker")
+                                ],
+                                value="PoreTuning_Amination"
+                            )
+                            metal_choice = gr.Dropdown(
+                                label="Target Metal Node (for Transmetalation) / 目标金属节点",
+                                choices=["Zn", "Cu", "Ni", "Co", "Mg", "Mn", "Cd"],
+                                value="Zn"
+                            )
+                            btn_run_modification = gr.Button("🚀 Apply Rational Modification / 执行晶体改性与前向验证", variant="primary")
+                        with gr.Column(scale=8):
+                            mod_result_md = gr.Markdown("### 📊 Structural Modification & Performance Delta")
+                            mod_table_output = gr.HTML("<div style='color: #64748b; padding: 12px;'>Select a strategy and click 'Apply Rational Modification' to view property comparison.</div>")
+                            download_cif_file = gr.File(label="📥 Download Generated Modified CIF / 下载改性后的晶体文件")
+
     def toggle_language(lang_curr):
         new_lang = "zh" if lang_curr == "en" else "en"
         t = I18N[new_lang]
@@ -694,6 +810,12 @@ with gr.Blocks(title="MOF Chatbot - AI Materials Assistant", css=custom_css, the
         fn=execute_chat_query,
         inputs=[active_cif_path, user_prompt_input, model_selector, top_k_slider, current_lang],
         outputs=[chat_output, candidates_output]
+    )
+
+    btn_run_modification.click(
+        fn=execute_cif_modification,
+        inputs=[active_cif_path, strategy_dropdown, metal_choice, current_lang],
+        outputs=[mod_result_md, mod_table_output, download_cif_file]
     )
     
     demo.load(
