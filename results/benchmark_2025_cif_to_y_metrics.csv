@@ -1,0 +1,6 @@
+﻿Target_Property,Valid_Count,R2_Score,MAE,RMSE,Pearson_r,Spearman_rho
+CO2 Uptake @ 1.0bar 1atm (mol/kg),943,0.9284,0.0805,0.441,0.964,0.9622
+N2 Uptake @ 1.0bar (mol/kg),943,-150.1971,0.396,0.4508,0.2173,0.9711
+CO2 Uptake @ 0.15bar FlueGas (mol/kg),947,-8.9122,0.4911,0.7347,0.2599,0.4569
+CO2/N2 Actual Selectivity,947,0.9155,0.2255,1.4315,0.9576,0.9624
+CO2 Adsorption Heat Qst (kJ/mol),947,-29.662,13.5333,13.8604,0.8432,0.8954

@@ -18,6 +18,10 @@ __pycache__/
 env/
 venv/
 
+# Large Archives & Datasets
+data_test1/
+*.zip
+
 # System files
 .DS_Store
 Thumbs.db

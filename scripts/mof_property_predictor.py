@@ -98,7 +98,7 @@ class MOFPropertyPredictor:
         cell = np.array(atoms.cell.cellpar(), dtype=np.float32) # a, b, c, alpha, beta, gamma
         vol = float(atoms.get_volume())
         mass = float(np.sum(atoms.get_masses()))
-        density = float(mass / (vol + 1e-6))
+        density = float((mass / (vol + 1e-6)) * 1.660539)
         n_atoms = len(atoms)
         z_nums = np.array(atoms.get_atomic_numbers())
         

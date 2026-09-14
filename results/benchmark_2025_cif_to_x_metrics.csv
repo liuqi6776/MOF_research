@@ -1,0 +1,6 @@
+﻿Descriptor,Valid_Count,R2_Score,MAE,RMSE,Pearson_r,Spearman_rho,MAPE_Percent
+Pore Limiting Diameter PLD (Å),563,0.9968,0.0146,0.184,0.9984,0.9918,0.34
+Largest Cavity Diameter LCD (Å),563,0.9795,0.0373,0.6477,0.9899,0.991,0.63
+Crystal Density (g/cm³),947,0.9885,0.005,0.0391,0.9943,0.9922,2.62
+Gravimetric Surface Area ASA (m²/g),563,0.8856,264.8582,352.2548,0.9725,0.9693,15.34
+Pore Volume (cm³/g),563,-2.2115,0.7364,0.8976,-0.7527,-0.9081,200.88
